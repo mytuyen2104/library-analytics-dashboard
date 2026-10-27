@@ -1,0 +1,8 @@
+BO DU LIEU GIA LAP - LIBRARY ANALYTICS DASHBOARD - NHOM 4
+120 sach; 80 doc gia; 800 giao dich muon; 500 ban ghi truy cap dien tu.
+Lien ket: MuonTra.MaSach -> Sach.MaSach; MuonTra.MaDocGia -> DocGia.MaDocGia.
+SoBanHienCo la so ban tai thoi diem gia lap; KHONG co bang ton kho theo thoi gian.
+MuonTra.NgayTra trong: chua tra; khong mo phong han tra/qua han.
+TruyCapDienTu.SoLuot la so luot tong hop tren moi dong, KHONG phai 1 luot/dong.
+Du lieu HOAN TOAN GIA LAP, khong phai du lieu UTH.
+File CSV UTF-8 BOM, co the mo bang Excel hoac import SQL Server.
