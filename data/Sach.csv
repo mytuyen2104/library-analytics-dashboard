@@ -1,0 +1,121 @@
+﻿MaSach,TenSach,TacGia,TheLoai,SoBanHienCo,NamXuatBan
+S0001,Python căn bản - Tập 1,Tác giả 02,Luật,10,2024
+S0002,Cơ sở dữ liệu - Tập 1,Tác giả 03,Quản trị,12,2025
+S0003,Mạng máy tính - Tập 1,Tác giả 04,Khoa học cơ bản,1,2025
+S0004,Java thực hành - Tập 1,Tác giả 05,Văn học,11,2019
+S0005,Phân tích dữ liệu - Tập 1,Tác giả 06,Kỹ thuật,1,2023
+S0006,An toàn thông tin - Tập 1,Tác giả 07,Ngoại ngữ,9,2018
+S0007,Trí tuệ nhân tạo - Tập 1,Tác giả 08,Kinh tế,14,2020
+S0008,Thiết kế web - Tập 1,Tác giả 09,Công nghệ thông tin,1,2023
+S0009,Hệ điều hành - Tập 1,Tác giả 10,Công nghệ thông tin,4,2025
+S0010,Kỹ thuật phần mềm - Tập 1,Tác giả 11,Luật,14,2019
+S0011,Marketing - Tập 1,Tác giả 12,Quản trị,10,2026
+S0012,Kế toán - Tập 1,Tác giả 13,Khoa học cơ bản,13,2016
+S0013,Tiếng Anh giao tiếp - Tập 1,Tác giả 14,Văn học,10,2016
+S0014,Toán ứng dụng - Tập 1,Tác giả 15,Kỹ thuật,4,2023
+S0015,Quản trị dự án - Tập 1,Tác giả 16,Ngoại ngữ,7,2021
+S0016,Python căn bản - Tập 2,Tác giả 17,Kinh tế,11,2026
+S0017,Cơ sở dữ liệu - Tập 2,Tác giả 18,Công nghệ thông tin,4,2019
+S0018,Mạng máy tính - Tập 2,Tác giả 19,Công nghệ thông tin,8,2017
+S0019,Java thực hành - Tập 2,Tác giả 20,Luật,10,2019
+S0020,Phân tích dữ liệu - Tập 2,Tác giả 21,Quản trị,14,2016
+S0021,An toàn thông tin - Tập 2,Tác giả 22,Khoa học cơ bản,11,2017
+S0022,Trí tuệ nhân tạo - Tập 2,Tác giả 23,Văn học,4,2023
+S0023,Thiết kế web - Tập 2,Tác giả 24,Kỹ thuật,1,2026
+S0024,Hệ điều hành - Tập 2,Tác giả 25,Ngoại ngữ,9,2021
+S0025,Kỹ thuật phần mềm - Tập 2,Tác giả 26,Kinh tế,3,2018
+S0026,Marketing - Tập 2,Tác giả 27,Công nghệ thông tin,13,2018
+S0027,Kế toán - Tập 2,Tác giả 28,Công nghệ thông tin,13,2022
+S0028,Tiếng Anh giao tiếp - Tập 2,Tác giả 29,Luật,12,2018
+S0029,Toán ứng dụng - Tập 2,Tác giả 30,Quản trị,13,2019
+S0030,Quản trị dự án - Tập 2,Tác giả 31,Khoa học cơ bản,8,2018
+S0031,Python căn bản - Tập 3,Tác giả 32,Văn học,4,2020
+S0032,Cơ sở dữ liệu - Tập 3,Tác giả 33,Kỹ thuật,7,2026
+S0033,Mạng máy tính - Tập 3,Tác giả 34,Ngoại ngữ,7,2020
+S0034,Java thực hành - Tập 3,Tác giả 35,Kinh tế,12,2021
+S0035,Phân tích dữ liệu - Tập 3,Tác giả 36,Công nghệ thông tin,13,2018
+S0036,An toàn thông tin - Tập 3,Tác giả 37,Công nghệ thông tin,4,2021
+S0037,Trí tuệ nhân tạo - Tập 3,Tác giả 01,Luật,2,2021
+S0038,Thiết kế web - Tập 3,Tác giả 02,Quản trị,8,2022
+S0039,Hệ điều hành - Tập 3,Tác giả 03,Khoa học cơ bản,12,2017
+S0040,Kỹ thuật phần mềm - Tập 3,Tác giả 04,Văn học,2,2023
+S0041,Marketing - Tập 3,Tác giả 05,Kỹ thuật,9,2024
+S0042,Kế toán - Tập 3,Tác giả 06,Ngoại ngữ,5,2026
+S0043,Tiếng Anh giao tiếp - Tập 3,Tác giả 07,Kinh tế,3,2016
+S0044,Toán ứng dụng - Tập 3,Tác giả 08,Công nghệ thông tin,11,2016
+S0045,Quản trị dự án - Tập 3,Tác giả 09,Công nghệ thông tin,13,2020
+S0046,Python căn bản - Tập 4,Tác giả 10,Luật,3,2024
+S0047,Cơ sở dữ liệu - Tập 4,Tác giả 11,Quản trị,6,2018
+S0048,Mạng máy tính - Tập 4,Tác giả 12,Khoa học cơ bản,5,2016
+S0049,Java thực hành - Tập 4,Tác giả 13,Văn học,14,2017
+S0050,Phân tích dữ liệu - Tập 4,Tác giả 14,Kỹ thuật,5,2022
+S0051,An toàn thông tin - Tập 4,Tác giả 15,Ngoại ngữ,12,2022
+S0052,Trí tuệ nhân tạo - Tập 4,Tác giả 16,Kinh tế,13,2021
+S0053,Thiết kế web - Tập 4,Tác giả 17,Công nghệ thông tin,14,2025
+S0054,Hệ điều hành - Tập 4,Tác giả 18,Công nghệ thông tin,13,2026
+S0055,Kỹ thuật phần mềm - Tập 4,Tác giả 19,Luật,7,2024
+S0056,Marketing - Tập 4,Tác giả 20,Quản trị,5,2025
+S0057,Kế toán - Tập 4,Tác giả 21,Khoa học cơ bản,13,2019
+S0058,Tiếng Anh giao tiếp - Tập 4,Tác giả 22,Văn học,6,2025
+S0059,Toán ứng dụng - Tập 4,Tác giả 23,Kỹ thuật,14,2018
+S0060,Quản trị dự án - Tập 4,Tác giả 24,Ngoại ngữ,1,2021
+S0061,Python căn bản - Tập 5,Tác giả 25,Kinh tế,13,2018
+S0062,Cơ sở dữ liệu - Tập 5,Tác giả 26,Công nghệ thông tin,7,2023
+S0063,Mạng máy tính - Tập 5,Tác giả 27,Công nghệ thông tin,2,2020
+S0064,Java thực hành - Tập 5,Tác giả 28,Luật,10,2016
+S0065,Phân tích dữ liệu - Tập 5,Tác giả 29,Quản trị,13,2016
+S0066,An toàn thông tin - Tập 5,Tác giả 30,Khoa học cơ bản,11,2017
+S0067,Trí tuệ nhân tạo - Tập 5,Tác giả 31,Văn học,9,2017
+S0068,Thiết kế web - Tập 5,Tác giả 32,Kỹ thuật,4,2025
+S0069,Hệ điều hành - Tập 5,Tác giả 33,Ngoại ngữ,11,2022
+S0070,Kỹ thuật phần mềm - Tập 5,Tác giả 34,Kinh tế,4,2021
+S0071,Marketing - Tập 5,Tác giả 35,Công nghệ thông tin,11,2020
+S0072,Kế toán - Tập 5,Tác giả 36,Công nghệ thông tin,13,2022
+S0073,Tiếng Anh giao tiếp - Tập 5,Tác giả 37,Luật,5,2023
+S0074,Toán ứng dụng - Tập 5,Tác giả 01,Quản trị,10,2020
+S0075,Quản trị dự án - Tập 5,Tác giả 02,Khoa học cơ bản,3,2024
+S0076,Python căn bản - Tập 6,Tác giả 03,Văn học,7,2019
+S0077,Cơ sở dữ liệu - Tập 6,Tác giả 04,Kỹ thuật,4,2017
+S0078,Mạng máy tính - Tập 6,Tác giả 05,Ngoại ngữ,4,2021
+S0079,Java thực hành - Tập 6,Tác giả 06,Kinh tế,2,2024
+S0080,Phân tích dữ liệu - Tập 6,Tác giả 07,Công nghệ thông tin,14,2024
+S0081,An toàn thông tin - Tập 6,Tác giả 08,Công nghệ thông tin,1,2026
+S0082,Trí tuệ nhân tạo - Tập 6,Tác giả 09,Luật,7,2017
+S0083,Thiết kế web - Tập 6,Tác giả 10,Quản trị,5,2018
+S0084,Hệ điều hành - Tập 6,Tác giả 11,Khoa học cơ bản,4,2017
+S0085,Kỹ thuật phần mềm - Tập 6,Tác giả 12,Văn học,5,2023
+S0086,Marketing - Tập 6,Tác giả 13,Kỹ thuật,12,2019
+S0087,Kế toán - Tập 6,Tác giả 14,Ngoại ngữ,1,2024
+S0088,Tiếng Anh giao tiếp - Tập 6,Tác giả 15,Kinh tế,9,2016
+S0089,Toán ứng dụng - Tập 6,Tác giả 16,Công nghệ thông tin,2,2017
+S0090,Quản trị dự án - Tập 6,Tác giả 17,Công nghệ thông tin,5,2026
+S0091,Python căn bản - Tập 7,Tác giả 18,Luật,13,2018
+S0092,Cơ sở dữ liệu - Tập 7,Tác giả 19,Quản trị,10,2023
+S0093,Mạng máy tính - Tập 7,Tác giả 20,Khoa học cơ bản,14,2023
+S0094,Java thực hành - Tập 7,Tác giả 21,Văn học,14,2025
+S0095,Phân tích dữ liệu - Tập 7,Tác giả 22,Kỹ thuật,5,2024
+S0096,An toàn thông tin - Tập 7,Tác giả 23,Ngoại ngữ,11,2019
+S0097,Trí tuệ nhân tạo - Tập 7,Tác giả 24,Kinh tế,11,2019
+S0098,Thiết kế web - Tập 7,Tác giả 25,Công nghệ thông tin,2,2018
+S0099,Hệ điều hành - Tập 7,Tác giả 26,Công nghệ thông tin,9,2021
+S0100,Kỹ thuật phần mềm - Tập 7,Tác giả 27,Luật,11,2025
+S0101,Marketing - Tập 7,Tác giả 28,Quản trị,11,2024
+S0102,Kế toán - Tập 7,Tác giả 29,Khoa học cơ bản,8,2023
+S0103,Tiếng Anh giao tiếp - Tập 7,Tác giả 30,Văn học,4,2016
+S0104,Toán ứng dụng - Tập 7,Tác giả 31,Kỹ thuật,11,2018
+S0105,Quản trị dự án - Tập 7,Tác giả 32,Ngoại ngữ,1,2021
+S0106,Python căn bản - Tập 8,Tác giả 33,Kinh tế,8,2023
+S0107,Cơ sở dữ liệu - Tập 8,Tác giả 34,Công nghệ thông tin,3,2023
+S0108,Mạng máy tính - Tập 8,Tác giả 35,Công nghệ thông tin,3,2023
+S0109,Java thực hành - Tập 8,Tác giả 36,Luật,13,2026
+S0110,Phân tích dữ liệu - Tập 8,Tác giả 37,Quản trị,6,2016
+S0111,An toàn thông tin - Tập 8,Tác giả 01,Khoa học cơ bản,8,2024
+S0112,Trí tuệ nhân tạo - Tập 8,Tác giả 02,Văn học,1,2026
+S0113,Thiết kế web - Tập 8,Tác giả 03,Kỹ thuật,3,2024
+S0114,Hệ điều hành - Tập 8,Tác giả 04,Ngoại ngữ,1,2021
+S0115,Kỹ thuật phần mềm - Tập 8,Tác giả 05,Kinh tế,14,2022
+S0116,Marketing - Tập 8,Tác giả 06,Công nghệ thông tin,13,2021
+S0117,Kế toán - Tập 8,Tác giả 07,Công nghệ thông tin,14,2023
+S0118,Tiếng Anh giao tiếp - Tập 8,Tác giả 08,Luật,1,2022
+S0119,Toán ứng dụng - Tập 8,Tác giả 09,Quản trị,8,2024
+S0120,Quản trị dự án - Tập 8,Tác giả 10,Khoa học cơ bản,6,2020
