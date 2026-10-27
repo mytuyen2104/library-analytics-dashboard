@@ -19,3 +19,4 @@ ho tro thong ke va de xuat bo sung tai lieu.
 
 ## Nhom thuc hien
 Nhom 4 - Du an thuc tap
+## Quản lý công việc của nhóm bằng Jira.
