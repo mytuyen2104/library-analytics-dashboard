@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  metabase:
+    image: metabase/metabase:latest
+    container_name: metabase
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./dashboard:/metabase.db
+    restart: always
