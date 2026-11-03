@@ -1,0 +1,2 @@
+import {Link} from 'react-router-dom';
+export default function About(){return <div className="about-page"><Link to="/">← Trang chủ</Link><h1>Giới thiệu hệ thống</h1><p>Library Analytics Dashboard hỗ trợ thống kê hoạt động thư viện, phân tích nhu cầu tài liệu và gợi ý bổ sung sách.</p><p>Giao diện React là khung hiển thị; dữ liệu và biểu đồ thực tế sẽ được tích hợp từ Metabase.</p><Link className="landing-primary" to="/overview">Vào Dashboard →</Link></div>}
