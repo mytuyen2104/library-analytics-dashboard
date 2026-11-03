@@ -1,0 +1,1 @@
+export default function Header({title, subtitle}){return <header className="header"><div><div className="eyebrow">LIBRARY ANALYTICS DASHBOARD</div><h1>{title}</h1>{subtitle&&<p>{subtitle}</p>}</div><div className="header-badge">BẢN DEMO</div></header>}

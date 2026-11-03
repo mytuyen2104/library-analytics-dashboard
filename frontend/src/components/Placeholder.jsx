@@ -1,0 +1,2 @@
+import { ChartColumnIncreasing } from 'lucide-react';
+export default function Placeholder({title,description='Khu vực sẽ tích hợp biểu đồ hoặc bảng dữ liệu Metabase.'}){return <section className="panel"><div className="panel-heading"><h2>{title}</h2><span className="pill">Metabase</span></div><div className="placeholder"><ChartColumnIncreasing size={38} strokeWidth={1.4}/><strong>Vùng hiển thị Metabase</strong><span>{description}</span></div></section>}
