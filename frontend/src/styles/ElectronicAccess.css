@@ -1,0 +1,70 @@
+.electronic-access-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  padding: 16px 20px;
+  box-sizing: border-box;
+}
+
+/* Xếp chồng 1 biểu đồ ở trên, 1 biểu đồ ở dưới */
+.dashboard-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+/* Card chứa từng biểu đồ */
+.chart-card {
+  position: relative;
+  background-color: #0b1520;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  overflow: hidden;
+  width: 100%;
+  height: 480px; /* Chiều cao hiển thị thoáng và rõ nét */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  display: flex;
+}
+
+/* Iframe hiển thị Metabase */
+.chart-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
+}
+
+/* Hiệu ứng loading xoay vòng */
+.chart-skeleton {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #0b1520;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #8da2b5;
+  font-size: 14px;
+  z-index: 2;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(255, 255, 255, 0.15);
+  border-top-color: #50e3c2;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
