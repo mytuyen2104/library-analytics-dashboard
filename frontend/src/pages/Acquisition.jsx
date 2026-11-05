@@ -1,3 +1,37 @@
-import Filters from '../components/Filters.jsx';
-import Placeholder from '../components/Placeholder.jsx';
-export default function Acquisition(){return <><Filters/><section className="panel"><div className="panel-heading"><h2>Bảng xếp hạng ưu tiên bổ sung tài liệu</h2><span className="pill">Metabase</span></div><div className="table-wrap"><table><thead><tr><th>Hạng</th><th>Mã sách</th><th>Tên sách</th><th>Lượt mượn</th><th>Số bản</th><th>Điểm ưu tiên ↓</th></tr></thead><tbody><tr><td colSpan="6" className="empty-row">Chưa kết nối dữ liệu. TV5 sẽ tích hợp bảng xếp hạng tại đây.</td></tr></tbody></table></div></section><div className="info-panel">Điểm ưu tiên dự kiến: P = 100 × [0,4 × (L/Lmax) + 0,6 × (R/Rmax)], với R = L/B (B &gt; 0). Việc tính toán được thực hiện trong SQL.</div></>}
+import Filters from "../components/Filters.jsx";
+import "../styles/Acquisition.css";
+
+const METABASE_URL = "https://scrooge-squire-amaretto.ngrok-free.dev/public/question/319f2e6d-492f-4dd7-a442-ab42110e0d5e?trang_thai=";
+
+export default function Acquisition() {
+  return (
+    <div className="acquisition-page">
+      <Filters />
+
+      <section className="acquisition-card">
+        <h2>Bảng xếp hạng ưu tiên bổ sung tài liệu</h2>
+
+        <p className="acquisition-description">
+          Điểm ưu tiên càng cao, sách càng được ưu tiên xem xét bổ sung.
+        </p>
+
+        {METABASE_URL ? (
+          <iframe
+            className="acquisition-frame"
+            src={METABASE_URL}
+            title="Bảng xếp hạng ưu tiên bổ sung tài liệu"
+            allowFullScreen
+          />
+        ) : (
+          <div className="acquisition-placeholder">
+            <h3>Khu vực hiển thị Metabase</h3>
+            <p>
+              Bảng xếp hạng sẽ hiển thị tại đây sau khi cấu hình
+              đường dẫn nhúng.
+            </p>
+          </div>
+        )}
+      </section>
+    </div>
+  );
+}

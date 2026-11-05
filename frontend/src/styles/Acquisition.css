@@ -1,0 +1,72 @@
+.acquisition-page {
+  width: 100%;
+  min-width: 0;
+}
+
+.acquisition-card {
+  margin-top: 24px;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+}
+
+.acquisition-card h2 {
+  margin: 0 0 12px;
+  color: #173b68;
+  font-size: 20px;
+}
+
+.acquisition-description {
+  margin: 0 0 20px;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.acquisition-placeholder {
+  display: flex;
+  min-height: 450px;
+  padding: 24px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  text-align: center;
+  background: #f8fbff;
+  border: 1px dashed #93baff;
+  border-radius: 12px;
+}
+
+.acquisition-placeholder h3 {
+  margin: 0 0 12px;
+  color: #2455a4;
+  font-size: 22px;
+}
+
+.acquisition-placeholder p {
+  margin: 0;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.acquisition-frame {
+  display: block;
+  width: 100%;
+  height: 850px;
+  border: 0;
+  border-radius: 12px;
+}
+
+@media (max-width: 768px) {
+  .acquisition-card {
+    padding: 16px;
+  }
+
+  .acquisition-placeholder {
+    min-height: 350px;
+  }
+
+  .acquisition-frame {
+    height: 700px;
+  }
+}
