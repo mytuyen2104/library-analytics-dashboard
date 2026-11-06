@@ -1,67 +1,68 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Filters from '../components/Filters.jsx';
 import '../styles/Borrowing.css';
 
-const Borrowing = () => {
+export default function Borrowing() {
+  const [loading1, setLoading1] = useState(true);
+  const [loading2, setLoading2] = useState(true);
+
   // Link 1: Xu hướng mượn sách theo thời gian
-  const URL_TREND = "http://scrooge-squire-amaretto.ngrok-free.dev/public/question/7f315243-8c82-4b68-a8c1-88de10ec368a#bordered=false&titled=false";
+  const URL_TREND = "https://dashboard.dashboardg4.click/public/question/7f315243-8c82-4b68-a8c1-88de10ec368a#bordered=false&titled=false";
   
   // Link 2: Top 10 sách được mượn nhiều nhất
-  const URL_TOP10 = "http://scrooge-squire-amaretto.ngrok-free.dev/public/question/d48d143f-e141-45ee-bfea-4e654d478555#bordered=false&titled=false";
+  const URL_TOP10 = "https://dashboard.dashboardg4.click/public/question/d48d143f-e141-45ee-bfea-4e654d478555#bordered=false&titled=false";
 
   return (
-    <div className="borrowing-container">
-      {/* Header trang */}
-      <div className="borrowing-header">
-        <div>
-          <h1 className="page-title">Thống kê mượn sách</h1>
-          <p className="page-subtitle">
-            Theo dõi lượt mượn theo thời gian và sách được quan tâm
+    <div className="document-demand-page">
+      {/* Bộ lọc (nếu trang có dùng chung Filters) */}
+      <Filters type="borrowing" />
+
+      {/* Khu vực hiển thị biểu đồ */}
+      <div className="dashboard-grid">
+        {/* Biểu đồ 1: Xu hướng mượn sách */}
+        <div className="chart-card">
+          <h2>Xu hướng mượn sách theo tháng / năm</h2>
+          <p className="chart-description">
+            Theo dõi sự biến động của lượt mượn sách theo các mốc thời gian thực tế.
           </p>
-        </div>
-        <div className="badge-tag">UTH • LIC</div>
-      </div>
 
-      {/* Khung nội dung chính */}
-      <div className="dashboard-card">
-        <div className="dashboard-card-header">
-          <h2 className="section-title">BẢNG ĐIỀU KHIỂN THỐNG KÊ MƯỢN SÁCH</h2>
-          <h3 className="section-subtitle">
-            Tổng quan xu hướng mượn sách và Top 10 danh mục sách nổi bật
-          </h3>
-          <p className="section-description">
-            Hỗ trợ lọc dữ liệu theo thời gian, thể loại và tự động cập nhật các chỉ số mượn trả theo thời gian thực.
+          {loading1 && (
+            <div className="chart-skeleton">
+              <div className="spinner"></div>
+              <span>Đang tải dữ liệu xu hướng mượn sách...</span>
+            </div>
+          )}
+          <iframe
+            src={URL_TREND}
+            title="Xu hướng mượn sách"
+            className="chart-iframe"
+            onLoad={() => setLoading1(false)}
+            allowTransparency
+          />
+        </div>
+
+        {/* Biểu đồ 2: Top 10 sách được mượn nhiều nhất */}
+        <div className="chart-card">
+          <h2>Top 10 sách được mượn nhiều nhất</h2>
+          <p className="chart-description">
+            Danh sách các đầu sách thu hút lượng quan tâm và mượn đọc cao nhất trong hệ thống.
           </p>
-        </div>
 
-        {/* Khu vực hiển thị 2 Metabase Questions */}
-        <div className="metabase-grid">
-          {/* Question 1: Xu hướng mượn sách */}
-          <div className="metabase-card">
-            <h4 className="card-embed-title">📊 Xu hướng mượn sách theo tháng / năm</h4>
-            <iframe
-              src={URL_TREND}
-              title="Xu hướng mượn sách"
-              className="metabase-iframe"
-              frameBorder="0"
-              allowTransparency
-            />
-          </div>
-
-          {/* Question 2: Top 10 sách mượn nhiều nhất */}
-          <div className="metabase-card">
-            <h4 className="card-embed-title">🏆 Top 10 sách được mượn nhiều nhất</h4>
-            <iframe
-              src={URL_TOP10}
-              title="Top 10 sách được mượn nhiều nhất"
-              className="metabase-iframe"
-              frameBorder="0"
-              allowTransparency
-            />
-          </div>
+          {loading2 && (
+            <div className="chart-skeleton">
+              <div className="spinner"></div>
+              <span>Đang tải Top 10 sách được mượn...</span>
+            </div>
+          )}
+          <iframe
+            src={URL_TOP10}
+            title="Top 10 sách được mượn nhiều nhất"
+            className="chart-iframe"
+            onLoad={() => setLoading2(false)}
+            allowTransparency
+          />
         </div>
       </div>
     </div>
   );
-};
-
-export default Borrowing;
+}

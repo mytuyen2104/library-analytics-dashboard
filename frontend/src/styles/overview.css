@@ -1,5 +1,5 @@
 /* Styles scoped to the Overview page; no global element selectors. */
-.overview-page { width: 100%; max-width: 1480px; margin: 0 auto; padding: 24px; color: #14345c; }
+.overview-page { width: 100%; max-width: 1480px; margin: 0 auto; padding: 0px; color: #14345c; }
 .overview-intro { margin-bottom: 30px; }
 .overview-intro h1 { margin: 0 0 12px; font-size: clamp(28px, 3vw, 38px); font-weight: 750; line-height: 1.2; }
 .overview-intro p { max-width: 1000px; margin: 0; color: #64748b; line-height: 1.7; font-size: 15px; }

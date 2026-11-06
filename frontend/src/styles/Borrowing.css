@@ -1,26 +1,30 @@
 .borrowing-container {
-  padding: 24px;
-  background-color: #f8fafc;
-  min-height: 100vh;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  width: 100%;
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 0;
+  color: #14345c;
+  box-sizing: border-box;
 }
 
-/* Header */
+/* Header trang */
 .borrowing-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   background: #ffffff;
-  padding: 20px 24px;
-  border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid #e1e8f1;
+  box-shadow: 0 5px 18px rgba(22, 52, 91, 0.045);
   margin-bottom: 24px;
+  box-sizing: border-box;
 }
 
 .page-title {
   font-size: 24px;
   font-weight: 700;
-  color: #0f172a;
+  color: #173b68;
   margin: 0 0 4px 0;
 }
 
@@ -39,12 +43,11 @@
   border-radius: 20px;
 }
 
-/* Dashboard Container */
+/* Dashboard Container chính (nếu dùng bọc ngoài các card) */
 .dashboard-card {
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
 }
 
 .dashboard-card-header {
@@ -61,43 +64,116 @@
 }
 
 .section-subtitle {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
-  color: #1e293b;
+  color: #173b68;
   margin: 0 0 6px 0;
 }
 
 .section-description {
-  font-size: 13px;
+  font-size: 14px;
   color: #64748b;
   margin: 0;
+  line-height: 1.6;
 }
 
-/* Metabase Embedded Grid Layout */
-.metabase-grid {
+/* Khung lưới chứa các biểu đồ (Đồng bộ dashboard-grid từ demand.css) */
+.metabase-grid,
+.dashboard-grid {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.metabase-card {
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 16px;
+/* Card chứa từng biểu đồ (Đồng bộ chuẩn chart-card) */
+.metabase-card,
+.chart-card {
+  position: relative;
   background-color: #ffffff;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  border: 1px solid #e1e8f1;
+  border-radius: 16px;
+  box-shadow: 0 5px 18px rgba(22, 52, 91, 0.045);
+  overflow: hidden;
+  width: 100%;
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 24px;
 }
 
 .card-embed-title {
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 600;
-  color: #1e293b;
-  margin: 0 0 16px 0;
+  color: #173b68;
+  margin: 0 0 12px 0;
 }
 
-.metabase-iframe {
+.chart-description {
+  margin: 0 0 20px;
+  color: #64748b;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+/* Iframe hiển thị Metabase */
+.metabase-iframe,
+.chart-iframe {
   width: 100%;
-  height: 450px;
+  flex-grow: 1;
+  height: 500px;
   border: none;
-  border-radius: 8px;
+  background: transparent;
+  display: block;
+  border-radius: 12px;
+}
+
+/* Hiệu ứng loading skeleton mượt mà */
+.chart-skeleton {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #64748b;
+  font-size: 14px;
+  z-index: 2;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(20, 52, 92, 0.15);
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .borrowing-container {
+    padding: 16px;
+  }
+  .metabase-card,
+  .chart-card {
+    min-height: 400px;
+    padding: 16px;
+  }
+  .metabase-iframe,
+  .chart-iframe {
+    height: 400px;
+  }
 }

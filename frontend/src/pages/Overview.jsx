@@ -1,7 +1,7 @@
 import MetabaseKPI from "../components/MetabaseKPI";
 import "../styles/overview.css";
 
-const base = "https://scrooge-squire-amaretto.ngrok-free.dev/public/question/";
+const base = "https://dashboard.dashboardg4.click/public/question/";
 
 const kpis = [
   { title: "Tổng đầu sách", url: `${base}105ebcee-409b-4c7b-8644-4309dbf52af4` },

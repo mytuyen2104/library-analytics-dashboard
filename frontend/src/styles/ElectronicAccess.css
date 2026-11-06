@@ -1,9 +1,9 @@
 .electronic-access-page {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
   width: 100%;
-  padding: 16px 20px;
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 0;
+  color: #14345c;
   box-sizing: border-box;
 }
 
@@ -13,43 +13,62 @@
   flex-direction: column;
   gap: 24px;
   width: 100%;
+  box-sizing: border-box;
 }
 
 /* Card chứa từng biểu đồ */
 .chart-card {
   position: relative;
-  background-color: #0b1520;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 10px;
+  background-color: #ffffff;
+  border: 1px solid #e1e8f1;
+  border-radius: 16px;
+  box-shadow: 0 5px 18px rgba(22, 52, 91, 0.045);
   overflow: hidden;
   width: 100%;
-  height: 480px; /* Chiều cao hiển thị thoáng và rõ nét */
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  min-height: 480px;
   display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 24px; /* Đồng bộ padding chuẩn 24px */
+}
+
+.chart-card h2 {
+  margin: 0 0 12px;
+  color: #173b68;
+  font-size: 20px;
+}
+
+.chart-description {
+  margin: 0 0 20px;
+  color: #64748b;
+  line-height: 1.6;
 }
 
 /* Iframe hiển thị Metabase */
 .chart-iframe {
   width: 100%;
-  height: 100%;
+  flex-grow: 1;
+  height: 500px; /* Chiều cao tối ưu cho biểu đồ */
   border: none;
   background: transparent;
+  display: block;
+  border-radius: 12px; /* Bo góc nhẹ cho iframe */
 }
 
-/* Hiệu ứng loading xoay vòng */
+/* Hiệu ứng loading xoay vòng (Đồng bộ nền trắng sáng sạch sẽ) */
 .chart-skeleton {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #0b1520;
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 12px;
-  color: #8da2b5;
+  color: #64748b;
   font-size: 14px;
   z-index: 2;
 }
@@ -57,8 +76,8 @@
 .spinner {
   width: 32px;
   height: 32px;
-  border: 3px solid rgba(255, 255, 255, 0.15);
-  border-top-color: #50e3c2;
+  border: 3px solid rgba(20, 52, 92, 0.15);
+  border-top-color: #2563eb;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -66,5 +85,18 @@
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .electronic-access-page {
+    padding: 16px;
+  }
+  .chart-card {
+    min-height: 400px;
+    padding: 16px;
+  }
+  .chart-iframe {
+    height: 400px;
   }
 }

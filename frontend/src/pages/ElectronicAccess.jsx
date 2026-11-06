@@ -7,8 +7,8 @@ export default function ElectronicAccess() {
   const [loading2, setLoading2] = useState(true);
 
   // Link Metabase public questions
-  const chartMonthlyUrl = "http://scrooge-squire-amaretto.ngrok-free.dev/public/question/b66623b2-6be6-43eb-ac09-ba24bc0a60d3";
-  const chartRankingUrl = "http://scrooge-squire-amaretto.ngrok-free.dev/public/question/7ef1c7f8-5a31-4a4a-89c1-e94421f56fa2";
+  const chartMonthlyUrl = "https://dashboard.dashboardg4.click/public/question/b66623b2-6be6-43eb-ac09-ba24bc0a60d3";
+  const chartRankingUrl = "https://dashboard.dashboardg4.click/public/question/7ef1c7f8-5a31-4a4a-89c1-e94421f56fa2";
 
   return (
     <div className="electronic-access-page">
@@ -19,6 +19,11 @@ export default function ElectronicAccess() {
       <div className="dashboard-grid">
         {/* Biểu đồ 1: Xu hướng theo tháng */}
         <div className="chart-card">
+          <h2>Xu hướng truy cập CSDL điện tử theo tháng</h2>
+          <p className="chart-description">
+            Thống kê số lượng lượt truy cập cơ sở dữ liệu điện tử theo từng mốc thời gian.
+          </p>
+
           {loading1 && (
             <div className="chart-skeleton">
               <div className="spinner"></div>
@@ -36,6 +41,11 @@ export default function ElectronicAccess() {
 
         {/* Biểu đồ 2: Bảng xếp hạng CSDL */}
         <div className="chart-card">
+          <h2>Bảng xếp hạng CSDL điện tử được dùng nhiều nhất</h2>
+          <p className="chart-description">
+            Liệt kê các cơ sở dữ liệu được sinh viên và giảng viên quan tâm, truy cập nhiều nhất.
+          </p>
+
           {loading2 && (
             <div className="chart-skeleton">
               <div className="spinner"></div>

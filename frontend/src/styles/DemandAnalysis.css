@@ -46,16 +46,29 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  padding: 20px;
+  padding: 24px; /* Đồng bộ padding chuẩn 24px giống thẻ card bên acquisition */
+}
+
+.chart-card h2 {
+  margin: 0 0 12px;
+  color: #173b68;
+  font-size: 20px;
+}
+
+.chart-description {
+  margin: 0 0 20px;
+  color: #64748b;
+  line-height: 1.6;
 }
 
 .chart-iframe {
   width: 100%;
   flex-grow: 1;
-  height: 440px;
+  height: 500px; /* Tăng nhẹ chiều cao mặc định để biểu đồ thoáng hơn, không bị cuộn nội bộ nhiều */
   border: none;
   background: transparent;
   display: block;
+  border-radius: 12px; /* Thêm bo góc nhẹ cho iframe giống style phần khung acquisition */
 }
 
 .chart-skeleton {
@@ -90,15 +103,15 @@
   }
 }
 
-@media (max-width: 620px) {
+@media (max-width: 768px) {
   .document-demand-page {
-    padding: 14px;
+    padding: 16px;
   }
   .chart-card {
     min-height: 400px;
-    padding: 12px;
+    padding: 16px;
   }
   .chart-iframe {
-    height: 360px;
+    height: 400px;
   }
 }
