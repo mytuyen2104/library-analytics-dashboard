@@ -1,37 +1,252 @@
 .acquisition-page {
+  position: relative;
   width: 100%;
   max-width: 1480px;
   margin: 0 auto;
-  padding: 0;
-  color: #14345c;
+  padding: 6px 0 40px;
+  color: #0f294a;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
-.acquisition-card {
-  position: relative; 
-  margin-top: 24px;
-  padding: 24px;
-  background: #ffffff;
-  border: 1px solid #e1e8f1; 
-  border-radius: 16px;
-  box-shadow: 0 5px 18px rgba(22, 52, 91, .045); 
-  overflow: hidden;
-  box-sizing: border-box;
+/* Khối cầu ánh sáng nền động tạo chiều sâu 3D */
+.acq-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  z-index: 0;
+  pointer-events: none;
+  animation: pulseAcqOrb 8s ease-in-out infinite alternate;
 }
 
-.acquisition-card h2 {
-  margin: 0 0 12px;
-  color: #173b68;
-  font-size: 20px;
+.acq-orb.orb-1 {
+  width: 420px;
+  height: 420px;
+  background: rgba(219, 39, 119, 0.11);
+  top: 10px;
+  right: -40px;
 }
 
-.acquisition-description {
-  margin: 0 0 20px;
+.acq-orb.orb-2 {
+  width: 360px;
+  height: 360px;
+  background: rgba(37, 99, 235, 0.11);
+  top: 50%;
+  left: -80px;
+  animation-delay: 3s;
+}
+
+@keyframes pulseAcqOrb {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
+}
+
+/* Banner giới thiệu 2 cột đồng bộ */
+.acq-intro-banner {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 30px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(240, 247, 255, 0.86) 100%);
+  backdrop-filter: blur(16px);
+  border: 1px solid #ffffff;
+  padding: 28px 32px;
+  border-radius: 24px;
+  box-shadow: 0 14px 34px rgba(15, 41, 74, 0.05);
+  display: grid;
+  grid-template-columns: 1.45fr 0.85fr;
+  align-items: center;
+  gap: 28px;
+}
+
+.acq-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  color: #db2777;
+  background: rgba(219, 39, 119, 0.1);
+  padding: 6px 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.acq-intro-banner h1 {
+  margin: 0 0 10px;
+  font-size: clamp(24px, 2.6vw, 32px);
+  font-weight: 850;
+  color: #0f294a;
+  letter-spacing: -0.02em;
+}
+
+.acq-description {
+  color: #475569;
+  font-size: 14.5px;
+  line-height: 1.7;
+  margin: 0;
+  text-align: justify;
+}
+
+.acq-intro-right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.acq-mini-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 6px 16px rgba(15, 41, 74, 0.04);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.acq-mini-card:hover {
+  transform: translateX(-4px);
+  border-color: #f472b6;
+}
+
+.acq-mini-icon {
+  padding: 8px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+.acq-mini-icon.pink { background: #fdf2f8; color: #db2777; }
+.acq-mini-icon.amber { background: #fffbeb; color: #d97706; }
+.acq-mini-icon.blue { background: #eff6ff; color: #2563eb; }
+
+.acq-mini-card div {
+  display: flex;
+  flex-direction: column;
+}
+
+.acq-mini-card strong {
+  font-size: 13px;
+  color: #0f294a;
+  font-weight: 700;
+}
+
+.acq-mini-card span {
+  font-size: 12px;
   color: #64748b;
-  line-height: 1.6;
 }
 
-.acquisition-placeholder {
+/* Khu vực khung chứa bảng xếp hạng */
+.acq-dashboard-grid {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.acq-chart-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(14px);
+  border: 1px solid #ffffff;
+  border-radius: 22px;
+  box-shadow: 0 14px 34px rgba(15, 41, 74, 0.06);
+  overflow: hidden;
+  width: 100%;
+  padding: 26px;
+  box-sizing: border-box;
+  transition: transform 0.2s ease, box-shadow 0.25s ease;
+}
+
+.acq-chart-card:hover {
+  box-shadow: 0 20px 42px rgba(37, 99, 235, 0.11);
+}
+
+.acq-card-top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #db2777, #7c3aed);
+}
+
+.acq-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.acq-card-title-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.acq-card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #fdf2f8;
+  color: #db2777;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.acq-chart-card h2 {
+  margin: 0 0 4px;
+  color: #0f294a;
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.acq-chart-description {
+  margin: 0;
+  color: #64748b;
+  font-size: 13.5px;
+}
+
+.acq-external-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.acq-external-btn:hover {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.acq-iframe-container {
+  position: relative;
+  width: 100%;
+  min-height: 820px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+}
+
+.acq-chart-iframe {
+  width: 100% !important;
+  height: 820px !important;
+  border: none;
+  display: block;
+}
+
+.acq-placeholder {
   display: flex;
   min-height: 450px;
   padding: 24px;
@@ -45,34 +260,22 @@
   border-radius: 12px;
 }
 
-.acquisition-placeholder h3 {
+.acq-placeholder h3 {
   margin: 0 0 12px;
   color: #2455a4;
   font-size: 22px;
 }
 
-.acquisition-placeholder p {
+.acq-placeholder p {
   margin: 0;
   color: #64748b;
   line-height: 1.6;
 }
 
-.acquisition-frame {
-  display: block;
-  width: 100%;
-  height: 850px;
-  border: 0;
-  border-radius: 12px;
-  background: transparent;
-}
-
-.chart-skeleton {
+.acq-chart-skeleton {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #fff;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.92);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -83,35 +286,36 @@
   z-index: 2;
 }
 
-.spinner {
+.acq-spinner {
   width: 32px;
   height: 32px;
   border: 3px solid rgba(20, 52, 92, 0.15);
-  border-top-color: #2563eb;
+  border-top-color: #db2777;
   border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+  animation: acq-spin 0.8s linear infinite;
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+@keyframes acq-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 992px) {
+  .acq-intro-banner {
+    grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 768px) {
   .acquisition-page {
-    padding: 16px;
+    padding: 10px;
   }
-
-  .acquisition-card {
-    padding: 16px;
+  .acq-intro-banner,
+  .acq-chart-card {
+    padding: 18px;
   }
-
-  .acquisition-placeholder {
-    min-height: 350px;
-  }
-
-  .acquisition-frame {
-    height: 700px;
+  .acq-iframe-container,
+  .acq-chart-iframe {
+    height: 680px !important;
+    min-height: 680px;
   }
 }

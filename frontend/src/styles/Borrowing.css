@@ -1,143 +1,267 @@
-.borrowing-container {
+.borrowing-page {
+  position: relative;
   width: 100%;
   max-width: 1480px;
   margin: 0 auto;
-  padding: 0;
-  color: #14345c;
+  padding: 6px 0 40px;
+  color: #0f294a;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
-/* Header trang */
-.borrowing-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  background: #ffffff;
-  padding: 24px;
-  border-radius: 16px;
-  border: 1px solid #e1e8f1;
-  box-shadow: 0 5px 18px rgba(22, 52, 91, 0.045);
-  margin-bottom: 24px;
-  box-sizing: border-box;
+/* Khối cầu ánh sáng nền động tạo chiều sâu 3D */
+.borrowing-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  z-index: 0;
+  pointer-events: none;
+  animation: pulseBorrowingOrb 8s ease-in-out infinite alternate;
 }
 
-.page-title {
-  font-size: 24px;
-  font-weight: 700;
-  color: #173b68;
-  margin: 0 0 4px 0;
+.borrowing-orb.orb-1 {
+  width: 420px;
+  height: 420px;
+  background: rgba(37, 99, 235, 0.13);
+  top: 10px;
+  right: -40px;
 }
 
-.page-subtitle {
-  font-size: 14px;
-  color: #64748b;
-  margin: 0;
+.borrowing-orb.orb-2 {
+  width: 360px;
+  height: 360px;
+  background: rgba(124, 58, 237, 0.1);
+  top: 50%;
+  left: -80px;
+  animation-delay: 3s;
 }
 
-.badge-tag {
-  background-color: #eff6ff;
+@keyframes pulseBorrowingOrb {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
+}
+
+/* Banner giới thiệu 2 cột đồng bộ */
+.borrowing-intro-banner {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 30px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(240, 247, 255, 0.86) 100%);
+  backdrop-filter: blur(16px);
+  border: 1px solid #ffffff;
+  padding: 28px 32px;
+  border-radius: 24px;
+  box-shadow: 0 14px 34px rgba(15, 41, 74, 0.05);
+  display: grid;
+  grid-template-columns: 1.45fr 0.85fr;
+  align-items: center;
+  gap: 28px;
+}
+
+.borrowing-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
   color: #2563eb;
-  font-weight: 600;
-  font-size: 12px;
+  background: rgba(37, 99, 235, 0.1);
   padding: 6px 12px;
-  border-radius: 20px;
+  border-radius: 8px;
+  margin-bottom: 12px;
 }
 
-/* Dashboard Container chính (nếu dùng bọc ngoài các card) */
-.dashboard-card {
-  background: transparent;
-  padding: 0;
-  box-shadow: none;
+.borrowing-intro-banner h1 {
+  margin: 0 0 10px;
+  font-size: clamp(24px, 2.6vw, 32px);
+  font-weight: 850;
+  color: #0f294a;
+  letter-spacing: -0.02em;
 }
 
-.dashboard-card-header {
-  margin-bottom: 24px;
-}
-
-.section-title {
-  font-size: 16px;
-  font-weight: 700;
-  color: #1e40af;
-  text-transform: uppercase;
-  margin: 0 0 12px 0;
-  letter-spacing: 0.5px;
-}
-
-.section-subtitle {
-  font-size: 18px;
-  font-weight: 700;
-  color: #173b68;
-  margin: 0 0 6px 0;
-}
-
-.section-description {
-  font-size: 14px;
-  color: #64748b;
+.borrowing-description {
+  color: #475569;
+  font-size: 14.5px;
+  line-height: 1.7;
   margin: 0;
-  line-height: 1.6;
+  text-align: justify;
 }
 
-/* Khung lưới chứa các biểu đồ (Đồng bộ dashboard-grid từ demand.css) */
-.metabase-grid,
-.dashboard-grid {
+.borrowing-intro-right {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  width: 100%;
-  box-sizing: border-box;
+  gap: 10px;
 }
 
-/* Card chứa từng biểu đồ (Đồng bộ chuẩn chart-card) */
-.metabase-card,
-.chart-card {
+.borrowing-mini-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 6px 16px rgba(15, 41, 74, 0.04);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.borrowing-mini-card:hover {
+  transform: translateX(-4px);
+  border-color: #93c5fd;
+}
+
+.borrowing-mini-icon {
+  padding: 8px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+.borrowing-mini-icon.blue { background: #eff6ff; color: #2563eb; }
+.borrowing-mini-icon.purple { background: #f5f3ff; color: #7c3aed; }
+.borrowing-mini-icon.green { background: #ecfdf5; color: #059669; }
+
+.borrowing-mini-card div {
+  display: flex;
+  flex-direction: column;
+}
+
+.borrowing-mini-card strong {
+  font-size: 13px;
+  color: #0f294a;
+  font-weight: 700;
+}
+
+.borrowing-mini-card span {
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* Lưới chứa 2 biểu đồ */
+.borrowing-dashboard-grid {
   position: relative;
-  background-color: #ffffff;
-  border: 1px solid #e1e8f1;
-  border-radius: 16px;
-  box-shadow: 0 5px 18px rgba(22, 52, 91, 0.045);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  width: 100%;
+}
+
+.borrowing-chart-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(14px);
+  border: 1px solid #ffffff;
+  border-radius: 22px;
+  box-shadow: 0 14px 34px rgba(15, 41, 74, 0.06);
   overflow: hidden;
   width: 100%;
-  min-height: 480px;
-  display: flex;
-  flex-direction: column;
+  padding: 26px;
   box-sizing: border-box;
-  padding: 24px;
+  transition: transform 0.2s ease, box-shadow 0.25s ease;
 }
 
-.card-embed-title {
-  font-size: 20px;
-  font-weight: 600;
-  color: #173b68;
-  margin: 0 0 12px 0;
+.borrowing-chart-card:hover {
+  box-shadow: 0 20px 42px rgba(37, 99, 235, 0.11);
 }
 
-.chart-description {
-  margin: 0 0 20px;
-  color: #64748b;
-  line-height: 1.6;
-  font-size: 14px;
-}
-
-/* Iframe hiển thị Metabase */
-.metabase-iframe,
-.chart-iframe {
-  width: 100%;
-  flex-grow: 1;
-  height: 500px;
-  border: none;
-  background: transparent;
-  display: block;
-  border-radius: 12px;
-}
-
-/* Hiệu ứng loading skeleton mượt mà */
-.chart-skeleton {
+.borrowing-card-top-bar {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  background-color: #ffffff;
+  height: 4px;
+  background: linear-gradient(90deg, #2563eb, #0ea5e9);
+}
+
+.borrowing-card-top-bar.purple-bar {
+  background: linear-gradient(90deg, #7c3aed, #ec4899);
+}
+
+.borrowing-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.borrowing-card-title-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.borrowing-card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #eff6ff;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.borrowing-card-icon.purple-icon {
+  background: #f5f3ff;
+  color: #7c3aed;
+}
+
+.borrowing-chart-card h2 {
+  margin: 0 0 4px;
+  color: #0f294a;
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.borrowing-chart-description {
+  margin: 0;
+  color: #64748b;
+  font-size: 13.5px;
+}
+
+.borrowing-external-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.borrowing-external-btn:hover {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.borrowing-iframe-container {
+  position: relative;
+  width: 100%;
+  min-height: 520px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+}
+
+.borrowing-chart-iframe {
+  width: 100% !important;
+  height: 520px !important;
+  border: none;
+  display: block;
+}
+
+.borrowing-chart-skeleton {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.92);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -148,32 +272,36 @@
   z-index: 2;
 }
 
-.spinner {
+.borrowing-spinner {
   width: 32px;
   height: 32px;
   border: 3px solid rgba(20, 52, 92, 0.15);
   border-top-color: #2563eb;
   border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+  animation: borrowing-spin 0.8s linear infinite;
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+@keyframes borrowing-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 992px) {
+  .borrowing-intro-banner {
+    grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 768px) {
-  .borrowing-container {
-    padding: 16px;
+  .borrowing-page {
+    padding: 10px;
   }
-  .metabase-card,
-  .chart-card {
-    min-height: 400px;
-    padding: 16px;
+  .borrowing-intro-banner,
+  .borrowing-chart-card {
+    padding: 18px;
   }
-  .metabase-iframe,
-  .chart-iframe {
-    height: 400px;
+  .borrowing-iframe-container,
+  .borrowing-chart-iframe {
+    height: 420px !important;
+    min-height: 420px;
   }
 }

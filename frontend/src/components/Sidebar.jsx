@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, BookOpen, Database, ChartNoAxesCombined, ListOrdered } from 'lucide-react';
+import { LayoutDashboard, BookOpen, Database, ChartNoAxesCombined, ListOrdered, FileText } from 'lucide-react';
 const links = [
   {to:'/', label:'Trang chủ', icon:LayoutDashboard, end:true},
   {to:'/overview', label:'Tổng quan', icon:LayoutDashboard},
@@ -7,5 +7,6 @@ const links = [
   {to:'/electronic-access', label:'Truy cập điện tử', icon:Database},
   {to:'/demand-analysis', label:'Phân tích nhu cầu', icon:ChartNoAxesCombined},
   {to:'/acquisition', label:'Gợi ý bổ sung tài liệu', icon:ListOrdered},
+  {to:'/log-details', label:'Chi tiết nhật ký', icon:FileText},
 ];
 export default function Sidebar(){return <aside className="sidebar"><div className="brand"><div className="brand-mark">L</div><div><strong>Library Analytics</strong><small>Dashboard</small></div></div><nav aria-label="Điều hướng chính">{links.map(({to,label,icon:Icon,end})=><NavLink key={to} to={to} end={end} className={({isActive})=>`nav-link ${isActive?'active':''}`}><Icon size={19}/><span>{label}</span></NavLink>)}</nav><div className="sidebar-footer">UTH • Library Analytics</div></aside>}

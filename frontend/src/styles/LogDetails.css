@@ -1,0 +1,290 @@
+.log-details-page {
+  position: relative;
+  width: 100%;
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 6px 0 40px;
+  color: #0f294a;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* Khối cầu ánh sáng nền động */
+.log-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  z-index: 0;
+  pointer-events: none;
+  animation: pulseLogOrb 8s ease-in-out infinite alternate;
+}
+
+.log-orb.orb-1 {
+  width: 420px;
+  height: 420px;
+  background: rgba(37, 99, 235, 0.13);
+  top: 10px;
+  right: -40px;
+}
+
+.log-orb.orb-2 {
+  width: 360px;
+  height: 360px;
+  background: rgba(14, 165, 233, 0.1);
+  top: 50%;
+  left: -80px;
+  animation-delay: 3s;
+}
+
+@keyframes pulseLogOrb {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
+}
+
+/* Banner giới thiệu riêng của trang LogDetails (Không xung đột với Overview) */
+.log-intro-banner {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 30px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(240, 247, 255, 0.86) 100%);
+  backdrop-filter: blur(16px);
+  border: 1px solid #ffffff;
+  padding: 28px 32px;
+  border-radius: 24px;
+  box-shadow: 0 14px 34px rgba(15, 41, 74, 0.05);
+  display: grid;
+  grid-template-columns: 1.45fr 0.85fr;
+  align-items: center;
+  gap: 28px;
+}
+
+.log-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  color: #2563eb;
+  background: rgba(37, 99, 235, 0.1);
+  padding: 6px 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.log-intro-banner h1 {
+  margin: 0 0 10px;
+  font-size: clamp(24px, 2.6vw, 32px);
+  font-weight: 850;
+  color: #0f294a;
+  letter-spacing: -0.02em;
+}
+
+.log-description {
+  color: #475569;
+  font-size: 14.5px;
+  line-height: 1.7;
+  margin: 0;
+  text-align: justify;
+}
+
+.log-intro-right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.log-mini-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 6px 16px rgba(15, 41, 74, 0.04);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.log-mini-card:hover {
+  transform: translateX(-4px);
+  border-color: #93c5fd;
+}
+
+.log-mini-icon {
+  padding: 8px;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+.log-mini-icon.blue { background: #eff6ff; color: #2563eb; }
+.log-mini-icon.amber { background: #fffbeb; color: #d97706; }
+.log-mini-icon.green { background: #ecfdf5; color: #059669; }
+
+.log-mini-card div {
+  display: flex;
+  flex-direction: column;
+}
+
+.log-mini-card strong {
+  font-size: 13px;
+  color: #0f294a;
+  font-weight: 700;
+}
+
+.log-mini-card span {
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* Khu vực khung chứa bảng nhật ký */
+.log-dashboard-grid {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.log-chart-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(14px);
+  border: 1px solid #ffffff;
+  border-radius: 22px;
+  box-shadow: 0 14px 34px rgba(15, 41, 74, 0.06);
+  overflow: hidden;
+  width: 100%;
+  padding: 26px;
+  box-sizing: border-box;
+}
+
+.log-card-top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #2563eb, #0ea5e9);
+}
+
+.log-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.log-card-title-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.log-card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: #eff6ff;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.log-chart-card h2 {
+  margin: 0 0 4px;
+  color: #0f294a;
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.log-chart-description {
+  margin: 0;
+  color: #64748b;
+  font-size: 13.5px;
+}
+
+.log-external-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.log-external-btn:hover {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.log-iframe-container {
+  position: relative;
+  width: 100%;
+  min-height: 680px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+}
+
+.log-chart-iframe {
+  width: 100% !important;
+  height: 680px !important;
+  border: none;
+  display: block;
+}
+
+.log-chart-skeleton {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.92);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #64748b;
+  font-size: 14px;
+  z-index: 2;
+}
+
+.log-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(20, 52, 92, 0.15);
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: log-spin 0.8s linear infinite;
+}
+
+@keyframes log-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 992px) {
+  .log-intro-banner {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .log-details-page {
+    padding: 10px;
+  }
+  .log-intro-banner,
+  .log-chart-card {
+    padding: 18px;
+  }
+  .log-iframe-container,
+  .log-chart-iframe {
+    height: 500px !important;
+    min-height: 500px;
+  }
+}

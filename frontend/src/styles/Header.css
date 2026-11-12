@@ -1,0 +1,195 @@
+.dashboard-3d-header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 22px 32px;
+  margin: 16px 24px 8px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(240, 247, 255, 0.88) 100%);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 22px;
+  box-shadow: 
+    0 12px 32px rgba(15, 41, 74, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+  overflow: hidden;
+  transition: transform 0.2s ease-out, box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+  z-index: 5;
+}
+
+.dashboard-3d-header:hover {
+  box-shadow: 
+    0 18px 40px rgba(37, 99, 235, 0.11),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+/* Thanh ánh sáng gradient chạy viền trên cùng */
+.header-glow-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3.5px;
+  background: linear-gradient(90deg, #2563eb, #0ea5e9, #8b5cf6, #2563eb);
+  background-size: 200% 100%;
+  animation: slideGradient 5s linear infinite;
+}
+
+@keyframes slideGradient {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* Quả cầu mờ trang trí góc phải */
+.header-ambient-circle {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  right: -40px;
+  top: -80px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Cột trái */
+.header-left-info {
+  position: relative;
+  z-index: 2;
+  transform: translateZ(15px);
+}
+
+.header-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #2563eb;
+  margin-bottom: 6px;
+}
+
+.header-main-title {
+  margin: 0;
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-weight: 850;
+  letter-spacing: -0.02em;
+  background: linear-gradient(120deg, #0f294a 15%, #1d4ed8 85%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.header-sub-desc {
+  margin: 4px 0 0;
+  font-size: 13.5px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Cột phải */
+.header-right-actions {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  transform: translateZ(20px);
+}
+
+.header-quick-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-nav-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid #dbeafe;
+  border-radius: 12px;
+  color: #1e3a8a;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(15, 41, 74, 0.04);
+  transition: all 0.2s ease;
+}
+
+.header-nav-pill:hover {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.25);
+}
+
+/* Huy hiệu 3D trạng thái hệ thống */
+.live-status-3d-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 16px;
+  background: linear-gradient(135deg, #0f294a 0%, #1e3a8a 100%);
+  color: #ffffff;
+  border-radius: 14px;
+  box-shadow: 
+    0 10px 22px rgba(15, 41, 74, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.pulse-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: #10b981;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: pulseGreen 2s infinite;
+}
+
+@keyframes pulseGreen {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.status-icon {
+  color: #38bdf8;
+}
+
+.status-texts {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.status-texts strong {
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  color: #f8fafc;
+}
+
+.status-texts small {
+  font-size: 10.5px;
+  color: #93c5fd;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .dashboard-3d-header {
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 12px 16px 8px;
+    padding: 18px 20px;
+  }
+  .header-right-actions {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+}
