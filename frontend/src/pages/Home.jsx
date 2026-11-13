@@ -14,7 +14,7 @@ import {
   ShieldCheck,
   Zap
 } from 'lucide-react';
-import '../styles/Home.css';
+import '../styles/home.css';
 
 // Component thẻ tính năng với hiệu ứng nghiêng 3D (3D Tilt)
 function TiltFeatureCard({ feature }) {
