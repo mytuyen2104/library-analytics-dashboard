@@ -39,17 +39,17 @@ function appendInventoryHistory(entry) {
   fs.writeFileSync(HISTORY_FILE, JSON.stringify(history, null, 2), 'utf8');
 }
 
-// Hàm sinh mã tự động VARCHAR(10) tiếp theo (VD: M0801, S0121, DG0081)
+// Hàm sinh mã tự động VARCHAR(10) tiếp theo (VD: M0802, S0121, DG0081)
 async function generateNextId(pool, tableName, idColumn, prefix) {
+  const prefixLen = prefix.length;
   const result = await pool.request().query(`
-    SELECT TOP 1 ${idColumn} FROM dbo.${tableName}
-    WHERE ${idColumn} LIKE '${prefix}%'
-    ORDER BY LEN(${idColumn}) DESC, ${idColumn} DESC
+    SELECT ISNULL(MAX(TRY_CAST(SUBSTRING(LTRIM(RTRIM(${idColumn})), ${prefixLen + 1}, 20) AS INT)), 0) AS maxNum
+    FROM dbo.${tableName}
+    WHERE LTRIM(RTRIM(${idColumn})) LIKE '${prefix}[0-9]%'
+      AND TRY_CAST(SUBSTRING(LTRIM(RTRIM(${idColumn})), ${prefixLen + 1}, 20) AS INT) IS NOT NULL
   `);
-  if (result.recordset.length === 0) return `${prefix}001`;
-  const lastId = result.recordset[0][idColumn];
-  const numPart = parseInt(lastId.replace(prefix, ''), 10) || 0;
-  return `${prefix}${String(numPart + 1).padStart(4, '0')}`;
+  const nextNum = (result.recordset[0]?.maxNum || 0) + 1;
+  return `${prefix}${String(nextNum).padStart(4, '0')}`;
 }
 
 // ================= 1. API QUẢN LÝ KHO SÁCH (dbo.Sach) =================
