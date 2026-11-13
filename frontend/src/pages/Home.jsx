@@ -10,13 +10,13 @@ import {
   LayoutDashboard, 
   FileText,
   Sparkles,
-  Layers,
   ShieldCheck,
-  Zap
+  Zap,
+  BookCheck,
+  PackagePlus
 } from 'lucide-react';
 import '../styles/home.css';
 
-// Component thẻ tính năng với hiệu ứng nghiêng 3D (3D Tilt)
 function TiltFeatureCard({ feature }) {
   const [transform, setTransform] = useState('perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)');
   const Icon = feature.icon;
@@ -64,6 +64,8 @@ function TiltFeatureCard({ feature }) {
 export default function Home() {
   const features = [
     { title: 'Tổng quan thư viện', desc: 'Theo dõi các chỉ số KPI vĩ mô và hiệu suất hoạt động toàn diện của thư viện.', to: '/overview', icon: LayoutDashboard, color: '#2563eb' },
+    { title: 'Quản lý Mượn / Trả', desc: 'Tạo phiếu mượn sách mới, tra cứu lịch sử mượn và xác nhận trả sách theo thời gian thực.', to: '/loan-management', icon: BookCheck, color: '#0d9488' },
+    { title: 'Quản lý Kho Sách', desc: 'Kiểm tra số lượng bản sách hiện có, nhập bổ sung kho và thêm đầu sách mới vào hệ thống.', to: '/inventory-management', icon: PackagePlus, color: '#ea580c' },
     { title: 'Thống kê mượn sách', desc: 'Phân tích biến động lượt mượn theo thời gian thực và bảng xếp hạng Top 10 sách.', to: '/borrowing', icon: BookOpen, color: '#7c3aed' },
     { title: 'Truy cập điện tử', desc: 'Đo lường hiệu quả khai thác tài nguyên số từ các nhà cung cấp học liệu quốc tế.', to: '/electronic-access', icon: Database, color: '#059669' },
     { title: 'Phân tích nhu cầu', desc: 'Khám phá cơ cấu chuyên ngành và xu hướng dịch chuyển nhu cầu đọc của sinh viên.', to: '/demand-analysis', icon: TrendingUp, color: '#d97706' },
@@ -74,12 +76,10 @@ export default function Home() {
 
   return (
     <div className="home-3d-container">
-      {/* Hiệu ứng ánh sáng nền động */}
       <div className="home-orb orb-alpha" />
       <div className="home-orb orb-beta" />
       <div className="home-orb orb-gamma" />
 
-      {/* Header / Nav */}
       <header className="home-nav">
         <div className="home-logo">
           <span className="logo-box">☷</span>
@@ -91,11 +91,12 @@ export default function Home() {
         <nav className="home-nav-links">
           <Link to="/" className="active">Trang chủ</Link>
           <Link to="/overview">Dashboard</Link>
+          <Link to="/loan-management">Mượn / Trả</Link>
+          <Link to="/inventory-management">Kho sách</Link>
           <Link to="/about">Giới thiệu</Link>
         </nav>
       </header>
 
-      {/* Hero Section */}
       <section className="home-hero">
         <div className="hero-text-col">
           <div className="hero-badge">
@@ -115,13 +116,12 @@ export default function Home() {
               <span>Truy cập Dashboard</span>
               <ArrowRight size={18} />
             </Link>
-            <Link to="/about" className="btn-secondary-glass">
-              <span>Tìm hiểu kiến trúc</span>
+            <Link to="/loan-management" className="btn-secondary-glass">
+              <span>Quản lý Mượn / Trả</span>
             </Link>
           </div>
         </div>
 
-        {/* Khối minh họa 3D trực quan bên phải */}
         <div className="hero-graphic-col">
           <div className="hero-3d-card-stack">
             <div className="stack-card card-sql">
@@ -140,11 +140,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 7 Chức năng chính */}
       <section className="features-section">
         <div className="features-header">
-          <h2>Hệ Thống 7 Phân Hệ Chức Năng</h2>
-          <p>Khám phá toàn bộ các công cụ phân tích và hỗ trợ ra quyết định được tích hợp trong ứng dụng</p>
+          <h2>Hệ Thống Phân Hệ Chức Năng</h2>
+          <p>Khám phá toàn bộ các công cụ nghiệp vụ thư viện, phân tích và hỗ trợ ra quyết định</p>
         </div>
 
         <div className="features-3d-grid">
@@ -154,7 +153,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="home-footer">
         <p>© 2026 Trường Đại học Giao thông vận tải TP. Hồ Chí Minh (UTH) • Đồ án Học kỳ Doanh nghiệp Nhóm 4</p>
       </footer>

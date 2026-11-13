@@ -71,15 +71,18 @@ Trước khi khởi chạy hệ thống, đảm bảo máy trạm đã chuẩn b
 HƯỚNG DẪN TRIỂN KHAI HỆ THỐNG
 Phần 1: Khởi chạy Hạ tầng BI (Docker + Metabase)
 Bước 1: Đồng bộ mã nguồn mới nhất từ GitHubBashgit pull origin main
-Bước 2: Dọn dẹp container cũ (nếu có) để tránh xung đột cổng 3000Bashdocker stop metabase
+Bước 2: Dọn dẹp container cũ (nếu có) để tránh xung đột cổng 3000
+Bashdocker stop metabase
 docker rm metabase
 Bước 3: Khởi chạy Metabase bằng Docker ComposeBashdocker compose up -d
 (Hệ thống mất khoảng 15 – 30 giây để nạp toàn bộ dữ liệu biểu đồ vào bộ nhớ).
 
 Phần 2: Khởi chạy Giao diện Web React (Frontend)
-Mở một cửa sổ Terminal mới tại thư mục gốc của dự án và thực hiện:Bashcd frontend
+Mở một cửa sổ Terminal mới tại thư mục gốc của dự án và thực hiện:
+cd frontend
 npm install
 npm run dev
+lệnh chạy cài backend: npm init -y && npm install express cors mssql dotenv
 Giao diện Web Portal (React): Truy cập tại 👉 http://localhost:5173
 Giao diện Quản trị Metabase BI: Truy cập tại 👉 http://localhost:3000📊 CÁC PHÂN HỆ CHỨC NĂNG TRÊN HỆ THỐNG
 Giao diện Web và Metabase tích hợp đồng bộ 7 phân hệ chức năng:STTPhân hệĐường dẫn (Route)Dạng trực quan hóaÝ nghĩa nghiệp vụ

@@ -1,0 +1,14 @@
+# Bỏ qua thư mục thư viện nặng
+node_modules/
+**/node_modules/
+
+# Bỏ qua file mật khẩu & cấu hình cục bộ
+.env
+**/.env
+!.env.example
+
+# Bỏ qua file build & log tạm
+dist/
+**/dist/
+backend/inventory-history.json
+.wrangler/
