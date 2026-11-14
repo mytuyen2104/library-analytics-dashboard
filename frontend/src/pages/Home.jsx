@@ -13,7 +13,8 @@ import {
   ShieldCheck,
   Zap,
   BookCheck,
-  PackagePlus
+  PackagePlus,
+  LogOut
 } from 'lucide-react';
 import '../styles/home.css';
 
@@ -61,7 +62,9 @@ function TiltFeatureCard({ feature }) {
   );
 }
 
-export default function Home() {
+export default function Home(prop) {
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+
   const features = [
     { title: 'Tổng quan thư viện', desc: 'Theo dõi các chỉ số KPI vĩ mô và hiệu suất hoạt động toàn diện của thư viện.', to: '/overview', icon: LayoutDashboard, color: '#2563eb' },
     { title: 'Quản lý Mượn / Trả', desc: 'Tạo phiếu mượn sách mới, tra cứu lịch sử mượn và xác nhận trả sách theo thời gian thực.', to: '/loan-management', icon: BookCheck, color: '#0d9488' },
@@ -73,6 +76,12 @@ export default function Home() {
     { title: 'Chi tiết nhật ký', desc: 'Truy xuất lịch sử giao dịch, thao tác và nhật ký hoạt động chi tiết trong hệ thống.', to: '/log-details', icon: FileText, color: '#2563eb' },
     { title: 'Giới thiệu hệ thống', desc: 'Tìm hiểu chi tiết về mục tiêu, kiến trúc công nghệ 3 tầng và đội ngũ phát triển.', to: '/about', icon: Info, color: '#0284c7' },
   ];
+
+  const handleConfirmLogout = () => {
+    if (prop.onLogout) {
+      prop.onLogout();
+    }
+  };
 
   return (
     <div className="home-3d-container">
@@ -88,12 +97,46 @@ export default function Home() {
             <small>Business Intelligence System</small>
           </div>
         </div>
-        <nav className="home-nav-links">
+        <nav className="home-nav-links" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
           <Link to="/" className="active">Trang chủ</Link>
           <Link to="/overview">Dashboard</Link>
           <Link to="/loan-management">Mượn / Trả</Link>
           <Link to="/inventory-management">Kho sách</Link>
           <Link to="/about">Giới thiệu</Link>
+
+          {/* Nút Đăng xuất ở trang chủ kích hoạt modal */}
+          {prop.onLogout && (
+            <button 
+              onClick={() => setShowLogoutModal(true)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '8px 16px',
+                background: 'rgba(239, 68, 68, 0.1)',
+                border: '1px solid rgba(239, 68, 68, 0.3)',
+                color: '#ef4444',
+                cursor: 'pointer',
+                borderRadius: '20px',
+                fontWeight: '600',
+                fontSize: '13px',
+                fontFamily: 'inherit',
+                transition: 'all 0.2s ease',
+                whiteSpace: 'nowrap'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = '#ef4444';
+                e.currentTarget.style.color = '#ffffff';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)';
+                e.currentTarget.style.color = '#ef4444';
+              }}
+            >
+              <LogOut size={15} />
+              <span>Đăng xuất</span>
+            </button>
+          )}
         </nav>
       </header>
 
@@ -156,6 +199,84 @@ export default function Home() {
       <footer className="home-footer">
         <p>© 2026 Trường Đại học Giao thông vận tải TP. Hồ Chí Minh (UTH) • Đồ án Học kỳ Doanh nghiệp Nhóm 4</p>
       </footer>
+
+      {/* Modal xác nhận đăng xuất chuẩn ChatGPT tại Trang Chủ (Đã bỏ thẻ tài khoản) */}
+      {showLogoutModal && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          backgroundColor: 'rgba(0, 0, 0, 0.75)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 999999,
+          backdropFilter: 'blur(5px)'
+        }}>
+          <div style={{
+            background: '#18181b',
+            border: '1px solid #27272a',
+            padding: '36px 32px',
+            borderRadius: '24px',
+            width: '380px',
+            textAlign: 'center',
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
+            color: '#ffffff',
+            fontFamily: 'inherit'
+          }}>
+            <h2 style={{ fontSize: '20px', fontWeight: '600', marginBottom: '12px', color: '#f4f4f5', margin: '0 0 12px 0' }}>
+              Đăng xuất khỏi UTH Library Analytics?
+            </h2>
+
+            <p style={{ fontSize: '14px', color: '#a1a1aa', marginBottom: '28px', lineHeight: '1.5', margin: '0 0 28px 0' }}>
+              Bạn sẽ cần đăng nhập lại để tiếp tục quản trị hệ thống thư viện.
+            </p>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <button
+                onClick={handleConfirmLogout}
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  background: '#f4f4f5',
+                  color: '#18181b',
+                  border: 'none',
+                  borderRadius: '9999px',
+                  fontWeight: '600',
+                  fontSize: '14px',
+                  cursor: 'pointer',
+                  transition: 'background 0.2s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.background = '#ffffff'}
+                onMouseLeave={(e) => e.currentTarget.style.background = '#f4f4f5'}
+              >
+                Đăng xuất
+              </button>
+              <button
+                onClick={() => setShowLogoutModal(false)}
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  background: 'transparent',
+                  color: '#f4f4f5',
+                  border: '1px solid #3f3f46',
+                  borderRadius: '9999px',
+                  fontWeight: '600',
+                  fontSize: '14px',
+                  cursor: 'pointer',
+                  transition: 'background 0.2s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.background = '#27272a'}
+                onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+              >
+                Huỷ
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

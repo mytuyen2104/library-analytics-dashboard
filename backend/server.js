@@ -359,6 +359,35 @@ async function getAvailableGeminiModel() {
   return cachedWorkingModel;
 }
 
+// API: Đăng nhập bằng tài khoản và mật khẩu cố định (5 tài khoản)
+app.post('/api/auth/login', (req, res) => {
+  try {
+    const { username, password } = req.body;
+    if (!username || !password) {
+      return res.status(400).json({ success: false, message: 'Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!' });
+    }
+
+    // Đọc danh sách tài khoản từ .env
+    const accountsConfig = process.env.ADMIN_ACCOUNTS || 'admin1:123456,admin2:123456,thuthu1:123456,thuthu2:123456,giaovien:123456';
+    const validAccounts = {};
+    
+    accountsConfig.split(',').forEach(pair => {
+      const [user, pass] = pair.split(':');
+      if (user && pass) {
+        validAccounts[user.trim()] = pass.trim();
+      }
+    });
+
+    // Kiểm tra thông tin đăng nhập
+    if (validAccounts[username.trim()] && validAccounts[username.trim()] === password.trim()) {
+      res.json({ success: true, message: 'Đăng nhập thành công!', token: 'admin-token-xyz' });
+    } else {
+      res.status(401).json({ success: false, message: 'Tên đăng nhập hoặc mật khẩu không đúng!' });
+    }
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
 async function callGeminiSafe(promptText) {
   const modelName = await getAvailableGeminiModel();
 
