@@ -13,7 +13,8 @@ import {
   ShieldCheck,
   Zap,
   BookCheck,
-  PackagePlus
+  PackagePlus,
+  LogOut
 } from 'lucide-react';
 import '../styles/home.css';
 
@@ -61,7 +62,9 @@ function TiltFeatureCard({ feature }) {
   );
 }
 
-export default function Home() {
+export default function Home({ onLogout }) {
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+
   const features = [
     { title: 'Tổng quan thư viện', desc: 'Theo dõi các chỉ số KPI vĩ mô và hiệu suất hoạt động toàn diện của thư viện.', to: '/overview', icon: LayoutDashboard, color: '#2563eb' },
     { title: 'Quản lý Mượn / Trả', desc: 'Tạo phiếu mượn sách mới, tra cứu lịch sử mượn và xác nhận trả sách theo thời gian thực.', to: '/loan-management', icon: BookCheck, color: '#0d9488' },
@@ -88,12 +91,43 @@ export default function Home() {
             <small>Business Intelligence System</small>
           </div>
         </div>
-        <nav className="home-nav-links">
+        <nav className="home-nav-links" style={{ display: 'flex', alignItems: 'center' }}>
           <Link to="/" className="active">Trang chủ</Link>
           <Link to="/overview">Dashboard</Link>
           <Link to="/loan-management">Mượn / Trả</Link>
           <Link to="/inventory-management">Kho sách</Link>
           <Link to="/about">Giới thiệu</Link>
+          {onLogout && (
+            <button
+              onClick={() => setShowLogoutModal(true)}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                marginLeft: '12px',
+                padding: '7px 14px',
+                borderRadius: '9999px',
+                border: '1px solid #fecaca',
+                background: '#fef2f2',
+                color: '#dc2626',
+                fontWeight: '600',
+                fontSize: '13.5px',
+                cursor: 'pointer',
+                transition: 'all 0.2s'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = '#fee2e2';
+                e.currentTarget.style.borderColor = '#fca5a5';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = '#fef2f2';
+                e.currentTarget.style.borderColor = '#fecaca';
+              }}
+            >
+              <LogOut size={15} />
+              <span>Đăng xuất</span>
+            </button>
+          )}
         </nav>
       </header>
 
@@ -156,6 +190,103 @@ export default function Home() {
       <footer className="home-footer">
         <p>© 2026 Trường Đại học Giao thông vận tải TP. Hồ Chí Minh (UTH) • Đồ án Học kỳ Doanh nghiệp Nhóm 4</p>
       </footer>
+
+      {showLogoutModal && (
+        <div
+          onClick={() => setShowLogoutModal(false)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0, 0, 0, 0.65)',
+            backdropFilter: 'blur(4px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 9999,
+            padding: '16px'
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: '100%',
+              maxWidth: '380px',
+              background: '#18181b',
+              border: '1px solid #27272a',
+              borderRadius: '20px',
+              padding: '28px 24px 24px',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.6)',
+              textAlign: 'center',
+              color: '#f4f4f5'
+            }}
+          >
+            <div
+              style={{
+                width: '48px',
+                height: '48px',
+                borderRadius: '50%',
+                background: 'rgba(239, 68, 68, 0.15)',
+                color: '#ef4444',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 16px'
+              }}
+            >
+              <LogOut size={22} />
+            </div>
+            <h3 style={{ margin: '0 0 8px', fontSize: '18px', fontWeight: '700', color: '#ffffff' }}>
+              Đăng xuất khỏi hệ thống?
+            </h3>
+            <p style={{ margin: '0 0 24px', fontSize: '14px', color: '#a1a1aa', lineHeight: '1.5' }}>
+              Bạn sẽ cần đăng nhập lại để tiếp tục truy cập vào bảng điều khiển quản trị thư viện.
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <button
+                onClick={() => {
+                  setShowLogoutModal(false);
+                  onLogout();
+                }}
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  background: '#ef4444',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '9999px',
+                  fontWeight: '600',
+                  fontSize: '14px',
+                  cursor: 'pointer',
+                  transition: 'background 0.2s'
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.background = '#dc2626')}
+                onMouseLeave={(e) => (e.currentTarget.style.background = '#ef4444')}
+              >
+                Đăng xuất
+              </button>
+              <button
+                onClick={() => setShowLogoutModal(false)}
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  background: 'transparent',
+                  color: '#f4f4f5',
+                  border: '1px solid #3f3f46',
+                  borderRadius: '9999px',
+                  fontWeight: '600',
+                  fontSize: '14px',
+                  cursor: 'pointer',
+                  transition: 'background 0.2s'
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.background = '#27272a')}
+                onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+              >
+                Hủy
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
