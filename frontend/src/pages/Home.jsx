@@ -62,7 +62,7 @@ function TiltFeatureCard({ feature }) {
   );
 }
 
-export default function Home(prop) {
+export default function Home({ onLogout }) {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   const features = [
@@ -76,12 +76,6 @@ export default function Home(prop) {
     { title: 'Chi tiết nhật ký', desc: 'Truy xuất lịch sử giao dịch, thao tác và nhật ký hoạt động chi tiết trong hệ thống.', to: '/log-details', icon: FileText, color: '#2563eb' },
     { title: 'Giới thiệu hệ thống', desc: 'Tìm hiểu chi tiết về mục tiêu, kiến trúc công nghệ 3 tầng và đội ngũ phát triển.', to: '/about', icon: Info, color: '#0284c7' },
   ];
-
-  const handleConfirmLogout = () => {
-    if (prop.onLogout) {
-      prop.onLogout();
-    }
-  };
 
   return (
     <div className="home-3d-container">
@@ -97,40 +91,37 @@ export default function Home(prop) {
             <small>Business Intelligence System</small>
           </div>
         </div>
-        <nav className="home-nav-links" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+        <nav className="home-nav-links" style={{ display: 'flex', alignItems: 'center' }}>
           <Link to="/" className="active">Trang chủ</Link>
           <Link to="/overview">Dashboard</Link>
           <Link to="/loan-management">Mượn / Trả</Link>
           <Link to="/inventory-management">Kho sách</Link>
           <Link to="/about">Giới thiệu</Link>
-
-          {/* Nút Đăng xuất ở trang chủ kích hoạt modal */}
-          {prop.onLogout && (
-            <button 
+          {onLogout && (
+            <button
               onClick={() => setShowLogoutModal(true)}
               style={{
-                display: 'flex',
+                display: 'inline-flex',
                 alignItems: 'center',
                 gap: '6px',
-                padding: '8px 16px',
-                background: 'rgba(239, 68, 68, 0.1)',
-                border: '1px solid rgba(239, 68, 68, 0.3)',
-                color: '#ef4444',
-                cursor: 'pointer',
-                borderRadius: '20px',
+                marginLeft: '12px',
+                padding: '7px 14px',
+                borderRadius: '9999px',
+                border: '1px solid #fecaca',
+                background: '#fef2f2',
+                color: '#dc2626',
                 fontWeight: '600',
-                fontSize: '13px',
-                fontFamily: 'inherit',
-                transition: 'all 0.2s ease',
-                whiteSpace: 'nowrap'
+                fontSize: '13.5px',
+                cursor: 'pointer',
+                transition: 'all 0.2s'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#ef4444';
-                e.currentTarget.style.color = '#ffffff';
+                e.currentTarget.style.background = '#fee2e2';
+                e.currentTarget.style.borderColor = '#fca5a5';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)';
-                e.currentTarget.style.color = '#ef4444';
+                e.currentTarget.style.background = '#fef2f2';
+                e.currentTarget.style.borderColor = '#fecaca';
               }}
             >
               <LogOut size={15} />
@@ -200,48 +191,67 @@ export default function Home(prop) {
         <p>© 2026 Trường Đại học Giao thông vận tải TP. Hồ Chí Minh (UTH) • Đồ án Học kỳ Doanh nghiệp Nhóm 4</p>
       </footer>
 
-      {/* Modal xác nhận đăng xuất chuẩn ChatGPT tại Trang Chủ (Đã bỏ thẻ tài khoản) */}
       {showLogoutModal && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100vw',
-          height: '100vh',
-          backgroundColor: 'rgba(0, 0, 0, 0.75)',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          zIndex: 999999,
-          backdropFilter: 'blur(5px)'
-        }}>
-          <div style={{
-            background: '#18181b',
-            border: '1px solid #27272a',
-            padding: '36px 32px',
-            borderRadius: '24px',
-            width: '380px',
-            textAlign: 'center',
-            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
-            color: '#ffffff',
-            fontFamily: 'inherit'
-          }}>
-            <h2 style={{ fontSize: '20px', fontWeight: '600', marginBottom: '12px', color: '#f4f4f5', margin: '0 0 12px 0' }}>
-              Đăng xuất khỏi UTH Library Analytics?
-            </h2>
-
-            <p style={{ fontSize: '14px', color: '#a1a1aa', marginBottom: '28px', lineHeight: '1.5', margin: '0 0 28px 0' }}>
-              Bạn sẽ cần đăng nhập lại để tiếp tục quản trị hệ thống thư viện.
+        <div
+          onClick={() => setShowLogoutModal(false)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0, 0, 0, 0.65)',
+            backdropFilter: 'blur(4px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 9999,
+            padding: '16px'
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: '100%',
+              maxWidth: '380px',
+              background: '#18181b',
+              border: '1px solid #27272a',
+              borderRadius: '20px',
+              padding: '28px 24px 24px',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.6)',
+              textAlign: 'center',
+              color: '#f4f4f5'
+            }}
+          >
+            <div
+              style={{
+                width: '48px',
+                height: '48px',
+                borderRadius: '50%',
+                background: 'rgba(239, 68, 68, 0.15)',
+                color: '#ef4444',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 16px'
+              }}
+            >
+              <LogOut size={22} />
+            </div>
+            <h3 style={{ margin: '0 0 8px', fontSize: '18px', fontWeight: '700', color: '#ffffff' }}>
+              Đăng xuất khỏi hệ thống?
+            </h3>
+            <p style={{ margin: '0 0 24px', fontSize: '14px', color: '#a1a1aa', lineHeight: '1.5' }}>
+              Bạn sẽ cần đăng nhập lại để tiếp tục truy cập vào bảng điều khiển quản trị thư viện.
             </p>
-
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               <button
-                onClick={handleConfirmLogout}
+                onClick={() => {
+                  setShowLogoutModal(false);
+                  onLogout();
+                }}
                 style={{
                   width: '100%',
                   padding: '12px',
-                  background: '#f4f4f5',
-                  color: '#18181b',
+                  background: '#ef4444',
+                  color: '#ffffff',
                   border: 'none',
                   borderRadius: '9999px',
                   fontWeight: '600',
@@ -249,8 +259,8 @@ export default function Home(prop) {
                   cursor: 'pointer',
                   transition: 'background 0.2s'
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.background = '#ffffff'}
-                onMouseLeave={(e) => e.currentTarget.style.background = '#f4f4f5'}
+                onMouseEnter={(e) => (e.currentTarget.style.background = '#dc2626')}
+                onMouseLeave={(e) => (e.currentTarget.style.background = '#ef4444')}
               >
                 Đăng xuất
               </button>
@@ -268,10 +278,10 @@ export default function Home(prop) {
                   cursor: 'pointer',
                   transition: 'background 0.2s'
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.background = '#27272a'}
-                onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                onMouseEnter={(e) => (e.currentTarget.style.background = '#27272a')}
+                onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
               >
-                Huỷ
+                Hủy
               </button>
             </div>
           </div>

@@ -13,7 +13,7 @@ import About from './pages/About.jsx';
 import LoanManagement from './pages/LoanManagement';
 import InventoryManagement from './pages/InventoryManagement';
 import ChatWidget from './components/ChatWidget';
-import Login from './components/Login.jsx';
+import Login from './components/Login';
 
 const headings = {
   '/overview': ['TỔNG QUAN THƯ VIỆN', 'Theo dõi các chỉ số hoạt động của thư viện'],
@@ -27,40 +27,42 @@ const headings = {
 };
 
 export default function App() {
+  const { pathname } = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem('isAdminLoggedIn') === 'true'
   );
 
-  const { pathname } = useLocation();
-
-  if (!isLoggedIn) {
-    return <Login onLoginSuccess={() => setIsLoggedIn(true)} />;
-  }
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('isAdminLoggedIn');
     setIsLoggedIn(false);
   };
 
-  // Trang Chủ và Giới thiệu (Truyền onLogout xuống để tích hợp vào menu tùy ý)
+  // Chặn toàn bộ trang web nếu chưa đăng nhập
+  if (!isLoggedIn) {
+    return <Login onLoginSuccess={handleLoginSuccess} />;
+  }
+
+  // Trang chủ và trang Giới thiệu (truyền onLogout vào Home)
   if (pathname === '/' || pathname === '/about') {
     return (
-      <div>
-        <Routes>
-          <Route path="/" element={<Home onLogout={handleLogout} />} />
-          <Route path="/about" element={<About onLogout={handleLogout} />} />
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/" element={<Home onLogout={handleLogout} />} />
+        <Route path="/about" element={<About onLogout={handleLogout} />} />
+      </Routes>
     );
   }
 
+  // Các trang Dashboard quản trị bên trong (truyền onLogout vào Header)
   const [title, subtitle] = headings[pathname] || ['LIBRARY ANALYTICS', ''];
 
   return (
-    <div className="app-shell" style={{ position: 'relative' }}>
+    <div className="app-shell">
       <Sidebar />
       <div className="main-column">
-        {/* Nếu muốn tích hợp nút đăng xuất lên Header chung của các trang quản lý, bạn có thể truyền onLogout vào đây */}
         <Header title={title} subtitle={subtitle} onLogout={handleLogout} />
         <main className="content">
           <Routes>
