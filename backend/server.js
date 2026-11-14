@@ -4,6 +4,7 @@ const cors = require('cors');
 const sql = require('mssql');
 const fs = require('fs');
 const path = require('path');
+const { GoogleGenAI } = require('@google/genai');
 
 const app = express();
 app.use(cors());
@@ -19,6 +20,8 @@ const dbConfig = {
     trustServerCertificate: true,
   },
 };
+
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 const HISTORY_FILE = path.join(__dirname, 'inventory-history.json');
 
@@ -295,6 +298,7 @@ app.put('/api/muon-tra/:maMuon/tra-sach', async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 });
+
 // Xóa toàn bộ lịch sử nhập kho
 app.delete('/api/sach/lich-su', (req, res) => {
   try {
@@ -316,5 +320,134 @@ app.delete('/api/sach/lich-su/:id', (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+// ================= 3. API TRỢ LÝ AI HỎI ĐÁP DỮ LIỆU (GEMINI TEXT-TO-SQL) =================
+
+
+
+let cachedWorkingModel = null;
+
+async function getAvailableGeminiModel() {
+  if (cachedWorkingModel) return cachedWorkingModel;
+
+  const pager = await ai.models.list();
+  const availableModels = [];
+  for await (const m of pager) {
+    const name = m.name.replace(/^models\//, '');
+    if (
+      name.includes('gemini') &&
+      !name.includes('embedding') &&
+      !name.includes('imagen') &&
+      !name.includes('image') &&
+      !name.includes('2.5') &&
+      !name.includes('2.0')
+    ) {
+      availableModels.push(name);
+    }
+  }
+
+  // Ưu tiên chọn bản flash-lite mới nhất (tốc độ phản hồi < 1 giây)
+  const preferred =
+    availableModels.find((n) => n === 'gemini-3.5-flash-lite') ||
+    availableModels.find((n) => n.includes('flash-lite')) ||
+    availableModels.find((n) => n === 'gemini-3.5-flash') ||
+    availableModels.find((n) => n.includes('flash')) ||
+    availableModels[0];
+
+  cachedWorkingModel = preferred;
+  console.log('✅ Đã chọn model siêu tốc:', cachedWorkingModel);
+  return cachedWorkingModel;
+}
+
+async function callGeminiSafe(promptText) {
+  const modelName = await getAvailableGeminiModel();
+
+  const timeoutPromise = new Promise((_, reject) =>
+    setTimeout(() => reject(new Error(`Timeout sau 25s với ${modelName}`)), 25000)
+  );
+
+  const apiPromise = ai.models.generateContent({
+    model: modelName,
+    contents: promptText,
+    config: {
+      temperature: 0.1,
+    },
+  });
+
+  const response = await Promise.race([apiPromise, timeoutPromise]);
+  return response.text;
+}
+
+app.post('/api/chat', async (req, res) => {
+  try {
+    const { message } = req.body;
+    if (!message || !message.trim()) {
+      return res.status(400).json({ reply: 'Vui lòng nhập câu hỏi của bạn.' });
+    }
+
+    console.log('📩 Nhận câu hỏi:', message);
+
+    const decisionPrompt = `
+Bạn là trợ lý ảo thông minh của Thư viện Trường ĐH Giao thông vận tải TP.HCM (UTH).
+Hệ thống có CSDL LibraryAnalyticsDB gồm 4 bảng:
+1. dbo.Sach (MaSach, TenSach, TacGia, TheLoai, SoBanHienCo, NamXuatBan)
+   - Thể loại: N'Công nghệ thông tin', N'Luật', N'Quản trị', N'Văn học', N'Khoa học cơ bản', N'Kỹ thuật', N'Ngoại ngữ', N'Kinh tế'.
+2. dbo.DocGia (MaDocGia, LoaiDocGia, NgayDangKy)
+3. dbo.MuonTra (MaMuon, MaSach, MaDocGia, NgayMuon, NgayTra, TrangThai) — TrangThai: N'Đã trả', N'Chưa trả', N'Đang mượn'.
+4. dbo.TruyCapDienTu (MaTruyCap, NgayTruyCap, TenCSDL, SoLuot) — TenCSDL: 'SpringerLink', 'ProQuest', 'EBSCO', 'ScienceDirect', 'ACM Digital Library', 'IEEE Xplore'.
+
+Nhiệm vụ:
+- Nếu câu hỏi KHÔNG liên quan đến tra cứu dữ liệu thư viện (chào hỏi, phép tính toán học, hỏi chức năng...), trả lời thẳng bắt đầu bằng "CHAT: " (ví dụ: "CHAT: 1 + 1 = 2. Tôi có thể giúp gì cho bạn về dữ liệu thư viện?").
+- Nếu câu hỏi CẦN tra cứu dữ liệu trong CSDL thư viện, chỉ trả về DUY NHẤT 1 câu lệnh T-SQL SELECT hợp lệ (dùng TOP, luôn thêm tiền tố N trước chuỗi tiếng Việt có dấu, không giải thích, không bọc \`\`\`sql).
+
+Câu hỏi người dùng: "${message}"
+Phản hồi:`;
+
+    const rawOutput = await callGeminiSafe(decisionPrompt);
+    const cleanedOutput = rawOutput.replace(/```sql|```/gi, '').trim();
+    console.log('🤖 AI phản hồi lượt 1:', cleanedOutput);
+
+    // Trường hợp 1: Trả lời giao tiếp / câu hỏi chung
+    if (cleanedOutput.toUpperCase().startsWith('CHAT:')) {
+      return res.json({
+        reply: cleanedOutput.replace(/^CHAT:\s*/i, '').trim(),
+      });
+    }
+
+    // Trường hợp 2: Thực thi câu lệnh T-SQL SELECT
+    const upperSql = cleanedOutput.toUpperCase();
+    if (
+      !upperSql.startsWith('SELECT') ||
+      /\b(DROP|DELETE|UPDATE|INSERT|ALTER|TRUNCATE|EXEC|MERGE)\b/.test(upperSql)
+    ) {
+      return res.json({
+        reply: 'Xin lỗi, tôi chỉ hỗ trợ tra cứu dữ liệu đọc (SELECT) hoặc giải đáp thông tin chung của thư viện.',
+      });
+    }
+
+    const pool = await sql.connect(dbConfig);
+    const dbResult = await pool.request().query(cleanedOutput);
+    const rows = dbResult.recordset;
+    console.log(`📊 SQL trả về ${rows.length} dòng`);
+
+    const finalReply = await callGeminiSafe(
+      `Bạn là trợ lý ảo Thư viện ĐH Giao thông vận tải TP.HCM (UTH).
+Người dùng hỏi: "${message}"
+Kết quả dữ liệu thực tế: ${JSON.stringify(rows.slice(0, 15))}
+Hãy trả lời ngắn gọn, rõ ràng, lịch sự bằng tiếng Việt (dùng gạch đầu dòng nếu liệt kê). Không nhắc đến JSON hay câu lệnh SQL.`
+    );
+
+    res.json({
+      reply: finalReply,
+      sqlDebug: cleanedOutput,
+    });
+  } catch (error) {
+    console.error('❌ Lỗi Chat AI:', error);
+    res.status(500).json({
+      reply: `Lỗi kết nối AI: ${error.message}. Vui lòng kiểm tra lại GEMINI_API_KEY trong file .env hoặc đường truyền mạng!`,
+    });
+  }
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Library API running on port ${PORT}`));
