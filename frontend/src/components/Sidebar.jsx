@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, BookOpen, Database, ChartNoAxesCombined, ListOrdered, FileText, BookCheck, PackagePlus } from 'lucide-react';
+import { LayoutDashboard, BookOpen, Database, ChartNoAxesCombined, ListOrdered, FileText, BookCheck, PackagePlus, Users } from 'lucide-react';
 
 const links = [
   {to:'/', label:'Trang chủ', icon:LayoutDashboard, end:true},
@@ -11,6 +11,7 @@ const links = [
   {to:'/log-details', label:'Chi tiết nhật ký', icon:FileText},
   {to:'/loan-management', label:'Quản lý mượn trả', icon:BookCheck},
   {to:'/inventory-management', label:'Quản lý kho sách', icon:PackagePlus},
+  {to:'/reader-management', label:'Quản lý độc giả', icon:Users},
 ];
 
 export default function Sidebar(){

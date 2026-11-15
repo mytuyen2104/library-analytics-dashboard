@@ -264,7 +264,7 @@
 .stack-dot.yellow { background: #f59e0b; }
 .stack-dot.green { background: #10b981; }
 
-/* 7 Chức năng Grid 3D cân đối (4 cột hoặc căn giữa thẻ cuối) */
+/* Chức năng Grid 3D cân đối */
 .features-section {
   position: relative;
   z-index: 2;
@@ -290,16 +290,11 @@
   margin: 0;
 }
 
-/* Chia lưới 3 cột đều, thẻ thứ 7 (Giới thiệu hệ thống) sẽ tự động chiếm full hoặc căn giữa gọn gàng */
 .features-3d-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 24px;
-}
-
-/* Cho thẻ cuối cùng (Giới thiệu hệ thống - phần tử thứ 7) rộng cân đối hoặc nằm đẹp ở hàng cuối */
-.feature-3d-card:nth-child(7) {
-  grid-column: 2 / 3; /* Căn giữa hoàn hảo ở hàng 3 */
+  align-items: stretch;
 }
 
 .feature-3d-card {
@@ -313,6 +308,8 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
+  height: 100%;
+  box-sizing: border-box;
   box-shadow: 0 12px 30px rgba(15, 41, 74, 0.05);
   transition: transform 0.18s ease-out, box-shadow 0.25s ease;
   transform-style: preserve-3d;
@@ -330,7 +327,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.03);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.03);
 }
 
 .feature-content h3 {
@@ -381,18 +378,12 @@
     justify-content: center;
   }
   .features-3d-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .feature-3d-card:nth-child(7) {
-    grid-column: span 2; /* Trải dài ở màn hình trung bình */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (max-width: 650px) {
   .features-3d-grid {
     grid-template-columns: 1fr;
-  }
-  .feature-3d-card:nth-child(7) {
-    grid-column: span 1;
   }
 }

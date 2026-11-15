@@ -14,6 +14,7 @@ import LoanManagement from './pages/LoanManagement';
 import InventoryManagement from './pages/InventoryManagement';
 import ChatWidget from './components/ChatWidget';
 import Login from './components/Login';
+import ReaderManagement from './pages/ReaderManagement';
 
 const headings = {
   '/overview': ['TỔNG QUAN THƯ VIỆN', 'Theo dõi các chỉ số hoạt động của thư viện'],
@@ -23,7 +24,8 @@ const headings = {
   '/acquisition': ['GỢI Ý BỔ SUNG TÀI LIỆU', 'Xếp hạng ưu tiên dựa trên nhu cầu và số bản hiện có'],
   '/log-details': ['CHI TIẾT NHẬT KÝ', 'Theo dõi lịch sử giao dịch và hoạt động của hệ thống'],
   '/loan-management': ['QUẢN LÝ MƯỢN TRẢ', 'Theo dõi và quản lý quá trình mượn trả sách'],
-  '/inventory-management': ['QUẢN LÝ KHO SÁCH', 'Quản lý tồn kho và bổ sung sách mới']
+  '/inventory-management': ['QUẢN LÝ KHO SÁCH', 'Quản lý tồn kho và bổ sung sách mới'],
+  '/reader-management': ['QUẢN LÝ ĐỘC GIẢ', 'Quản lý thông tin và hoạt động của độc giả'],
 };
 
 export default function App() {
@@ -74,6 +76,7 @@ export default function App() {
             <Route path="/log-details" element={<LogDetails />} />
             <Route path="/loan-management" element={<LoanManagement />} />
             <Route path="/inventory-management" element={<InventoryManagement />} />
+            <Route path="/reader-management" element={<ReaderManagement />} />
             <Route path="*" element={<Overview />} />
           </Routes>
         </main>

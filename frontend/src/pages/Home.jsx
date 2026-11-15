@@ -14,6 +14,7 @@ import {
   Zap,
   BookCheck,
   PackagePlus,
+  Users,
   LogOut
 } from 'lucide-react';
 import '../styles/home.css';

@@ -154,22 +154,139 @@ app.put('/api/sach/:maSach/nhap-kho', async (req, res) => {
   }
 });
 
-// ================= 2. API QUẢN LÝ MƯỢN / TRẢ (dbo.MuonTra + dbo.DocGia) =================
+// Xóa toàn bộ lịch sử nhập kho
+app.delete('/api/sach/lich-su', (req, res) => {
+  try {
+    fs.writeFileSync(HISTORY_FILE, JSON.stringify([], null, 2), 'utf8');
+    res.json({ message: 'Đã xóa toàn bộ lịch sử nhập kho!' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
+// Xóa 1 dòng lịch sử theo id
+app.delete('/api/sach/lich-su/:id', (req, res) => {
+  try {
+    const targetId = Number(req.params.id);
+    const history = readInventoryHistory().filter((item) => item.id !== targetId);
+    fs.writeFileSync(HISTORY_FILE, JSON.stringify(history, null, 2), 'utf8');
+    res.json({ message: 'Đã xóa mục lịch sử!' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ================= 2. API QUẢN LÝ ĐỘC GIẢ (dbo.DocGia) =================
+
+// Lấy danh sách độc giả kèm thống kê số lượt mượn & tìm kiếm
 app.get('/api/doc-gia', async (req, res) => {
   try {
+    const { search = '', loai = '' } = req.query;
     const pool = await sql.connect(dbConfig);
-    const result = await pool.request().query(`
-      SELECT MaDocGia, LoaiDocGia, CONVERT(varchar(10), NgayDangKy, 23) AS NgayDangKy
-      FROM dbo.DocGia
-      ORDER BY MaDocGia ASC
-    `);
+    const result = await pool.request()
+      .input('search', sql.NVarChar, `%${search}%`)
+      .input('loai', sql.NVarChar, loai)
+      .query(`
+        SELECT 
+          d.MaDocGia, 
+          d.LoaiDocGia, 
+          CONVERT(varchar(10), d.NgayDangKy, 23) AS NgayDangKy,
+          COUNT(m.MaMuon) AS TongLuotMuon,
+          SUM(CASE WHEN m.TrangThai IN (N'Đang mượn', N'Chưa trả') THEN 1 ELSE 0 END) AS DangMuon
+        FROM dbo.DocGia d
+        LEFT JOIN dbo.MuonTra m ON d.MaDocGia = m.MaDocGia
+        WHERE (d.MaDocGia LIKE @search OR d.LoaiDocGia LIKE @search)
+          AND (@loai = '' OR d.LoaiDocGia = @loai)
+        GROUP BY d.MaDocGia, d.LoaiDocGia, d.NgayDangKy
+        ORDER BY d.MaDocGia DESC
+      `);
     res.json(result.recordset);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
+// Thêm độc giả mới (tự sinh mã DGxxxx nếu bỏ trống)
+app.post('/api/doc-gia', async (req, res) => {
+  try {
+    const { MaDocGia, LoaiDocGia = 'Sinh viên', NgayDangKy } = req.body;
+    const pool = await sql.connect(dbConfig);
+    const finalMaDocGia = MaDocGia?.trim().toUpperCase() || await generateNextId(pool, 'DocGia', 'MaDocGia', 'DG');
+    const finalNgayDangKy = NgayDangKy || new Date().toISOString().split('T')[0];
+
+    const checkExist = await pool.request()
+      .input('MaDocGia', sql.VarChar(10), finalMaDocGia)
+      .query(`SELECT MaDocGia FROM dbo.DocGia WHERE MaDocGia = @MaDocGia`);
+
+    if (checkExist.recordset.length > 0) {
+      return res.status(400).json({ error: `Mã độc giả ${finalMaDocGia} đã tồn tại!` });
+    }
+
+    await pool.request()
+      .input('MaDocGia', sql.VarChar(10), finalMaDocGia)
+      .input('LoaiDocGia', sql.NVarChar(80), LoaiDocGia)
+      .input('NgayDangKy', sql.Date, finalNgayDangKy)
+      .query(`
+        INSERT INTO dbo.DocGia (MaDocGia, LoaiDocGia, NgayDangKy)
+        VALUES (@MaDocGia, @LoaiDocGia, @NgayDangKy)
+      `);
+
+    res.json({ message: 'Thêm độc giả mới thành công!', MaDocGia: finalMaDocGia });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Cập nhật thông tin độc giả
+app.put('/api/doc-gia/:maDocGia', async (req, res) => {
+  try {
+    const { maDocGia } = req.params;
+    const { LoaiDocGia, NgayDangKy } = req.body;
+    const pool = await sql.connect(dbConfig);
+
+    await pool.request()
+      .input('MaDocGia', sql.VarChar(10), maDocGia)
+      .input('LoaiDocGia', sql.NVarChar(80), LoaiDocGia)
+      .input('NgayDangKy', sql.Date, NgayDangKy)
+      .query(`
+        UPDATE dbo.DocGia
+        SET LoaiDocGia = @LoaiDocGia, NgayDangKy = @NgayDangKy
+        WHERE MaDocGia = @MaDocGia
+      `);
+
+    res.json({ message: 'Cập nhật thông tin độc giả thành công!' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Lấy lịch sử mượn trả chi tiết của 1 độc giả
+app.get('/api/doc-gia/:maDocGia/lich-su', async (req, res) => {
+  try {
+    const { maDocGia } = req.params;
+    const pool = await sql.connect(dbConfig);
+    const result = await pool.request()
+      .input('MaDocGia', sql.VarChar(10), maDocGia)
+      .query(`
+        SELECT 
+          m.MaMuon, m.MaSach, s.TenSach, s.TheLoai,
+          CONVERT(varchar(10), m.NgayMuon, 23) AS NgayMuon,
+          CONVERT(varchar(10), m.NgayTra, 23) AS NgayTra,
+          m.TrangThai
+        FROM dbo.MuonTra m
+        JOIN dbo.Sach s ON m.MaSach = s.MaSach
+        WHERE m.MaDocGia = @MaDocGia
+        ORDER BY m.NgayMuon DESC
+      `);
+    res.json(result.recordset);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ================= 3. API QUẢN LÝ MƯỢN / TRẢ (dbo.MuonTra) =================
+
+// Lấy danh sách phiếu mượn trả
 app.get('/api/muon-tra', async (req, res) => {
   try {
     const { search = '' } = req.query;
@@ -197,6 +314,7 @@ app.get('/api/muon-tra', async (req, res) => {
   }
 });
 
+// Tạo phiếu mượn mới
 app.post('/api/muon-tra', async (req, res) => {
   const { MaDocGia, LoaiDocGia = 'Sinh viên', MaSach, NgayMuon } = req.body;
   const pool = await sql.connect(dbConfig);
@@ -262,6 +380,7 @@ app.post('/api/muon-tra', async (req, res) => {
   }
 });
 
+// Xác nhận trả sách
 app.put('/api/muon-tra/:maMuon/tra-sach', async (req, res) => {
   const { maMuon } = req.params;
   const pool = await sql.connect(dbConfig);
@@ -299,31 +418,34 @@ app.put('/api/muon-tra/:maMuon/tra-sach', async (req, res) => {
   }
 });
 
-// Xóa toàn bộ lịch sử nhập kho
-app.delete('/api/sach/lich-su', (req, res) => {
+// ================= 4. API ĐĂNG NHẬP & TRỢ LÝ AI =================
+
+app.post('/api/auth/login', (req, res) => {
   try {
-    fs.writeFileSync(HISTORY_FILE, JSON.stringify([], null, 2), 'utf8');
-    res.json({ message: 'Đã xóa toàn bộ lịch sử nhập kho!' });
+    const { username, password } = req.body;
+    if (!username || !password) {
+      return res.status(400).json({ success: false, message: 'Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!' });
+    }
+
+    const accountsConfig = process.env.ADMIN_ACCOUNTS || 'admin1:123456,admin2:123456,thuthu1:123456,thuthu2:123456,giaovien:123456';
+    const validAccounts = {};
+
+    accountsConfig.split(',').forEach(pair => {
+      const [user, pass] = pair.split(':');
+      if (user && pass) {
+        validAccounts[user.trim()] = pass.trim();
+      }
+    });
+
+    if (validAccounts[username.trim()] && validAccounts[username.trim()] === password.trim()) {
+      res.json({ success: true, message: 'Đăng nhập thành công!', token: 'admin-token-xyz' });
+    } else {
+      res.status(401).json({ success: false, message: 'Tên đăng nhập hoặc mật khẩu không đúng!' });
+    }
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ success: false, error: err.message });
   }
 });
-
-// Xóa 1 dòng lịch sử theo id
-app.delete('/api/sach/lich-su/:id', (req, res) => {
-  try {
-    const targetId = Number(req.params.id);
-    const history = readInventoryHistory().filter((item) => item.id !== targetId);
-    fs.writeFileSync(HISTORY_FILE, JSON.stringify(history, null, 2), 'utf8');
-    res.json({ message: 'Đã xóa mục lịch sử!' });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// ================= 3. API TRỢ LÝ AI HỎI ĐÁP DỮ LIỆU (GEMINI TEXT-TO-SQL) =================
-
-
 
 let cachedWorkingModel = null;
 
@@ -346,7 +468,6 @@ async function getAvailableGeminiModel() {
     }
   }
 
-  // Ưu tiên chọn bản flash-lite mới nhất (tốc độ phản hồi < 1 giây)
   const preferred =
     availableModels.find((n) => n === 'gemini-3.5-flash-lite') ||
     availableModels.find((n) => n.includes('flash-lite')) ||
@@ -359,35 +480,6 @@ async function getAvailableGeminiModel() {
   return cachedWorkingModel;
 }
 
-// API: Đăng nhập bằng tài khoản và mật khẩu cố định (5 tài khoản)
-app.post('/api/auth/login', (req, res) => {
-  try {
-    const { username, password } = req.body;
-    if (!username || !password) {
-      return res.status(400).json({ success: false, message: 'Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu!' });
-    }
-
-    // Đọc danh sách tài khoản từ .env
-    const accountsConfig = process.env.ADMIN_ACCOUNTS || 'admin1:123456,admin2:123456,thuthu1:123456,thuthu2:123456,giaovien:123456';
-    const validAccounts = {};
-    
-    accountsConfig.split(',').forEach(pair => {
-      const [user, pass] = pair.split(':');
-      if (user && pass) {
-        validAccounts[user.trim()] = pass.trim();
-      }
-    });
-
-    // Kiểm tra thông tin đăng nhập
-    if (validAccounts[username.trim()] && validAccounts[username.trim()] === password.trim()) {
-      res.json({ success: true, message: 'Đăng nhập thành công!', token: 'admin-token-xyz' });
-    } else {
-      res.status(401).json({ success: false, message: 'Tên đăng nhập hoặc mật khẩu không đúng!' });
-    }
-  } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
-  }
-});
 async function callGeminiSafe(promptText) {
   const modelName = await getAvailableGeminiModel();
 
@@ -427,7 +519,8 @@ Hệ thống có CSDL LibraryAnalyticsDB gồm 4 bảng:
 
 Nhiệm vụ:
 - Nếu câu hỏi KHÔNG liên quan đến tra cứu dữ liệu thư viện (chào hỏi, phép tính toán học, hỏi chức năng...), trả lời thẳng bắt đầu bằng "CHAT: " (ví dụ: "CHAT: 1 + 1 = 2. Tôi có thể giúp gì cho bạn về dữ liệu thư viện?").
-- Nếu câu hỏi CẦN tra cứu dữ liệu trong CSDL thư viện, chỉ trả về DUY NHẤT 1 câu lệnh T-SQL SELECT hợp lệ (dùng TOP, luôn thêm tiền tố N trước chuỗi tiếng Việt có dấu, không giải thích, không bọc \`\`\`sql).
+- Nếu câu hỏi CẦN tra cứu dữ liệu trong CSDL thư viện, chỉ trả về DUY NHẤT 1 câu lệnh T-SQL SELECT hợp lệ (dùng TOP, luôn thêm tiền tố N trước chuỗi tiếng Việt có dấu, không giải thích, không bọc 
+\`\`\`sql).
 
 Câu hỏi người dùng: "${message}"
 Phản hồi:`;
@@ -436,14 +529,12 @@ Phản hồi:`;
     const cleanedOutput = rawOutput.replace(/```sql|```/gi, '').trim();
     console.log('🤖 AI phản hồi lượt 1:', cleanedOutput);
 
-    // Trường hợp 1: Trả lời giao tiếp / câu hỏi chung
     if (cleanedOutput.toUpperCase().startsWith('CHAT:')) {
       return res.json({
         reply: cleanedOutput.replace(/^CHAT:\s*/i, '').trim(),
       });
     }
 
-    // Trường hợp 2: Thực thi câu lệnh T-SQL SELECT
     const upperSql = cleanedOutput.toUpperCase();
     if (
       !upperSql.startsWith('SELECT') ||
