@@ -1,0 +1,208 @@
+
+/* =====================================================
+   FRAME 1: BRAND
+   Logo và tên hệ thống
+===================================================== */
+
+.sidebar {
+  
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+
+ 
+  width: 100%;
+  height: 100%;
+
+  background: #007F82;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 20px 0;
+ 
+  
+}
+
+.brand  {
+ display: block;
+
+  font-family: 'Roboto', sans-serif; 
+  color: #ffffff;
+ 
+  font-size: 30px;
+  font-weight: 900;
+  
+  width: 100%;             
+  box-sizing: border-box;  
+  text-align: center;
+}
+
+
+
+
+/* =====================================================
+   FRAME 2: NAVIGATION
+   Điều hướng và phân nhóm chức năng
+===================================================== */
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+max-width: 220px;
+width: 90%;
+margin: 0 auto;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* Navigation group */
+.sidebar-group {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+  margin-bottom: 18px;
+}
+
+/* Group title: Phân tích / Tài liệu / Khác */
+.sidebar-group-title {
+  padding: 0 20px;
+  padding-top: 20px;
+    color: #B2DFDB;
+border-top: 1.5px solid #B2DFDB;
+
+font-family: 'Roboto', sans-serif;
+  font-size: 12px;
+  font-weight: 450;
+  /* letter-spacing: 1px; */
+  text-transform: uppercase;
+
+  cursor: default;
+  user-select: none;
+}
+
+
+/* Navigation item */
+.nav-link {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  min-height: 44px;
+  box-sizing: border-box;
+
+  padding: 0 12px;
+
+  border-radius: 5px;
+
+  background: transparent;
+  color: #B2DFDB;
+
+font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Icon */
+.nav-link svg {
+  flex-shrink: 0;
+
+  color: #B2DFDB;
+
+  transition: color 0.2s ease;
+}
+
+/* Hover */
+.nav-link:hover {
+  background: #0B6E67;
+  color: #B2DFDB;
+}
+
+.nav-link:hover svg {
+  color: #B2DFDB;
+}
+
+/* Active */
+.nav-link.active {
+  background: #0D9488;
+  color: #ffffff;
+    font-weight: 700;
+
+
+  font-weight: 650;
+}
+
+.nav-link.active svg {
+  color: #ffffff;
+}
+
+/* Click effect */
+.nav-link:active {
+  transform: scale(0.975);
+  background: #D5EAE6;
+}
+
+/* Keyboard focus */
+.nav-link:focus-visible {
+  outline: 2px solid #75C5B8;
+  outline-offset: 2px;
+}
+
+
+/* =====================================================
+   FRAME 3: FOOTER
+   Thông tin cuối Sidebar
+===================================================== */
+
+.sidebar-footer {
+  padding: 16px 10px 4px;
+
+  /* border-top: 1px solid #E5E7EB; */
+text-align: center;
+  color: #3BA69B;
+font-family: 'Roboto', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+
+/* =====================================================
+   SCROLLBAR
+   Thanh cuộn Navigation
+===================================================== */
+
+.sidebar nav::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar nav::-webkit-scrollbar-thumb {
+  background: #DCE5E3;
+  border-radius: 10px;
+}
+
+.sidebar nav::-webkit-scrollbar-thumb:hover {
+  background: #AABDB9;
+}

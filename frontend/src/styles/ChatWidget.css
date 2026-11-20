@@ -1,0 +1,25 @@
+
+/* ========================================
+   CHAT WIDGET - GLOBAL INHERITED STYLES
+======================================== */
+/* 
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
+    color: #17243b;
+    background: #f5f7fb;
+    font-synthesis: none;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+body {
+    margin: 0;
+} */

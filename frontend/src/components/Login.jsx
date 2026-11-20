@@ -1,4 +1,6 @@
+
 import React, { useState } from 'react';
+import '../styles/Login.css';
 
 export default function Login({ onLoginSuccess }) {
   const [username, setUsername] = useState('');
@@ -10,13 +12,16 @@ export default function Login({ onLoginSuccess }) {
     e.preventDefault();
     setLoading(true);
     setMessage('');
+
     try {
       const res = await fetch('https://api.dashboardg4.click/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
+
       const data = await res.json();
+
       if (res.ok && data.success) {
         localStorage.setItem('isAdminLoggedIn', 'true');
         onLoginSuccess();
@@ -31,40 +36,78 @@ export default function Login({ onLoginSuccess }) {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#0f172a' }}>
-      <div style={{ background: '#1e293b', padding: '40px', borderRadius: '12px', width: '380px', color: '#fff', boxShadow: '0 10px 25px rgba(0,0,0,0.3)' }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>🔐 Quản Trị Thư Viện UTH</h2>
-        {message && <p style={{ color: '#f87171', textAlign: 'center', fontSize: '14px', marginBottom: '15px' }}>{message}</p>}
+    <div className="login-page">
+      <div className="login-card">
 
-        <form onSubmit={handleLogin}>
-          <label style={{ display: 'block', marginBottom: '6px', fontSize: '14px' }}>Tên đăng nhập:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Ví dụ: admin1, thuthu1..."
-            required
-            style={{ width: '100%', padding: '10px', marginBottom: '15px', borderRadius: '6px', border: '1px solid #475569', background: '#0f172a', color: '#fff' }}
-          />
+        {/* HEADER */}
+        <div className="login-heading">
+          <div className="login-brand">
+            <h1>UTH LIBRARY ANALYTICS DASHBOARD</h1>
+            <span>Học Kỳ Doanh Nghiệp - Nhóm 4</span>
+          </div>
 
-          <label style={{ display: 'block', marginBottom: '6px', fontSize: '14px' }}>Mật khẩu:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="••••••"
-            required
-            style={{ width: '100%', padding: '10px', marginBottom: '20px', borderRadius: '6px', border: '1px solid #475569', background: '#0f172a', color: '#fff' }}
-          />
+          <div className="login-divider"></div>
 
-          <button type="submit" disabled={loading} style={{ width: '100%', padding: '12px', background: '#2563eb', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer' }}>
-            {loading ? 'Đang kiểm tra...' : 'Đăng Nhập Hệ Thống'}
+          <h2>Đăng nhập hệ thống</h2>
+          <p>
+            Vui lòng đăng nhập để tiếp tục sử dụng hệ thống quản lý thư viện.
+          </p>
+        </div>
+
+        {/* ERROR MESSAGE */}
+        {message && (
+          <div className="login-message">
+            {message}
+          </div>
+        )}
+
+        {/* LOGIN FORM */}
+        <form onSubmit={handleLogin} className="login-form">
+
+          <div className="login-form-group">
+            <label htmlFor="username">Tên đăng nhập</label>
+
+            <input
+              id="username"
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Nhập tên đăng nhập"
+              autoComplete="username"
+              required
+            />
+          </div>
+
+          <div className="login-form-group">
+            <label htmlFor="password">Mật khẩu</label>
+
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Nhập mật khẩu"
+              autoComplete="current-password"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="login-submit-btn"
+            disabled={loading}
+          >
+            {loading ? 'Đang kiểm tra...' : 'Đăng nhập'}
           </button>
+
         </form>
-        
-        <p style={{ marginTop: '15px', textAlign: 'center', fontSize: '12px', color: '#94a3b8' }}>
-          (Gợi ý tài khoản demo: <b>admin1</b> / <b>123456</b>)
-        </p>
+
+        {/* FOOTER */}
+        <div className="login-footer">
+          <span>BY HỌC KỲ DOANH NGHIỆP - NHÓM 4</span>
+          <p>UTH Library Analytics Dashboard</p>
+        </div>
+
       </div>
     </div>
   );

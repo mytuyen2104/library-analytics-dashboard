@@ -1,0 +1,409 @@
+.inv-container {
+  padding: 8px 0;
+  box-sizing: border-box;
+}
+
+.inv-container *,
+.inv-container *::before,
+.inv-container *::after {
+  box-sizing: inherit;
+}
+
+.inv-card {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+  border: 1px solid #e2e8f0;
+  color: #1e293b;
+}
+
+.inv-card--spaced {
+  margin-bottom: 20px;
+}
+
+.inv-card-title {
+  margin: 0;
+  color: #0f172a;
+}
+
+.inv-card-title--form {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+/* Form thêm đầu sách */
+.inv-add-form {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1.5fr 0.8fr 0.8fr auto;
+  gap: 10px;
+}
+
+.inv-input {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 14px;
+  color: #0f172a;
+  background: #ffffff;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.inv-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.inv-btn-add {
+  padding: 10px 18px;
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  white-space: nowrap;
+  transition: background-color 0.15s ease;
+}
+
+.inv-btn-add:hover {
+  background: #1d4ed8;
+}
+
+/* Header danh sách & nút lịch sử */
+.inv-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 12px;
+}
+
+.inv-history-toggle {
+  padding: 7px 14px;
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.inv-history-toggle:hover {
+  background: #e2e8f0;
+}
+
+.inv-history-toggle--active {
+  background: #0f172a;
+  color: #ffffff;
+  border-color: #0f172a;
+}
+
+.inv-history-toggle--active:hover {
+  background: #1e293b;
+}
+
+/* Khung lịch sử nhập kho */
+.inv-history-panel {
+  margin-bottom: 18px;
+  padding: 14px;
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+}
+
+.inv-history-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.inv-history-heading {
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.inv-history-clear-btn {
+  padding: 5px 10px;
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.inv-history-clear-btn:hover {
+  background: #fecaca;
+}
+
+.inv-history-empty {
+  color: #64748b;
+  font-size: 13px;
+  margin: 0;
+}
+
+.inv-history-scroll {
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.inv-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.inv-history-table thead tr {
+  border-bottom: 1px solid #cbd5e1;
+  text-align: left;
+  color: #475569;
+}
+
+.inv-history-table th,
+.inv-history-table td {
+  padding: 8px;
+}
+
+.inv-history-table tbody tr {
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.inv-history-time {
+  color: #334155;
+  font-weight: 500;
+}
+
+.inv-action-badge {
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #1d4ed8;
+  display: inline-block;
+}
+
+.inv-action-badge--new {
+  background: #dbeafe;
+}
+
+.inv-action-badge--restock {
+  background: #e0f2fe;
+}
+
+.inv-added-qty {
+  color: #059669;
+  font-weight: 700;
+}
+
+.inv-after-qty {
+  font-weight: 600;
+}
+
+.inv-history-delete-btn {
+  padding: 3px 8px;
+  background: transparent;
+  color: #dc2626;
+  border: 1px solid #fca5a5;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.inv-history-delete-btn:hover {
+  background: #fef2f2;
+}
+
+.inv-text-right {
+  text-align: right;
+}
+
+/* Thanh tìm kiếm & bộ lọc */
+.inv-toolbar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.inv-search-input {
+  flex: 1;
+  min-width: 240px;
+}
+
+.inv-filter-group {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.inv-filter-btn {
+  padding: 9px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.inv-filter-btn--all {
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  color: #475569;
+}
+
+.inv-filter-btn--all.is-active {
+  background: #0f172a;
+  color: #ffffff;
+  border-color: #0f172a;
+}
+
+.inv-filter-btn--out {
+  border: 1px solid #fca5a5;
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.inv-filter-btn--out.is-active {
+  background: #dc2626;
+  color: #ffffff;
+  border-color: #dc2626;
+}
+
+.inv-filter-btn--under10 {
+  border: 1px solid #fcd34d;
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.inv-filter-btn--under10.is-active {
+  background: #d97706;
+  color: #ffffff;
+  border-color: #d97706;
+}
+
+/* Bảng tồn kho chính */
+.inv-table-scroll {
+  max-height: 460px;
+  overflow-y: auto;
+}
+
+.inv-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.inv-table thead tr {
+  border-bottom: 2px solid #e2e8f0;
+  text-align: left;
+  color: #475569;
+}
+
+.inv-table th {
+  padding: 12px 10px;
+}
+
+.inv-table td {
+  padding: 10px;
+}
+
+.inv-table tbody tr {
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.inv-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.inv-table-empty {
+  padding: 20px;
+  text-align: center;
+  color: #64748b;
+}
+
+.inv-code-cell {
+  font-weight: 600;
+}
+
+.inv-author-cell {
+  color: #475569;
+}
+
+/* Badge trạng thái tồn kho */
+.inv-stock-badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 13px;
+  display: inline-block;
+}
+
+.inv-stock-badge--out {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.inv-stock-badge--low {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.inv-stock-badge--ok {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.inv-btn-restock {
+  padding: 6px 12px;
+  background: #0284c7;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  transition: background-color 0.15s ease;
+}
+
+.inv-btn-restock:hover {
+  background: #0369a1;
+}
+
+/* Responsive cho màn hình nhỏ khi nhúng vào layout quản trị */
+@media (max-width: 1024px) {
+  .inv-add-form {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .inv-btn-add {
+    grid-column: span 3;
+  }
+}
+
+@media (max-width: 640px) {
+  .inv-add-form {
+    grid-template-columns: 1fr;
+  }
+
+  .inv-btn-add {
+    grid-column: span 1;
+  }
+
+  .inv-list-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

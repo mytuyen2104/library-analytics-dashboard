@@ -2,19 +2,20 @@ import React, { useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Sidebar from './components/Sidebar.jsx';
 import Header from './components/Header.jsx';
-import Overview from './pages/Overview.jsx';
-import Borrowing from './pages/Borrowing.jsx';
-import ElectronicAccess from './pages/ElectronicAccess.jsx';
-import DemandAnalysis from './pages/DemandAnalysis.jsx';
-import Acquisition from './pages/Acquisition.jsx';
-import LogDetails from './pages/LogDetails.jsx';
+// import Overview from './components/Overview.jsx';
+// import Borrowing from './components/Borrowing.jsx';
+// import ElectronicAccess from './pages/ElectronicAccess.jsx';
+// import DemandAnalysis from './pages/DemandAnalysis.jsx';
+// import Acquisition from './pages/Acquisition.jsx';
+// import LogDetails from './pages/LogDetails.jsx';
 import Home from './pages/Home.jsx';
 import About from './pages/About.jsx';
-import LoanManagement from './pages/LoanManagement';
-import InventoryManagement from './pages/InventoryManagement';
+import Management from './pages/Management.jsx';
+// import LoanManagement from './pages/LoanManagement';
+// import InventoryManagement from './pages/InventoryManagement';
 import ChatWidget from './components/ChatWidget';
 import Login from './components/Login';
-import ReaderManagement from './pages/ReaderManagement';
+// import ReaderManagement from './pages/ReaderManagement';
 
 const headings = {
   '/overview': ['TỔNG QUAN THƯ VIỆN', 'Theo dõi các chỉ số hoạt động của thư viện'],
@@ -49,13 +50,36 @@ export default function App() {
   }
 
   // Trang chủ và trang Giới thiệu (truyền onLogout vào Home)
-  if (pathname === '/' || pathname === '/about') {
+if (
+  pathname === '/' ||
+  pathname === '/about' ||
+  pathname === '/management' ||
+  [
+    '/overview',
+    '/borrowing',
+    '/electronic-access',
+    '/demand-analysis',
+    '/acquisition',
+    '/log-details'
+  ].includes(pathname)
+)
+ {
     return (
-      <Routes>
-        <Route path="/" element={<Home onLogout={handleLogout} />} />
-        <Route path="/about" element={<About onLogout={handleLogout} />} />
-      </Routes>
-    );
+  <Routes>
+    <Route path="/" element={<Home onLogout={handleLogout} />} />
+    <Route path="/about" element={<About onLogout={handleLogout} />} />
+<Route
+  path="/management"
+  element={<Management onLogout={handleLogout} />}
+/>
+    <Route path="/overview" element={<Home onLogout={handleLogout} />} />
+    <Route path="/borrowing" element={<Home onLogout={handleLogout} />} />
+    <Route path="/electronic-access" element={<Home onLogout={handleLogout} />} />
+    <Route path="/demand-analysis" element={<Home onLogout={handleLogout} />} />
+    <Route path="/acquisition" element={<Home onLogout={handleLogout} />} />
+    <Route path="/log-details" element={<Home onLogout={handleLogout} />} />
+  </Routes>
+);
   }
 
   // Các trang Dashboard quản trị bên trong (truyền onLogout vào Header)
@@ -68,12 +92,7 @@ export default function App() {
         <Header title={title} subtitle={subtitle} onLogout={handleLogout} />
         <main className="content">
           <Routes>
-            <Route path="/overview" element={<Overview />} />
-            <Route path="/borrowing" element={<Borrowing />} />
-            <Route path="/electronic-access" element={<ElectronicAccess />} />
-            <Route path="/demand-analysis" element={<DemandAnalysis />} />
-            <Route path="/acquisition" element={<Acquisition />} />
-            <Route path="/log-details" element={<LogDetails />} />
+            
             <Route path="/loan-management" element={<LoanManagement />} />
             <Route path="/inventory-management" element={<InventoryManagement />} />
             <Route path="/reader-management" element={<ReaderManagement />} />

@@ -1,0 +1,350 @@
+/* ========================================
+   LOAN MANAGEMENT COMPONENT
+   Styles riêng cho tab Quản lý mượn - trả
+======================================== */
+
+.loan-management {
+  width: 100%;
+  padding: 8px 0;
+  box-sizing: border-box;
+  color: #1e293b;
+}
+
+.loan-management *,
+.loan-management *::before,
+.loan-management *::after {
+  box-sizing: border-box;
+}
+
+/* Thông báo */
+.loan-message {
+  padding: 12px 16px;
+  background: #dbeafe;
+  color: #1e40af;
+  border: 1px solid #93c5fd;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+/* Bố cục hai cột */
+.loan-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  gap: 24px;
+  align-items: start;
+  width: 100%;
+}
+
+/* Khung nội dung */
+.loan-card {
+  min-width: 0;
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+  border: 1px solid #e2e8f0;
+  color: #1e293b;
+}
+
+.loan-section-title {
+  margin: 0 0 16px;
+  color: #0f172a;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.loan-return-title {
+  margin-bottom: 12px;
+}
+
+/* Form tạo phiếu */
+.loan-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.loan-form-group {
+  min-width: 0;
+  flex: 1;
+}
+
+.loan-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.loan-input {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 14px;
+  color: #0f172a;
+  background: #ffffff;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.loan-input:focus {
+  border-color: #16877f;
+  box-shadow: 0 0 0 3px rgba(22, 135, 127, 0.12);
+}
+
+.loan-input::placeholder {
+  color: #94a3b8;
+}
+
+.loan-form-row {
+  display: flex;
+  gap: 12px;
+}
+
+.loan-readonly {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+/* Nút tạo phiếu */
+.loan-submit-btn {
+  margin-top: 6px;
+  padding: 12px;
+  background: #2563eb;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.loan-submit-btn:hover {
+  background: #1d4ed8;
+}
+
+.loan-submit-btn:active,
+.loan-return-btn:active,
+.loan-filter-btn:active {
+  transform: scale(0.98);
+}
+
+/* Phiếu mượn vừa tạo */
+.loan-receipt {
+  margin-top: 20px;
+  padding: 16px;
+  background: #ecfdf5;
+  border: 1px solid #6ee7b7;
+  border-radius: 10px;
+  color: #065f46;
+  font-size: 14px;
+}
+
+.loan-receipt h4 {
+  margin: 0 0 8px;
+}
+
+.loan-receipt p {
+  margin: 4px 0;
+}
+
+/* Thanh tìm kiếm và bộ lọc */
+.loan-toolbar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.loan-search-input {
+  flex: 1;
+  min-width: 220px;
+  margin-top: 0;
+}
+
+.loan-filter-group {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.loan-filter-btn {
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+/* Bộ lọc tất cả */
+.loan-filter-all {
+  background: #f8fafc;
+  color: #475569;
+}
+
+.loan-filter-all.active {
+  background: #0f172a;
+  color: #ffffff;
+}
+
+/* Bộ lọc chưa trả */
+.loan-filter-unreturned {
+  border-color: #fcd34d;
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.loan-filter-unreturned.active {
+  background: #d97706;
+  color: #ffffff;
+}
+
+/* Bộ lọc đã trả */
+.loan-filter-returned {
+  border-color: #6ee7b7;
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.loan-filter-returned.active {
+  background: #059669;
+  color: #ffffff;
+}
+
+/* Bảng mượn trả */
+.loan-table-wrapper {
+  width: 100%;
+  max-height: 480px;
+  overflow: auto;
+}
+
+.loan-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  color: #1e293b;
+}
+
+.loan-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #ffffff;
+}
+
+.loan-table th {
+  padding: 10px 8px;
+  border-bottom: 2px solid #e2e8f0;
+  text-align: left;
+  color: #475569;
+  white-space: nowrap;
+}
+
+.loan-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+.loan-id-cell {
+  font-weight: 600;
+}
+
+.loan-subtext {
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* Trạng thái phiếu */
+.loan-status {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.loan-status.returned {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.loan-status.unreturned {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+/* Nút trả sách */
+.loan-return-btn {
+  padding: 6px 12px;
+  background: #10b981;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.loan-return-btn:hover {
+  background: #059669;
+}
+
+.loan-returned-date {
+  font-size: 12px;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .loan-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .loan-card {
+    padding: 16px;
+  }
+
+  .loan-form-row {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .loan-toolbar {
+    align-items: stretch;
+  }
+
+  .loan-search-input {
+    min-width: 100%;
+  }
+
+  .loan-filter-group {
+    width: 100%;
+  }
+
+  .loan-filter-btn {
+    flex: 1;
+    padding: 9px 8px;
+  }
+
+  .loan-table-wrapper {
+    overflow-x: auto;
+  }
+
+  .loan-table {
+    min-width: 720px;
+  }
+}

@@ -1,0 +1,519 @@
+.rm-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+}
+
+.rm-container *,
+.rm-container *::before,
+.rm-container *::after {
+  box-sizing: inherit;
+}
+
+/* Thông báo trạng thái */
+.rm-alert {
+  padding: 12px 16px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.rm-alert--success {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.rm-alert--error {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.rm-alert-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.rm-alert-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  padding: 2px;
+}
+
+/* Thẻ KPI */
+.rm-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.rm-kpi-card {
+  background: #ffffff;
+  padding: 16px 20px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+}
+
+.rm-kpi-label {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.rm-kpi-value {
+  font-size: 26px;
+  margin-top: 4px;
+}
+
+.rm-kpi-value--total {
+  color: #0f172a;
+}
+
+.rm-kpi-value--student {
+  color: #2563eb;
+}
+
+.rm-kpi-value--lecturer {
+  color: #059669;
+}
+
+.rm-kpi-value--borrowing {
+  color: #d97706;
+}
+
+/* Panel & tiêu đề khu vực */
+.rm-panel {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.rm-section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.rm-section-header--compact {
+  margin-bottom: 0;
+}
+
+.rm-section-title {
+  margin: 0;
+  font-size: 16px;
+  color: #0f172a;
+}
+
+.rm-icon-sky {
+  color: #0284c7;
+  flex-shrink: 0;
+}
+
+.rm-icon-dark {
+  color: #0f172a;
+  flex-shrink: 0;
+}
+
+/* Form cấp thẻ mới */
+.rm-add-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  align-items: end;
+}
+
+.rm-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: #475569;
+  margin-bottom: 6px;
+}
+
+.rm-input {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 14px;
+  color: #0f172a;
+  background: #ffffff;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.rm-input:focus {
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
+}
+
+.rm-btn-primary {
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  background: #0284c7;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  height: 40px;
+  transition: background-color 0.15s ease;
+}
+
+.rm-btn-primary:hover:not(:disabled) {
+  background: #0369a1;
+}
+
+.rm-btn-primary:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Header danh sách & thanh công cụ */
+.rm-list-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.rm-toolbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.rm-search-box {
+  position: relative;
+}
+
+.rm-search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+.rm-search-input {
+  padding-left: 32px;
+  width: 210px;
+}
+
+.rm-filter-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rm-filter-icon {
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.rm-filter-select {
+  width: 165px;
+}
+
+.rm-btn-export {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 14px;
+  border-radius: 8px;
+  border: 1px solid #16a34a;
+  background: #f0fdf4;
+  color: #15803d;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.rm-btn-export:hover {
+  background: #dcfce7;
+}
+
+/* Bảng dữ liệu */
+.rm-table-scroll {
+  overflow-x: auto;
+}
+
+.rm-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.rm-table--compact {
+  font-size: 13px;
+}
+
+.rm-table thead tr {
+  background: #f8fafc;
+  border-bottom: 2px solid #e2e8f0;
+  text-align: left;
+}
+
+.rm-table--compact thead tr {
+  border-bottom-width: 1px;
+}
+
+.rm-table th {
+  padding: 12px;
+  color: #475569;
+  font-weight: 600;
+}
+
+.rm-table td {
+  padding: 12px;
+  color: #334155;
+}
+
+.rm-table tbody tr {
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.rm-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.rm-table-empty {
+  padding: 24px;
+  text-align: center;
+  color: #64748b;
+}
+
+.rm-code-cell {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.rm-book-title-cell {
+  font-weight: 500;
+}
+
+.rm-text-right {
+  text-align: right;
+}
+
+/* Badge loại độc giả & trạng thái mượn */
+.rm-role-badge {
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.rm-role-badge--student {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.rm-role-badge--lecturer {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.rm-borrowing-active {
+  color: #d97706;
+  font-weight: 600;
+}
+
+.rm-borrowing-none {
+  color: #64748b;
+}
+
+.rm-status-badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.rm-status-badge--returned {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.rm-status-badge--borrowing {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+/* Nút thao tác hàng */
+.rm-action-group {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.rm-btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+.rm-btn-action:hover {
+  filter: brightness(0.97);
+}
+
+.rm-btn-action--history {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.rm-btn-action--edit {
+  background: #f8fafc;
+  color: #334155;
+}
+
+/* Modal */
+.rm-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.rm-modal-box {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 22px;
+  width: 100%;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.rm-modal-box--sm {
+  max-width: 440px;
+}
+
+.rm-modal-box--lg {
+  max-width: 680px;
+}
+
+.rm-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.rm-modal-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rm-modal-title {
+  margin: 0;
+  font-size: 17px;
+  color: #0f172a;
+}
+
+.rm-modal-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #475569;
+  display: inline-flex;
+  align-items: center;
+  padding: 4px;
+}
+
+.rm-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.rm-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.rm-btn-cancel {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.rm-btn-save {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  background: #0284c7;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.rm-btn-save:hover {
+  background: #0369a1;
+}
+
+.rm-modal-status {
+  text-align: center;
+  color: #64748b;
+  margin: 0;
+}
+
+.rm-modal-status--padded {
+  padding: 20px 0;
+}
+
+.rm-history-scroll {
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+@media (max-width: 640px) {
+  .rm-search-input,
+  .rm-filter-select {
+    width: 100%;
+  }
+
+  .rm-search-box,
+  .rm-filter-box,
+  .rm-btn-export {
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -1,3 +1,4 @@
+import '../styles/MetabaseKPI.css';
 export default function MetabaseKPI({ title, url }) {
   return (
     <article className="overview-kpi-card">
