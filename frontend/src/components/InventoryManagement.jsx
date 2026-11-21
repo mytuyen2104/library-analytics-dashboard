@@ -81,6 +81,47 @@ export default function InventoryManagement() {
     setHistory([]);
   };
 
+  const handleExportHistoryCSV = () => {
+    if (!history || history.length === 0) {
+      alert('Chưa có dữ liệu lịch sử để tải về!');
+      return;
+    }
+
+    const headers = [
+      'Thời gian',
+      'Thao tác',
+      'Mã sách',
+      'Tên sách',
+      'Số lượng thêm',
+      'Tồn sau nhập',
+    ];
+
+    const rows = history.map((item) => [
+      `"${item.thoiGian || ''}"`,
+      `"${item.loaiHanhDong || ''}"`,
+      `"${item.maSach || ''}"`,
+      `"${(item.tenSach || '').replace(/"/g, '""')}"`,
+      `"${item.soLuongThem ?? 0}"`,
+      `"${item.tonSauNhap ?? 0}"`,
+    ]);
+
+    const csvContent =
+      '\uFEFF' +
+      [headers.join(','), ...rows.map((row) => row.join(','))].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    const today = new Date().toISOString().slice(0, 10);
+
+    link.href = url;
+    link.setAttribute('download', `Nhat_Ky_Nhap_Kho_${today}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   const handleAddNewBook = async (e) => {
     e.preventDefault();
     const res = await fetch(`${API_URL}/sach`, {
@@ -231,13 +272,22 @@ export default function InventoryManagement() {
             <div className="inv-history-toolbar">
               <strong className="inv-history-heading">Nhật ký Thêm / Nhập Bổ Sung Kho Sách</strong>
               {history.length > 0 && (
-                <button
-                  type="button"
-                  onClick={handleClearAllHistory}
-                  className="inv-history-clear-btn"
-                >
-                   Xóa tất cả lịch sử
-                </button>
+                <div className="inv-history-actions">
+                  <button
+                    type="button"
+                    onClick={handleExportHistoryCSV}
+                    className="inv-history-export-btn"
+                  >
+                    Tải lịch sử (.CSV)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleClearAllHistory}
+                    className="inv-history-clear-btn"
+                  >
+                    Xóa tất cả lịch sử
+                  </button>
+                </div>
               )}
             </div>
 

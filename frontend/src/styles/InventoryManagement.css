@@ -103,7 +103,6 @@
   background: #0B6E67;
   color: #fff;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-
 }
 
 .inv-history-toggle--active {
@@ -138,6 +137,29 @@
   color: #0f172a;
 }
 
+.inv-history-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.inv-history-export-btn {
+  padding: 5px 10px;
+  background: #007F82;
+  color: #ffffff;
+  border: 1px solid #007F82;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.inv-history-export-btn:hover {
+  background: #0B6E67;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+}
+
 .inv-history-clear-btn {
   padding: 5px 10px;
   background: #B90F0F;
@@ -152,7 +174,6 @@
 .inv-history-clear-btn:hover {
   background: #FF0000;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-
 }
 
 .inv-history-empty {
@@ -278,7 +299,6 @@
   color: #ffffff;
   border-color: #085750;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-
 }
 
 .inv-filter-btn--out {
@@ -292,7 +312,6 @@
   color: #f8fafc;
   border-color: #085750;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-
 }
 
 .inv-filter-btn--under10 {
@@ -306,14 +325,12 @@
   color: #f8fafc;
   border-color: #085750;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-
 }
 
 /* Bảng tồn kho chính */
 .inv-table-scroll {
   max-height: 460px;
   overflow-y: auto;
-
 }
 
 .inv-table {
@@ -329,7 +346,6 @@
   position: sticky;
   top: 0;
   z-index: 2;
-
 }
 
 .inv-table thead tr {
@@ -348,10 +364,8 @@
 
 .inv-table td {
   padding: 10px;
-
   vertical-align: middle;
   overflow: hidden;
-
 }
 
 .inv-table tbody tr {
@@ -406,8 +420,9 @@
 .inv-table td:nth-child(6) {
   width: 10%;
 }
-.inv-table th:nth-child(6),
-.inv-table td:nth-child(6) {
+
+.inv-table th:nth-child(7),
+.inv-table td:nth-child(7) {
   width: 20%;
 }
 
