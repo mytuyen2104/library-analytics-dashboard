@@ -132,6 +132,8 @@ GEMINI_API_KEY=your_gemini_api_key
 ADMIN_ACCOUNTS=admin1:123456,admin2:123456,thuthu1:123456
 PORT=5000
 ```
+
+Tài khoản GG để gửi email thông báo cho user: thuviendashboard@gmail.com, thuvien@123
 Mở Terminal tại thư mục `backend/` và chạy:
 ```bash
 cd backend

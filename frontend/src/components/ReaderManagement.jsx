@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Users, UserPlus, Search, Download, Edit3, History,
-  CheckCircle2, AlertCircle, X, BookOpen, Filter
+  Users, UserPlus, Search, Download, Edit3, History, Trash2, BellRing,
+  CheckCircle2, AlertCircle, X, BookOpen, Filter, IdCard, Mail, Phone, Hash, Calendar
 } from 'lucide-react';
 import '../styles/ReaderManagement.css';
 
@@ -19,9 +19,17 @@ export default function ReaderManagement() {
 
   // Form thêm mới
   const [maDocGia, setMaDocGia] = useState('');
+  const [hoTen, setHoTen] = useState('');
+  const [maSvNv, setMaSvNv] = useState('');
+  const [email, setEmail] = useState('');
+  const [soDienThoai, setSoDienThoai] = useState('');
   const [loaiDocGia, setLoaiDocGia] = useState('Sinh viên');
   const [ngayDangKy, setNgayDangKy] = useState(new Date().toISOString().split('T')[0]);
   const [submitting, setSubmitting] = useState(false);
+  const [sendingNoticeId, setSendingNoticeId] = useState(null);
+
+  // Modal xem chi tiết thẻ thông tin cá nhân khi bấm vào Mã độc giả
+  const [selectedReader, setSelectedReader] = useState(null);
 
   // Modal sửa độc giả
   const [editingReader, setEditingReader] = useState(null);
@@ -64,6 +72,10 @@ export default function ReaderManagement() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           MaDocGia: maDocGia,
+          HoTen: hoTen,
+          MaSV_NV: maSvNv,
+          Email: email,
+          SoDienThoai: soDienThoai,
           LoaiDocGia: loaiDocGia,
           NgayDangKy: ngayDangKy,
         }),
@@ -71,8 +83,12 @@ export default function ReaderManagement() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Thêm độc giả thất bại');
 
-      setMessage({ type: 'success', text: `Đã cấp thẻ độc giả ${data.MaDocGia} thành công!` });
+      setMessage({ type: 'success', text: data.message || `Đã cấp thẻ độc giả ${data.MaDocGia} thành công!` });
       setMaDocGia('');
+      setHoTen('');
+      setMaSvNv('');
+      setEmail('');
+      setSoDienThoai('');
       setLoaiDocGia('Sinh viên');
       fetchReaders();
     } catch (err) {
@@ -91,6 +107,10 @@ export default function ReaderManagement() {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          HoTen: editingReader.HoTen || '',
+          MaSV_NV: editingReader.MaSV_NV || '',
+          Email: editingReader.Email || '',
+          SoDienThoai: editingReader.SoDienThoai || '',
           LoaiDocGia: editingReader.LoaiDocGia,
           NgayDangKy: editingReader.NgayDangKy,
         }),
@@ -103,6 +123,45 @@ export default function ReaderManagement() {
       fetchReaders();
     } catch (err) {
       setMessage({ type: 'error', text: err.message });
+    }
+  };
+
+  const handleDeleteReader = async (reader) => {
+    const displayName = reader.HoTen ? `${reader.MaDocGia} (${reader.HoTen})` : reader.MaDocGia;
+    if (!window.confirm(`Bạn có chắc chắn muốn xóa thẻ độc giả ${displayName} không?`)) {
+      return;
+    }
+
+    setMessage({ type: '', text: '' });
+    try {
+      const res = await fetch(`${API_BASE}/doc-gia/${reader.MaDocGia}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Xóa độc giả thất bại');
+
+      setMessage({ type: 'success', text: data.message });
+      fetchReaders();
+    } catch (err) {
+      setMessage({ type: 'error', text: err.message });
+    }
+  };
+
+  const handleSendNotice = async (reader) => {
+    setSendingNoticeId(reader.MaDocGia);
+    setMessage({ type: '', text: '' });
+    try {
+      const res = await fetch(`${API_BASE}/doc-gia/${reader.MaDocGia}/nhac-han`, {
+        method: 'POST',
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Gửi thông báo thất bại');
+
+      setMessage({ type: 'success', text: data.message });
+    } catch (err) {
+      setMessage({ type: 'error', text: err.message });
+    } finally {
+      setSendingNoticeId(null);
     }
   };
 
@@ -121,13 +180,29 @@ export default function ReaderManagement() {
   const handleExportCSV = () => {
     if (readers.length === 0) return;
 
-    const headers = ['Mã Độc Giả', 'Loại Độc Giả', 'Ngày Đăng Ký', 'Tổng Lượt Mượn', 'Sách Đang Giữ'];
+    const headers = [
+      'Mã Độc Giả',
+      'Họ và Tên',
+      'Mã SV / Mã NV',
+      'Email',
+      'Số Điện Thoại',
+      'Loại Độc Giả',
+      'Ngày Đăng Ký',
+      'Tổng Lượt Mượn',
+      'Sách Đang Giữ',
+      'Sách Quá Hạn',
+    ];
     const rows = readers.map((r) => [
       r.MaDocGia,
+      r.HoTen || '',
+      r.MaSV_NV || '',
+      r.Email || '',
+      r.SoDienThoai || '',
       r.LoaiDocGia,
       r.NgayDangKy,
       r.TongLuotMuon || 0,
       r.DangMuon || 0,
+      r.QuaHan || 0,
     ]);
 
     const csvContent =
@@ -205,9 +280,53 @@ export default function ReaderManagement() {
             <label className="rm-label">Mã độc giả (để trống tự sinh DGxxxx)</label>
             <input
               type="text"
-              placeholder="VD: DG0081 hoặc MSSV..."
+              placeholder="VD: DG0081..."
               value={maDocGia}
               onChange={(e) => setMaDocGia(e.target.value)}
+              className="rm-input"
+            />
+          </div>
+
+          <div>
+            <label className="rm-label">Họ và tên</label>
+            <input
+              type="text"
+              placeholder="VD: Nguyễn Văn A"
+              value={hoTen}
+              onChange={(e) => setHoTen(e.target.value)}
+              className="rm-input"
+            />
+          </div>
+
+          <div>
+            <label className="rm-label">Mã sinh viên / Mã NV</label>
+            <input
+              type="text"
+              placeholder="VD: 2251120001"
+              value={maSvNv}
+              onChange={(e) => setMaSvNv(e.target.value)}
+              className="rm-input"
+            />
+          </div>
+
+          <div>
+            <label className="rm-label">Email</label>
+            <input
+              type="email"
+              placeholder="VD: sinhvien@ut.edu.vn"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="rm-input"
+            />
+          </div>
+
+          <div>
+            <label className="rm-label">Số điện thoại</label>
+            <input
+              type="tel"
+              placeholder="VD: 0901234567"
+              value={soDienThoai}
+              onChange={(e) => setSoDienThoai(e.target.value)}
               className="rm-input"
             />
           </div>
@@ -256,7 +375,7 @@ export default function ReaderManagement() {
               <Search size={16} className="rm-search-icon" />
               <input
                 type="text"
-                placeholder="Tìm mã độc giả..."
+                placeholder="Tìm mã ĐG, họ tên, MSSV, SĐT..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="rm-input rm-search-input"
@@ -292,6 +411,8 @@ export default function ReaderManagement() {
             <thead>
               <tr>
                 <th>Mã Độc Giả</th>
+                <th>Họ và Tên</th>
+                <th>Mã SV / NV</th>
                 <th>Loại Độc Giả</th>
                 <th>Ngày Đăng Ký</th>
                 <th>Tổng Lượt Mượn</th>
@@ -302,26 +423,40 @@ export default function ReaderManagement() {
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan={6} className="rm-table-empty">
+                  <td colSpan={8} className="rm-table-empty">
                     Đang tải dữ liệu độc giả...
                   </td>
                 </tr>
               ) : readers.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="rm-table-empty">
+                  <td colSpan={8} className="rm-table-empty">
                     Không tìm thấy độc giả nào phù hợp.
                   </td>
                 </tr>
               ) : (
                 readers.map((r) => (
                   <tr key={r.MaDocGia}>
-                    <td className="rm-code-cell">{r.MaDocGia}</td>
+                    <td className="rm-code-cell">
+                      <button
+                        type="button"
+                        onClick={() => setSelectedReader(r)}
+                        title="Bấm để xem thẻ thông tin cá nhân"
+                        className="rm-code-link"
+                      >
+                        {r.MaDocGia}
+                      </button>
+                    </td>
+                    <td className="rm-book-title-cell">
+                      {r.HoTen || <span className="rm-text-muted">Chưa cập nhật</span>}
+                    </td>
+                    <td>{r.MaSV_NV || '—'}</td>
                     <td>
                       <span
-                        className={`rm-role-badge ${r.LoaiDocGia === 'Giảng viên'
+                        className={`rm-role-badge ${
+                          r.LoaiDocGia === 'Giảng viên'
                             ? 'rm-role-badge--lecturer'
                             : 'rm-role-badge--student'
-                          }`}
+                        }`}
                       >
                         {r.LoaiDocGia}
                       </span>
@@ -329,7 +464,14 @@ export default function ReaderManagement() {
                     <td>{r.NgayDangKy}</td>
                     <td>{r.TongLuotMuon || 0} lượt</td>
                     <td>
-                      {Number(r.DangMuon) > 0 ? (
+                      {Number(r.QuaHan) > 0 ? (
+                        <span
+                          className="rm-status-badge rm-status-badge--overdue"
+                          title="Độc giả đang bị khóa quyền mượn do có sách quá hạn"
+                        >
+                          {r.DangMuon} cuốn ({r.QuaHan} quá hạn - Khóa)
+                        </span>
+                      ) : Number(r.DangMuon) > 0 ? (
                         <span className="rm-borrowing-active">{r.DangMuon} cuốn</span>
                       ) : (
                         <span className="rm-borrowing-none">0 cuốn</span>
@@ -337,6 +479,32 @@ export default function ReaderManagement() {
                     </td>
                     <td className="rm-text-right">
                       <div className="rm-action-group">
+                        {Number(r.DangMuon) > 0 && (
+                          <button
+                            type="button"
+                            disabled={sendingNoticeId === r.MaDocGia}
+                            onClick={() => handleSendNotice(r)}
+                            title={
+                              Number(r.QuaHan) > 0
+                                ? 'Gửi email cảnh báo sách quá hạn'
+                                : 'Gửi email nhắc hạn trả sách'
+                            }
+                            className={`rm-btn-action ${
+                              Number(r.QuaHan) > 0
+                                ? 'rm-btn-action--notice-overdue'
+                                : 'rm-btn-action--notice-normal'
+                            }`}
+                          >
+                            <BellRing size={15} />
+                            <span>
+                              {sendingNoticeId === r.MaDocGia
+                                ? 'Đang gửi...'
+                                : Number(r.QuaHan) > 0
+                                  ? 'Báo quá hạn'
+                                  : 'Nhắc hạn'}
+                            </span>
+                          </button>
+                        )}
                         <button
                           type="button"
                           onClick={() => handleViewHistory(r)}
@@ -355,6 +523,15 @@ export default function ReaderManagement() {
                           <Edit3 size={15} />
                           <span>Sửa</span>
                         </button>
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteReader(r)}
+                          title="Xóa thẻ độc giả"
+                          className="rm-btn-action rm-btn-action--delete"
+                        >
+                          <Trash2 size={15} />
+                          <span>Xóa</span>
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -365,10 +542,128 @@ export default function ReaderManagement() {
         </div>
       </div>
 
+      {/* Modal Thẻ thông tin cá nhân chi tiết (Mở khi bấm vào Mã độc giả) */}
+      {selectedReader && (
+        <div className="rm-modal-backdrop" onClick={() => setSelectedReader(null)}>
+          <div className="rm-modal-box rm-modal-box--md" onClick={(e) => e.stopPropagation()}>
+            <div className="rm-modal-header">
+              <div className="rm-modal-title-group">
+                <IdCard size={22} className="rm-icon-sky" />
+                <h3 className="rm-modal-title">Thẻ Thông Tin Độc Giả</h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedReader(null)}
+                className="rm-modal-close"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className="rm-profile-card">
+              <div className="rm-profile-banner">
+                <div className="rm-profile-avatar">
+                  {(selectedReader.HoTen || selectedReader.MaDocGia).charAt(0).toUpperCase()}
+                </div>
+                <div>
+                  <h4 className="rm-profile-name">
+                    {selectedReader.HoTen || 'Chưa cập nhật họ tên'}
+                  </h4>
+                  <div className="rm-profile-badges">
+                    <span className="rm-profile-code">{selectedReader.MaDocGia}</span>
+                    <span className="rm-role-badge rm-role-badge--student">
+                      {selectedReader.LoaiDocGia}
+                    </span>
+                    {Number(selectedReader.QuaHan) > 0 && (
+                      <span className="rm-status-badge rm-status-badge--overdue">
+                        Khóa mượn ({selectedReader.QuaHan} quá hạn)
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="rm-profile-grid">
+                <div className="rm-profile-item">
+                  <span className="rm-profile-item-label">
+                    <Hash size={14} /> Mã sinh viên / Mã NV
+                  </span>
+                  <strong className="rm-profile-item-value">
+                    {selectedReader.MaSV_NV || 'Chưa cập nhật'}
+                  </strong>
+                </div>
+
+                <div className="rm-profile-item">
+                  <span className="rm-profile-item-label">
+                    <Calendar size={14} /> Ngày đăng ký thẻ
+                  </span>
+                  <strong className="rm-profile-item-value">{selectedReader.NgayDangKy}</strong>
+                </div>
+
+                <div className="rm-profile-item">
+                  <span className="rm-profile-item-label">
+                    <Mail size={14} /> Email liên hệ
+                  </span>
+                  <strong className="rm-profile-item-value">
+                    {selectedReader.Email || 'Chưa cập nhật'}
+                  </strong>
+                </div>
+
+                <div className="rm-profile-item">
+                  <span className="rm-profile-item-label">
+                    <Phone size={14} /> Số điện thoại
+                  </span>
+                  <strong className="rm-profile-item-value">
+                    {selectedReader.SoDienThoai || 'Chưa cập nhật'}
+                  </strong>
+                </div>
+              </div>
+
+              <div className="rm-profile-stats">
+                <div className="rm-profile-stat-box">
+                  <span>Tổng lượt đã mượn</span>
+                  <strong>{selectedReader.TongLuotMuon || 0} lượt</strong>
+                </div>
+                <div className="rm-profile-stat-box">
+                  <span>Sách đang giữ hiện tại</span>
+                  <strong>{selectedReader.DangMuon || 0} cuốn</strong>
+                </div>
+              </div>
+            </div>
+
+            <div className="rm-modal-footer">
+              <button
+                type="button"
+                onClick={() => {
+                  const target = selectedReader;
+                  setSelectedReader(null);
+                  handleViewHistory(target);
+                }}
+                className="rm-btn-action rm-btn-action--history"
+              >
+                <History size={15} />
+                <span>Xem lịch sử mượn</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  const target = { ...selectedReader };
+                  setSelectedReader(null);
+                  setEditingReader(target);
+                }}
+                className="rm-btn-save"
+              >
+                Chỉnh sửa thông tin
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Modal Sửa thông tin độc giả */}
       {editingReader && (
         <div className="rm-modal-backdrop">
-          <div className="rm-modal-box rm-modal-box--sm">
+          <div className="rm-modal-box rm-modal-box--md">
             <div className="rm-modal-header">
               <h3 className="rm-modal-title">Cập nhật độc giả: {editingReader.MaDocGia}</h3>
               <button
@@ -380,27 +675,69 @@ export default function ReaderManagement() {
               </button>
             </div>
             <form onSubmit={handleUpdateReader} className="rm-modal-form">
-              <div>
-                <label className="rm-label">Loại độc giả</label>
-                <select
-                  value={editingReader.LoaiDocGia}
-                  onChange={(e) => setEditingReader({ ...editingReader, LoaiDocGia: e.target.value })}
-                  className="rm-input"
-                >
-                  <option value="Sinh viên">Sinh viên</option>
-                  <option value="Giảng viên">Giảng viên</option>
-                  <option value="Cán bộ nhân viên">Cán bộ nhân viên</option>
-                </select>
-              </div>
-              <div>
-                <label className="rm-label">Ngày đăng ký</label>
-                <input
-                  type="date"
-                  value={editingReader.NgayDangKy}
-                  onChange={(e) => setEditingReader({ ...editingReader, NgayDangKy: e.target.value })}
-                  className="rm-input"
-                  required
-                />
+              <div className="rm-modal-grid">
+                <div>
+                  <label className="rm-label">Họ và tên</label>
+                  <input
+                    type="text"
+                    placeholder="VD: Nguyễn Văn A"
+                    value={editingReader.HoTen || ''}
+                    onChange={(e) => setEditingReader({ ...editingReader, HoTen: e.target.value })}
+                    className="rm-input"
+                  />
+                </div>
+                <div>
+                  <label className="rm-label">Mã sinh viên / Mã NV</label>
+                  <input
+                    type="text"
+                    placeholder="VD: 2251120001"
+                    value={editingReader.MaSV_NV || ''}
+                    onChange={(e) => setEditingReader({ ...editingReader, MaSV_NV: e.target.value })}
+                    className="rm-input"
+                  />
+                </div>
+                <div>
+                  <label className="rm-label">Email</label>
+                  <input
+                    type="email"
+                    placeholder="VD: sinhvien@ut.edu.vn"
+                    value={editingReader.Email || ''}
+                    onChange={(e) => setEditingReader({ ...editingReader, Email: e.target.value })}
+                    className="rm-input"
+                  />
+                </div>
+                <div>
+                  <label className="rm-label">Số điện thoại</label>
+                  <input
+                    type="tel"
+                    placeholder="VD: 0901234567"
+                    value={editingReader.SoDienThoai || ''}
+                    onChange={(e) => setEditingReader({ ...editingReader, SoDienThoai: e.target.value })}
+                    className="rm-input"
+                  />
+                </div>
+                <div>
+                  <label className="rm-label">Loại độc giả</label>
+                  <select
+                    value={editingReader.LoaiDocGia}
+                    onChange={(e) => setEditingReader({ ...editingReader, LoaiDocGia: e.target.value })}
+                    className="rm-input"
+                  >
+                    <option value="Sinh viên">Sinh viên</option>
+                    <option value="Giảng viên">Giảng viên</option>
+                    <option value="Cán bộ nhân viên">Cán bộ nhân viên</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="rm-label">Ngày đăng ký</label>
+                  <input
+                    type="date"
+                    value={editingReader.NgayDangKy}
+                    onChange={(e) => setEditingReader({ ...editingReader, NgayDangKy: e.target.value })}
+                    className="rm-input"
+                    required
+                  />
+                </div>
               </div>
               <div className="rm-modal-footer">
                 <button
@@ -427,7 +764,10 @@ export default function ReaderManagement() {
               <div className="rm-modal-title-group">
                 <BookOpen size={20} className="rm-icon-sky" />
                 <h3 className="rm-modal-title">
-                  Lịch sử mượn sách — {historyModal.reader?.MaDocGia} ({historyModal.reader?.LoaiDocGia})
+                  Lịch sử mượn sách — {historyModal.reader?.MaDocGia}
+                  {historyModal.reader?.HoTen
+                    ? ` (${historyModal.reader.HoTen})`
+                    : ` (${historyModal.reader?.LoaiDocGia})`}
                 </h3>
               </div>
               <button
@@ -453,7 +793,7 @@ export default function ReaderManagement() {
                       <th>Mã Phiếu</th>
                       <th>Tên Sách</th>
                       <th>Ngày Mượn</th>
-                      <th>Ngày Trả</th>
+                      <th>Hạn Trả / Ngày Trả</th>
                       <th>Trạng Thái</th>
                     </tr>
                   </thead>
@@ -466,10 +806,13 @@ export default function ReaderManagement() {
                         <td>{log.NgayTra || '—'}</td>
                         <td>
                           <span
-                            className={`rm-status-badge ${log.TrangThai === 'Đã trả'
+                            className={`rm-status-badge ${
+                              log.TrangThai === 'Đã trả'
                                 ? 'rm-status-badge--returned'
-                                : 'rm-status-badge--borrowing'
-                              }`}
+                                : log.TrangThai === 'Quá hạn'
+                                  ? 'rm-status-badge--overdue'
+                                  : 'rm-status-badge--borrowing'
+                            }`}
                           >
                             {log.TrangThai}
                           </span>

@@ -32,7 +32,7 @@ BEGIN
 END;
 GO
 
--- 2. DocGia: 80 synthetic readers.
+-- 2. DocGia: 80 synthetic readers (3 core columns for CSV import).
 IF OBJECT_ID(N'dbo.DocGia', N'U') IS NULL
 BEGIN
     CREATE TABLE dbo.DocGia (
@@ -83,6 +83,17 @@ IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = 'IX_MuonTra_MaSach' AND ob
     CREATE INDEX IX_MuonTra_MaSach ON dbo.MuonTra (MaSach);
 IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = 'IX_TruyCap_Ngay_CSDL' AND object_id = OBJECT_ID(N'dbo.TruyCapDienTu'))
     CREATE INDEX IX_TruyCap_Ngay_CSDL ON dbo.TruyCapDienTu (NgayTruyCap, TenCSDL);
+GO
+
+-- 5. Extended Reader Info (Run after importing DocGia.csv, or safe to run anytime)
+IF COL_LENGTH('dbo.DocGia', 'HoTen') IS NULL
+    ALTER TABLE dbo.DocGia ADD HoTen NVARCHAR(100) NULL;
+IF COL_LENGTH('dbo.DocGia', 'MaSV_NV') IS NULL
+    ALTER TABLE dbo.DocGia ADD MaSV_NV VARCHAR(20) NULL;
+IF COL_LENGTH('dbo.DocGia', 'Email') IS NULL
+    ALTER TABLE dbo.DocGia ADD Email VARCHAR(100) NULL;
+IF COL_LENGTH('dbo.DocGia', 'SoDienThoai') IS NULL
+    ALTER TABLE dbo.DocGia ADD SoDienThoai VARCHAR(15) NULL;
 GO
 
 -- After importing CSVs, run these checks. Expected: 120, 80, 800, 500.
