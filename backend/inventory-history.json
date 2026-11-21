@@ -1,0 +1,101 @@
+[
+  {
+    "id": 1795244152493,
+    "thoiGian": "13:55:52 21/11/2026",
+    "loaiHanhDong": "Nhập bổ sung kho",
+    "maSach": "S0005",
+    "tenSach": "Phân tích dữ liệu - Tập 1",
+    "soLuongThem": 3,
+    "tonSauNhap": 4
+  },
+  {
+    "id": 1795242590313,
+    "thoiGian": "13:29:50 21/11/2026",
+    "loaiHanhDong": "Nhập bổ sung kho",
+    "maSach": "S0121",
+    "tenSach": "Điện toán đám mây",
+    "soLuongThem": 1,
+    "tonSauNhap": 10
+  },
+  {
+    "id": 1795240383514,
+    "thoiGian": "12:53:03 21/11/2026",
+    "loaiHanhDong": "Nhập bổ sung kho",
+    "maSach": "S0090",
+    "tenSach": "Quản trị dự án - Tập 6",
+    "soLuongThem": 1,
+    "tonSauNhap": 6
+  },
+  {
+    "id": 1795168793924,
+    "thoiGian": "16:59:53 20/11/2026",
+    "loaiHanhDong": "Nhập bổ sung kho",
+    "maSach": "S0120",
+    "tenSach": "Quản trị dự án - Tập 8",
+    "soLuongThem": 1,
+    "tonSauNhap": 8
+  },
+  {
+    "id": 1795168758032,
+    "thoiGian": "16:59:18 20/11/2026",
+    "loaiHanhDong": "Nhập bổ sung kho",
+    "maSach": "S0063",
+    "tenSach": "Mạng máy tính - Tập 5",
+    "soLuongThem": 2,
+    "tonSauNhap": 4
+  },
+  {
+    "id": 1794715016867,
+    "thoiGian": "10:56:56 15/11/2026",
+    "loaiHanhDong": "Nhập bổ sung kho",
+    "maSach": "S0060",
+    "tenSach": "Quản trị dự án - Tập 4",
+    "soLuongThem": 5,
+    "tonSauNhap": 6
+  },
+  {
+    "id": 1794665959881,
+    "thoiGian": "21:19:19 14/11/2026",
+    "loaiHanhDong": "Nhập bổ sung kho",
+    "maSach": "S0003",
+    "tenSach": "Mạng máy tính - Tập 1",
+    "soLuongThem": 1,
+    "tonSauNhap": 2
+  },
+  {
+    "id": 1794665917748,
+    "thoiGian": "21:18:37 14/11/2026",
+    "loaiHanhDong": "Nhập bổ sung kho",
+    "maSach": "S0122",
+    "tenSach": "Điện toán đám mây",
+    "soLuongThem": 1,
+    "tonSauNhap": 19
+  },
+  {
+    "id": 1794594853220,
+    "thoiGian": "01:34:13 14/11/2026",
+    "loaiHanhDong": "Nhập bổ sung kho",
+    "maSach": "S0118",
+    "tenSach": "Tiếng Anh giao tiếp - Tập 8",
+    "soLuongThem": 1,
+    "tonSauNhap": 5
+  },
+  {
+    "id": 1794594832329,
+    "thoiGian": "01:33:52 14/11/2026",
+    "loaiHanhDong": "Nhập bổ sung kho",
+    "maSach": "S0120",
+    "tenSach": "Quản trị dự án - Tập 8",
+    "soLuongThem": 1,
+    "tonSauNhap": 7
+  },
+  {
+    "id": 1794590684734,
+    "thoiGian": "00:24:44 14/11/2026",
+    "loaiHanhDong": "Nhập bổ sung kho",
+    "maSach": "S0118",
+    "tenSach": "Tiếng Anh giao tiếp - Tập 8",
+    "soLuongThem": 1,
+    "tonSauNhap": 4
+  }
+]

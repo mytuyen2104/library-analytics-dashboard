@@ -10,5 +10,5 @@ node_modules/
 # Bỏ qua file build & log tạm
 dist/
 **/dist/
-backend/inventory-history.json
+!backend/inventory-history.json
 .wrangler/
