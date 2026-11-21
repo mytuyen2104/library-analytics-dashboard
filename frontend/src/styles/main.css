@@ -6,3 +6,14 @@ body,
   margin: 0;
   padding: 0;
 }
+/* Áp dụng cho tất cả phần tử khi được focus */
+*:focus {
+  outline: none;
+}
+
+/* Hoặc chỉ áp dụng cho các phần tử dễ bị hiện viền như button, div, tab */
+button:focus,
+.tab:focus,
+.tab-content:focus {
+  outline: none;
+}

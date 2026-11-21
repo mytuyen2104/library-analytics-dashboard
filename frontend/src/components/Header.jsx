@@ -21,18 +21,18 @@ export default function Header({ activeSection, onLogout }) {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
 
-const handleHomeClick = () => {
-  if (location.pathname !== '/') {
-    navigate('/');
-    return;
-  }
+  const handleHomeClick = () => {
+    if (location.pathname !== '/') {
+      navigate('/');
+      return;
+    }
 
-  // Đang ở Home thì cuộn lên đầu trang
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
-};
+    // Đang ở Home thì cuộn lên đầu trang
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
   const isHome = location.pathname === '/';
 
   // Đang ở một trang con của Dashboard
@@ -85,28 +85,26 @@ const handleHomeClick = () => {
 
           {/* Trang chủ */}
           <Link
-  to="/"
-  onClick={() => {
-    if (location.pathname === '/') {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    }
-  }}
-  className={`header-nav-pill ${
-    isHomeActive ? 'active' : ''
-  }`}
->
-  Trang chủ
-</Link>
+            to="/"
+            onClick={() => {
+              if (location.pathname === '/') {
+                window.scrollTo({
+                  top: 0,
+                  behavior: 'smooth'
+                });
+              }
+            }}
+            className={`header-nav-pill ${isHomeActive ? 'active' : ''
+              }`}
+          >
+            Trang chủ
+          </Link>
 
           {/* Dashboard */}
           <Link
             to="/#dashboard"
-            className={`header-nav-pill ${
-              isDashboardActive ? 'active' : ''
-            }`}
+            className={`header-nav-pill ${isDashboardActive ? 'active' : ''
+              }`}
           >
             Dashboard
           </Link>
@@ -146,36 +144,36 @@ const handleHomeClick = () => {
 
         </div>
       </div>
-{showLogoutModal && createPortal(
-  <div className="logout-modal-overlay">
-    <div className="logout-modal">
-      <h3>Xác nhận đăng xuất</h3>
+      {showLogoutModal && createPortal(
+        <div className="logout-modal-overlay">
+          <div className="logout-modal">
+            <h3>Xác nhận đăng xuất</h3>
 
-      <p>
-        Bạn có chắc chắn muốn đăng xuất khỏi hệ thống?
-      </p>
+            <p>
+              Bạn có chắc chắn muốn đăng xuất khỏi hệ thống?
+            </p>
 
-      <div className="logout-modal-actions">
-        <button
-          type="button"
-          className="logout-cancel-btn"
-          onClick={() => setShowLogoutModal(false)}
-        >
-          Hủy
-        </button>
+            <div className="logout-modal-actions">
+              <button
+                type="button"
+                className="logout-cancel-btn"
+                onClick={() => setShowLogoutModal(false)}
+              >
+                Hủy
+              </button>
 
-        <button
-          type="button"
-          className="logout-confirm-btn"
-          onClick={onLogout}
-        >
-          Đăng xuất
-        </button>
-      </div>
-    </div>
-  </div>,
-  document.body
-)}
+              <button
+                type="button"
+                className="logout-confirm-btn"
+                onClick={onLogout}
+              >
+                Đăng xuất
+              </button>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
     </header>
   );
 }

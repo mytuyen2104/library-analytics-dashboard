@@ -156,9 +156,8 @@ export default function ReaderManagement() {
       {/* Thông báo */}
       {message.text && (
         <div
-          className={`rm-alert ${
-            message.type === 'success' ? 'rm-alert--success' : 'rm-alert--error'
-          }`}
+          className={`rm-alert ${message.type === 'success' ? 'rm-alert--success' : 'rm-alert--error'
+            }`}
         >
           <div className="rm-alert-content">
             {message.type === 'success' ? <CheckCircle2 size={18} /> : <AlertCircle size={18} />}
@@ -319,11 +318,10 @@ export default function ReaderManagement() {
                     <td className="rm-code-cell">{r.MaDocGia}</td>
                     <td>
                       <span
-                        className={`rm-role-badge ${
-                          r.LoaiDocGia === 'Giảng viên'
+                        className={`rm-role-badge ${r.LoaiDocGia === 'Giảng viên'
                             ? 'rm-role-badge--lecturer'
                             : 'rm-role-badge--student'
-                        }`}
+                          }`}
                       >
                         {r.LoaiDocGia}
                       </span>
@@ -468,11 +466,10 @@ export default function ReaderManagement() {
                         <td>{log.NgayTra || '—'}</td>
                         <td>
                           <span
-                            className={`rm-status-badge ${
-                              log.TrangThai === 'Đã trả'
+                            className={`rm-status-badge ${log.TrangThai === 'Đã trả'
                                 ? 'rm-status-badge--returned'
                                 : 'rm-status-badge--borrowing'
-                            }`}
+                              }`}
                           >
                             {log.TrangThai}
                           </span>

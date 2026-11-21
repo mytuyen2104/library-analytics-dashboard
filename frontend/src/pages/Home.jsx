@@ -17,88 +17,88 @@ import ChatWidget from '../components/ChatWidget.jsx';
 
 
 export default function Home({ onLogout }) {
-    const dashboardRef = useRef(null);
+  const dashboardRef = useRef(null);
   const location = useLocation();
-// const navigate = useNavigate();
-const contentRef = useRef(null);
+  // const navigate = useNavigate();
+  const contentRef = useRef(null);
   const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
-  if (location.pathname === '/') return;
+    if (location.pathname === '/') return;
 
-  requestAnimationFrame(() => {
-    // Reset vùng nội dung Dashboard
-    if (contentRef.current) {
-      contentRef.current.scrollTop = 0;
-      contentRef.current.scrollLeft = 0;
-    }
-
-    // Đưa khu vực Dashboard về vị trí đầu
-    dashboardRef.current?.scrollIntoView({
-      behavior: 'instant',
-      block: 'start'
-    });
-  });
-}, [location.pathname]);
-
-useEffect(() => {
-  if (location.pathname !== '/') {
-    setActiveSection('dashboard');
-  } else if (location.hash === '#dashboard') {
-    setActiveSection('dashboard');
-  } else {
-    setActiveSection('home');
-  }
-}, [location.pathname, location.hash]);
-
-useEffect(() => {
-  if (location.pathname === '/' && !location.hash) {
     requestAnimationFrame(() => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    });
-  }
-}, [location.pathname, location.hash]);
+      // Reset vùng nội dung Dashboard
+      if (contentRef.current) {
+        contentRef.current.scrollTop = 0;
+        contentRef.current.scrollLeft = 0;
+      }
 
-useEffect(() => {
-  if (location.hash === '#dashboard') {
-    requestAnimationFrame(() => {
+      // Đưa khu vực Dashboard về vị trí đầu
       dashboardRef.current?.scrollIntoView({
-        behavior: 'smooth',
+        behavior: 'instant',
         block: 'start'
       });
     });
-  }
-}, [location]);
+  }, [location.pathname]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (location.pathname !== '/') {
+    if (location.pathname !== '/') {
       setActiveSection('dashboard');
-      return;
-    }
-
-    if (!dashboardRef.current) return;
-
-    const dashboardTop =
-      dashboardRef.current.getBoundingClientRect().top;
-
-    if (dashboardTop <= window.innerHeight * 0.35) {
+    } else if (location.hash === '#dashboard') {
       setActiveSection('dashboard');
     } else {
       setActiveSection('home');
     }
-  };
+  }, [location.pathname, location.hash]);
+
+  useEffect(() => {
+    if (location.pathname === '/' && !location.hash) {
+      requestAnimationFrame(() => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    }
+  }, [location.pathname, location.hash]);
+
+  useEffect(() => {
+    if (location.hash === '#dashboard') {
+      requestAnimationFrame(() => {
+        dashboardRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      });
+    }
+  }, [location]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (location.pathname !== '/') {
+        setActiveSection('dashboard');
+        return;
+      }
+
+      if (!dashboardRef.current) return;
+
+      const dashboardTop =
+        dashboardRef.current.getBoundingClientRect().top;
+
+      if (dashboardTop <= window.innerHeight * 0.35) {
+        setActiveSection('dashboard');
+      } else {
+        setActiveSection('home');
+      }
+    };
 
 
 
-   window.addEventListener('scroll', handleScroll);
-  handleScroll();
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
 
-  return () => {
-    window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
     };
   }, [location.pathname]);
 
@@ -137,13 +137,13 @@ useEffect(() => {
         <div className="home-orb orb-gamma" />
       </div>
 
-     {/* 1. HEADER */}
-<div className="home-header">
-  <Header
-    activeSection={activeSection}
-    onLogout={onLogout}
-  />
-</div>
+      {/* 1. HEADER */}
+      <div className="home-header">
+        <Header
+          activeSection={activeSection}
+          onLogout={onLogout}
+        />
+      </div>
 
       {/* 2. HOME CONTENT */}
       <div className="home-content">
@@ -165,21 +165,21 @@ useEffect(() => {
       </div>
 
       {/* 3. DASHBOARD */}
-      <div className="home-dashboard"  id="dashboard" ref={dashboardRef}>
+      <div className="home-dashboard" id="dashboard" ref={dashboardRef}>
 
         <aside className="dashboard-sidebar">
-  <Sidebar activeSection={activeSection} />
-</aside>
+          <Sidebar activeSection={activeSection} />
+        </aside>
 
         <main
-  className="dashboard-content"
-  ref={contentRef}
->
-  {renderDashboard()}
-</main>
+          className="dashboard-content"
+          ref={contentRef}
+        >
+          {renderDashboard()}
+        </main>
 
       </div>
-<ChatWidget />
+      <ChatWidget />
     </div>
   );
 }

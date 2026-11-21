@@ -221,7 +221,7 @@ export default function InventoryManagement() {
             }}
             className={`inv-history-toggle ${showHistory ? 'inv-history-toggle--active' : ''}`}
           >
-            <span>{showHistory ? '✕ Đóng lịch sử' : `🕒 Lịch sử nhập kho (${history.length})`}</span>
+            <span>{showHistory ? 'Đóng lịch sử' : ` Lịch sử nhập kho (${history.length})`}</span>
           </button>
         </div>
 
@@ -236,7 +236,7 @@ export default function InventoryManagement() {
                   onClick={handleClearAllHistory}
                   className="inv-history-clear-btn"
                 >
-                  🗑️ Xóa tất cả lịch sử
+                   Xóa tất cả lịch sử
                 </button>
               )}
             </div>

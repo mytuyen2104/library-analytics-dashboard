@@ -1,307 +1,221 @@
+/* =========================================
+   demand-analysis - MAIN
+========================================= */
+
 .demand-analysis-page {
-  position: relative;
-  width: 100%;
-  max-width: 1480px;
-  margin: 0 auto;
-  padding: 6px 0 40px;
-  color: #0f294a;
+  /* Thuột vào 10px mỗi bên (trái và phải), chiều rộng tự động co lại */
+  width: calc(100% - 20px);
+  margin-left: 10px;
+  margin-right: 10px;
+
+  color: #1E293B;
+
+  /* Cách phía trên của thẻ cha 10px */
+  margin-top: 10px;
+
+  /* Chiều cao tối thiểu lấp đầy, cho phép co giãn linh hoạt theo nội dung bên dưới */
+  min-height: calc(100% - 10px);
+  height: auto;
+
   box-sizing: border-box;
+
+  /* Bật cuộn dọc cho trang overview, ẩn thanh scroll ngang nếu có */
+  overflow-y: auto;
   overflow-x: hidden;
-}
 
-/* Khối cầu ánh sáng nền động tạo chiều sâu 3D */
-.da-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(90px);
-  z-index: 0;
-  pointer-events: none;
-  animation: pulseDaOrb 8s ease-in-out infinite alternate;
-}
-
-.da-orb.orb-1 {
-  width: 420px;
-  height: 420px;
-  background: rgba(217, 119, 6, 0.12);
-  top: 10px;
-  right: -40px;
-}
-
-.da-orb.orb-2 {
-  width: 360px;
-  height: 360px;
-  background: rgba(37, 99, 235, 0.11);
-  top: 50%;
-  left: -80px;
-  animation-delay: 3s;
-}
-
-@keyframes pulseDaOrb {
-  0% { transform: scale(1); }
-  100% { transform: scale(1.1); }
-}
-
-/* Banner giới thiệu 2 cột đồng bộ */
-.da-intro-banner {
-  position: relative;
-  z-index: 2;
-  margin-bottom: 30px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(240, 247, 255, 0.86) 100%);
-  backdrop-filter: blur(16px);
-  border: 1px solid #ffffff;
-  padding: 28px 32px;
-  border-radius: 24px;
-  box-shadow: 0 14px 34px rgba(15, 41, 74, 0.05);
-  display: grid;
-  grid-template-columns: 1.45fr 0.85fr;
-  align-items: center;
+  display: flex;
+  flex-direction: column;
   gap: 28px;
 }
 
-.da-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.07em;
-  color: #d97706;
-  background: rgba(217, 119, 6, 0.1);
-  padding: 6px 12px;
-  border-radius: 8px;
-  margin-bottom: 12px;
-}
 
-.da-intro-banner h1 {
-  margin: 0 0 10px;
-  font-size: clamp(24px, 2.6vw, 32px);
-  font-weight: 850;
-  color: #0f294a;
-  letter-spacing: -0.02em;
-}
+/* =========================================
+   FRAME 01: HEADING
+========================================= */
 
-.da-description {
-  color: #475569;
-  font-size: 14.5px;
-  line-height: 1.7;
-  margin: 0;
-  text-align: justify;
-}
-
-.da-intro-right {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.da-mini-card {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 11px 16px;
-  background: rgba(255, 255, 255, 0.94);
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  box-shadow: 0 6px 16px rgba(15, 41, 74, 0.04);
-  transition: transform 0.2s ease, border-color 0.2s ease;
-}
-
-.da-mini-card:hover {
-  transform: translateX(-4px);
-  border-color: #fcd34d;
-}
-
-.da-mini-icon {
-  padding: 8px;
-  border-radius: 10px;
-  flex-shrink: 0;
-}
-.da-mini-icon.amber { background: #fffbeb; color: #d97706; }
-.da-mini-icon.blue { background: #eff6ff; color: #2563eb; }
-.da-mini-icon.purple { background: #f5f3ff; color: #7c3aed; }
-
-.da-mini-card div {
-  display: flex;
-  flex-direction: column;
-}
-
-.da-mini-card strong {
-  font-size: 13px;
-  color: #0f294a;
-  font-weight: 700;
-}
-
-.da-mini-card span {
-  font-size: 12px;
-  color: #64748b;
-}
-
-/* Lưới chứa 2 biểu đồ */
-.da-dashboard-grid {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  gap: 26px;
+.demand-analysis-heading {
   width: 100%;
-}
-
-.da-chart-card {
-  position: relative;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(14px);
-  border: 1px solid #ffffff;
-  border-radius: 22px;
-  box-shadow: 0 14px 34px rgba(15, 41, 74, 0.06);
-  overflow: hidden;
-  width: 100%;
-  padding: 26px;
+  padding-top: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
   box-sizing: border-box;
-  transition: transform 0.2s ease, box-shadow 0.25s ease;
 }
 
-.da-chart-card:hover {
-  box-shadow: 0 20px 42px rgba(37, 99, 235, 0.11);
-}
-
-.da-card-top-bar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #2563eb, #0ea5e9);
-}
-
-.da-card-top-bar.amber-bar {
-  background: linear-gradient(90deg, #d97706, #f59e0b);
-}
-
-.da-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 16px;
-  margin-bottom: 18px;
-  flex-wrap: wrap;
-}
-
-.da-card-title-group {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.da-card-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  background: #eff6ff;
-  color: #2563eb;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.da-card-icon.amber-icon {
-  background: #fffbeb;
-  color: #d97706;
-}
-
-.da-chart-card h2 {
-  margin: 0 0 4px;
-  color: #0f294a;
-  font-size: 19px;
-  font-weight: 800;
-}
-
-.da-chart-description {
-  margin: 0;
-  color: #64748b;
-  font-size: 13.5px;
-}
-
-.da-external-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  background: #eff6ff;
-  color: #2563eb;
-  font-size: 13px;
-  font-weight: 600;
-  border-radius: 999px;
-  text-decoration: none;
-  transition: all 0.2s ease;
-}
-
-.da-external-btn:hover {
-  background: #2563eb;
-  color: #ffffff;
-}
-
-.da-iframe-container {
-  position: relative;
+.demand-analysis-heading .heading-content {
   width: 100%;
-  min-height: 520px;
-  border-radius: 14px;
-  overflow: hidden;
-  border: 1px solid #e2e8f0;
+  box-sizing: border-box;
+}
+
+.demand-analysis-heading h1 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 26px;
+  font-weight: 900;
+  margin: 0;
+}
+
+.demand-analysis-heading p {
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  font-weight: 370;
+  margin: 0;
+}
+
+
+/* =========================================
+   FRAME 02: CHART
+========================================= */
+
+.demand-analysis-chart {
+  width: calc(100% - 20px);
+  background: #ffffff;
+  box-sizing: border-box;
+  align-self: center;
+
+}
+
+.demand-analysis-tag {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
   background: #ffffff;
 }
 
-.da-chart-iframe {
-  width: 100% !important;
-  height: 520px !important;
-  border: none;
-  display: block;
+
+/* Tiêu đề khu vực */
+
+.chart-text {
+  width: 100%;
+  box-sizing: border-box;
+  border-left: 10px solid #007F82;
+  padding-left: 7px;
+
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
-.da-chart-skeleton {
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.92);
+.chart-text h2 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 25px;
+  font-weight: 350;
+  margin: 9px;
+}
+
+
+/* =========================================
+   CHART CONTENT
+========================================= */
+
+.demand-analysis-tag .chart-content {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
+  gap: 24px;
+}
+
+
+/* =========================================
+   CHART ITEM
+========================================= */
+
+.demand-analysis-tag .chart-item {
+  width: 100%;
+  min-width: 0;
+  padding: 20px;
+
+  max-height: 600px;
+
+
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  background: #ffffff;
+  border: 1px solid #e4eeec;
+  border-radius: 12px;
+}
+
+
+/* Tiêu đề và mô tả */
+
+.demand-analysis-tag .chart-item-text h3 {
+  margin: 0 0 6px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f294a;
+}
+
+.demand-analysis-tag .chart-item-text p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.6;
   color: #64748b;
-  font-size: 14px;
-  z-index: 2;
 }
 
-.da-spinner {
-  width: 32px;
-  height: 32px;
-  border: 3px solid rgba(20, 52, 92, 0.15);
-  border-top-color: #d97706;
-  border-radius: 50%;
-  animation: da-spin 0.8s linear infinite;
+
+/* =========================================
+   METABASE IFRAME
+========================================= */
+
+.demand-analysis-tag .chart-item-frame {
+  width: 100%;
+  height: 520px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #f8fafc;
 }
 
-@keyframes da-spin {
-  to { transform: rotate(360deg); }
+.demand-analysis-tag .chart-item-frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none;
 }
 
-@media (max-width: 992px) {
-  .da-intro-banner {
-    grid-template-columns: 1fr;
-  }
+
+/* =========================================
+   METABASE LINK
+========================================= */
+
+.chart-item-frame {
+  width: 100%;
+  min-height: 350px;
+  overflow: hidden;
 }
+
+.chart-item-frame iframe {
+  width: 100%;
+  height: 350px;
+  border: none;
+}
+
+.chart-item a {
+  display: inline-block;
+  padding: 20px;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
 
 @media (max-width: 768px) {
   .demand-analysis-page {
-    padding: 10px;
+    padding: 18px 16px;
+    gap: 20px;
   }
-  .da-intro-banner,
-  .da-chart-card {
-    padding: 18px;
+
+  .demand-analysis-heading h1 {
+    font-size: 22px;
   }
-  .da-iframe-container,
-  .da-chart-iframe {
-    height: 420px !important;
-    min-height: 420px;
+
+  .demand-analysis-tag {
+    padding: 16px;
+  }
+
+  .demand-analysis-tag .chart-item {
+    padding: 14px;
+  }
+
+  .demand-analysis-tag .chart-item-frame {
+    height: 400px;
   }
 }

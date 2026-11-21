@@ -1,4 +1,4 @@
-import "../styles/ElectronicAccess1.css";
+import "../styles/ElectronicAccess.css";
 
 const base = "https://dashboard.dashboardg4.click/public/question/";
 

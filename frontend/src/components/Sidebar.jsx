@@ -71,8 +71,7 @@ export default function Sidebar({ activeSection }) {
                   key={to}
                   to={to}
                   className={({ isActive }) =>
-                    `nav-link ${
-                      isActive || isOverviewActive ? 'active' : ''
+                    `nav-link ${isActive || isOverviewActive ? 'active' : ''
                     }`
                   }
                 >

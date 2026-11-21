@@ -30,81 +30,81 @@ const TABS_DATA = [
 ];
 
 export default function LibraryManagement({ onLogout }) {
-const [activeTab, setActiveTab] = useState('muon-tra');
+  const [activeTab, setActiveTab] = useState('muon-tra');
 
 
-useEffect(() => {
-  window.scrollTo({
-    top: 0,
-    left: 0,
-    behavior: 'instant'
-  });
-}, []);
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'instant'
+    });
+  }, []);
 
   return (
     <div className="management-page">
-        <div className="management-orbs-container">
-            <div className="management-orb management-orb-alpha" />
-            <div className="management-orb management-orb-beta" />
-            <div className="management-orb management-orb-gamma" />
-        </div>
-
-        <div className="management-header">
-    <Header
-        activeSection="management"
-        onLogout={onLogout}
-    />
-</div>
-
-        <div className="management-content">
-            <section className="management-frame">
-      {/* Thanh điều hướng Tabs */}
-      <div className="tabs-header" role="tablist">
-        {TABS_DATA.map((tab) => {
-          const isActive = activeTab === tab.id;
-          return (
-            <button
-              key={tab.id}
-              role="tab"
-              aria-selected={isActive}
-              className={`tab-btn ${isActive ? 'active' : ''}`}
-              onClick={() => setActiveTab(tab.id)}
-            >
-              {/* Render tên đầy đủ nếu đang active, ngược lại render tên ngắn */}
-              {isActive ? tab.fullLabel : tab.shortLabel}
-            </button>
-          );
-        })}
+      <div className="management-orbs-container">
+        <div className="management-orb management-orb-alpha" />
+        <div className="management-orb management-orb-beta" />
+        <div className="management-orb management-orb-gamma" />
       </div>
 
-      
-      {/* Khung hiển thị nội dung tương ứng */}
-<div className="tab-panel" role="tabpanel">
+      <div className="management-header">
+        <Header
+          activeSection="management"
+          onLogout={onLogout}
+        />
+      </div>
 
-  {activeTab === 'muon-tra' && (
-    <LoanManagement />
-  )}
+      <div className="management-content">
+        <section className="management-frame">
+          {/* Thanh điều hướng Tabs */}
+          <div className="tabs-header" role="tablist">
+            {TABS_DATA.map((tab) => {
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  role="tab"
+                  aria-selected={isActive}
+                  className={`tab-btn ${isActive ? 'active' : ''}`}
+                  onClick={() => setActiveTab(tab.id)}
+                >
+                  {/* Render tên đầy đủ nếu đang active, ngược lại render tên ngắn */}
+                  {isActive ? tab.fullLabel : tab.shortLabel}
+                </button>
+              );
+            })}
+          </div>
 
-  {activeTab === 'kho-sach' && (
-    <div>
-      <InventoryManagement/>
-    </div>
-  )}
 
-  {activeTab === 'doc-gia' && (
-    <div>
-      <ReaderManagement/>
-    </div>
-  )}
+          {/* Khung hiển thị nội dung tương ứng */}
+          <div className="tab">
+            <div className="tab-content">
+              <div className="tab-panel" role="tabpanel">
 
-</div>
+                {activeTab === 'muon-tra' && (
+                  <LoanManagement />
+                )}
 
+                {activeTab === 'kho-sach' && (
+                  <div className="inventory-scroll">
+                    <InventoryManagement />
+                  </div>
+                )}
 
+                {activeTab === 'doc-gia' && (
+                  <div>
+                    <ReaderManagement />
+                  </div>
+                )}
 
-
-    </section>
-        </div>
-        <ChatWidget />
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <ChatWidget />
     </div>
   );
 }

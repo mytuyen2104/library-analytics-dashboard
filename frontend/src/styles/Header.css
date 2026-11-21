@@ -1,4 +1,3 @@
-
 /* ==============================
    HEADER CONTAINER
 ============================== */
@@ -14,10 +13,10 @@
   top: 0;
   width: 100%;
   height: 95px;
- /* background: #000; */
+  /* background: #000; */
 
   backdrop-filter: blur(12px);
--webkit-backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 
   z-index: 1000;
 }
@@ -31,10 +30,14 @@
   top: 7px;
   z-index: 2;
 }
+
 .header-logo {
-  width: 60px; /* Hoặc kích thước bạn muốn, ví dụ: 80px, 100px... */
-  height: auto; /* Giữ nguyên tỉ lệ ảnh để không bị méo */
+  width: 60px;
+  /* Hoặc kích thước bạn muốn, ví dụ: 80px, 100px... */
+  height: auto;
+  /* Giữ nguyên tỉ lệ ảnh để không bị méo */
 }
+
 .header-brand-link {
   text-decoration: none;
 }
@@ -57,7 +60,7 @@
   font-weight: 700;
   font-size: clamp(22px, 2.4vw, 28px);
   letter-spacing: -0.02em;
-line-height: 1.1;
+  line-height: 1.1;
   color: #007F82;
 }
 
@@ -69,7 +72,7 @@ line-height: 1.1;
   font-size: 16px;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-line-height: 1.5;
+  line-height: 1.5;
   color: #0B6E67;
 }
 
@@ -79,8 +82,8 @@ line-height: 1.5;
 .header-right {
   position: relative;
   z-index: 2;
-top: 9px;
-right: 120px;
+  top: 9px;
+  right: 120px;
   display: flex;
   align-items: center;
   gap: 20px;
@@ -96,13 +99,13 @@ right: 120px;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-justify-content: center;
+  justify-content: center;
 
   padding: 8px 14px;
-width: 70px;
+  width: 100px;
 
 
-  
+
   border-radius: 8px;
 
   color: #007F82;
@@ -111,14 +114,14 @@ width: 70px;
   font-weight: 600;
   text-decoration: none;
 
- 
+
   transition: all 0.2s ease;
 }
 
 .header-nav-pill:hover {
   background: #3BA69B;
   color: #ffffff;
- 
+
 
   transform: translateY(-2px);
   box-shadow: 0 8px 18px rgba(37, 99, 235, 0.25);
@@ -136,20 +139,20 @@ width: 70px;
 
 /* BUTTON Log out */
 .header-nav-icon-pill {
-  width: 40px;          
-  height: 40px;         
-  padding: 0;           
+  width: 40px;
+  height: 40px;
+  padding: 0;
   justify-content: center;
-  align-items: center; 
-  display: inline-flex; 
-  
-  background: transparent; 
-  border: none;           
-  cursor: pointer;         
+  align-items: center;
+  display: inline-flex;
+
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 .header-nav-icon-pill:hover {
-  background: rgba(255, 255, 255, 0.1); 
+  background: rgba(255, 255, 255, 0.1);
   box-shadow: none !important;
 }
 
@@ -157,6 +160,7 @@ width: 70px;
   width: 20px;
   height: auto;
 }
+
 /* ==============================
    RESPONSIVE
 ============================== */

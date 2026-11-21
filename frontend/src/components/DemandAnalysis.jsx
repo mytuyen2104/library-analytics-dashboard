@@ -1,4 +1,4 @@
-import "../styles/DemandAnalysis1.css";
+import "../styles/DemandAnalysis.css";
 
 const base = "https://dashboard.dashboardg4.click/public/question/";
 

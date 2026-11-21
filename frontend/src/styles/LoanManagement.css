@@ -5,9 +5,11 @@
 
 .loan-management {
   width: 100%;
-  padding: 8px 0;
+  padding: 0px 0;
   box-sizing: border-box;
-  color: #1e293b;
+  color: #0B6E67;
+  font-family: 'Roboto', sans-serif;
+
 }
 
 .loan-management *,
@@ -19,11 +21,11 @@
 /* Thông báo */
 .loan-message {
   padding: 12px 16px;
-  background: #dbeafe;
-  color: #1e40af;
-  border: 1px solid #93c5fd;
+  background: #EAF7F6;
+  color: #007F82;
+  border: 1px solid #007F82;
   border-radius: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-weight: 500;
 }
 
@@ -31,9 +33,11 @@
 .loan-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
-  gap: 24px;
+  gap: 10px;
   align-items: start;
-  width: 100%;
+  width: calc(100% + 10px);
+  min-height: calc(100% + 10px);
+
 }
 
 /* Khung nội dung */
@@ -45,6 +49,7 @@
   box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
   border: 1px solid #e2e8f0;
   color: #1e293b;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
 }
 
 .loan-section-title {
@@ -114,7 +119,7 @@
 .loan-submit-btn {
   margin-top: 6px;
   padding: 12px;
-  background: #2563eb;
+  background: #007F82;
   color: #ffffff;
   border: none;
   border-radius: 10px;
@@ -122,10 +127,12 @@
   font-weight: 700;
   font-size: 14px;
   transition: background 0.2s ease, transform 0.2s ease;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+
 }
 
 .loan-submit-btn:hover {
-  background: #1d4ed8;
+  background: #0B6E67;
 }
 
 .loan-submit-btn:active,
@@ -138,10 +145,10 @@
 .loan-receipt {
   margin-top: 20px;
   padding: 16px;
-  background: #ecfdf5;
-  border: 1px solid #6ee7b7;
+  background: #EAF7F6;
+  border: 1px solid #0B6E67;
   border-radius: 10px;
-  color: #065f46;
+  color: #0B6E67;
   font-size: 14px;
 }
 
@@ -177,46 +184,53 @@
 .loan-filter-btn {
   padding: 9px 12px;
   border-radius: 8px;
-  border: 1px solid #cbd5e1;
+  border: 1px solid #065f46;
   cursor: pointer;
   font-size: 13px;
   font-weight: 600;
   transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+
 }
 
 /* Bộ lọc tất cả */
 .loan-filter-all {
   background: #f8fafc;
-  color: #475569;
+  color: #085750;
 }
 
 .loan-filter-all.active {
-  background: #0f172a;
-  color: #ffffff;
+  background: #085750;
+  color: #f8fafc;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+
 }
 
 /* Bộ lọc chưa trả */
 .loan-filter-unreturned {
-  border-color: #fcd34d;
-  background: #fef3c7;
-  color: #92400e;
+  border-color: #065f46;
+  background: #f8fafc;
+  color: #065f46;
 }
 
 .loan-filter-unreturned.active {
-  background: #d97706;
+  background: #065f46;
   color: #ffffff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+
 }
 
 /* Bộ lọc đã trả */
 .loan-filter-returned {
-  border-color: #6ee7b7;
-  background: #d1fae5;
+  border-color: #065f46;
+  background: #f8fafc;
   color: #065f46;
 }
 
 .loan-filter-returned.active {
-  background: #059669;
+  background: #065f46;
   color: #ffffff;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+
 }
 
 /* Bảng mượn trả */
@@ -228,34 +242,84 @@
 
 .loan-table {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
   font-size: 14px;
   color: #1e293b;
 }
 
+/* Cố định độ rộng từng cột */
+.loan-table th:nth-child(1),
+.loan-table td:nth-child(1) {
+  width: 12%;
+}
+
+.loan-table th:nth-child(2),
+.loan-table td:nth-child(2) {
+  width: 13%;
+}
+
+.loan-table th:nth-child(3),
+.loan-table td:nth-child(3) {
+  width: 30%;
+}
+
+.loan-table th:nth-child(4),
+.loan-table td:nth-child(4) {
+  width: 15%;
+}
+
+.loan-table th:nth-child(5),
+.loan-table td:nth-child(5) {
+  width: 13%;
+}
+
+.loan-table th:nth-child(6),
+.loan-table td:nth-child(6) {
+  width: 17%;
+}
+
+/* Header */
 .loan-table thead {
   position: sticky;
   top: 0;
-  z-index: 1;
-  background: #ffffff;
+  z-index: 2;
+
 }
 
 .loan-table th {
-  padding: 10px 8px;
-  border-bottom: 2px solid #e2e8f0;
-  text-align: left;
-  color: #475569;
+  padding: 12px 8px;
+  height: 52px;
+  box-shadow: inset 0 -4px 0 #0B6E67;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 16px;
+  font-weight: 850;
+  color: #0B6E67;
+  background: #EAF7F6;
   white-space: nowrap;
+
 }
 
+/* Nội dung */
 .loan-table td {
-  padding: 10px 8px;
-  border-bottom: 1px solid #f1f5f9;
+  padding: 12px 8px;
+  border-bottom: 1px solid #0B6E67;
   vertical-align: middle;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  vertical-align: middle;
+}
+
+table th:nth-child(3),
+table td:nth-child(3) {
+  text-align: left;
 }
 
 .loan-id-cell {
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .loan-subtext {
@@ -271,23 +335,27 @@
   font-size: 12px;
   font-weight: 600;
   white-space: nowrap;
+  width: 80px;
 }
 
 .loan-status.returned {
-  background: #d1fae5;
-  color: #065f46;
+  background: #065f46;
+  color: #fff;
+
 }
 
 .loan-status.unreturned {
-  background: #fef3c7;
-  color: #92400e;
+  border: 1px solid #065f46;
+
+  background: #f8fafc;
+  color: #065f46;
 }
 
 /* Nút trả sách */
 .loan-return-btn {
   padding: 6px 12px;
-  background: #10b981;
-  color: #ffffff;
+  background: #05A300;
+  color: #fff;
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -297,12 +365,12 @@
 }
 
 .loan-return-btn:hover {
-  background: #059669;
+  background: #16877F;
 }
 
 .loan-returned-date {
   font-size: 12px;
-  color: #64748b;
+  color: #065f46;
   white-space: nowrap;
 }
 

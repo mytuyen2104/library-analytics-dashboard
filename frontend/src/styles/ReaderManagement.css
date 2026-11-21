@@ -1,8 +1,16 @@
 .rm-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
   box-sizing: border-box;
+
+  max-height: 80vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+
+
+  font-family: "Roboto", sans-serif;
 }
 
 .rm-container *,
@@ -37,7 +45,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .rm-alert-close {
@@ -67,29 +75,30 @@
 }
 
 .rm-kpi-label {
-  font-size: 13px;
+  font-size: 16px;
   color: #64748b;
 }
 
 .rm-kpi-value {
-  font-size: 26px;
+  font-size: 30px;
   margin-top: 4px;
+  font-weight: 500;
 }
 
 .rm-kpi-value--total {
-  color: #0f172a;
+  color: #085750;
 }
 
 .rm-kpi-value--student {
-  color: #2563eb;
+  color: #085750;
 }
 
 .rm-kpi-value--lecturer {
-  color: #059669;
+  color: #085750;
 }
 
 .rm-kpi-value--borrowing {
-  color: #d97706;
+  color: #085750;
 }
 
 /* Panel & tiêu đề khu vực */
@@ -113,12 +122,12 @@
 
 .rm-section-title {
   margin: 0;
-  font-size: 16px;
-  color: #0f172a;
+  font-size: 20px;
+  color: #085750;
 }
 
 .rm-icon-sky {
-  color: #0284c7;
+  color: #085750;
   flex-shrink: 0;
 }
 
@@ -137,7 +146,7 @@
 
 .rm-label {
   display: block;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 500;
   color: #475569;
   margin-bottom: 6px;
@@ -156,7 +165,7 @@
 }
 
 .rm-input:focus {
-  border-color: #0284c7;
+  border-color: #085750;
   box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
 }
 
@@ -164,7 +173,7 @@
   padding: 10px 18px;
   border-radius: 8px;
   border: none;
-  background: #0284c7;
+  background: #16877F;
   color: #ffffff;
   font-weight: 600;
   font-size: 14px;
@@ -174,7 +183,7 @@
 }
 
 .rm-btn-primary:hover:not(:disabled) {
-  background: #0369a1;
+  background: #0B6E67;
 }
 
 .rm-btn-primary:disabled {
@@ -238,9 +247,9 @@
   gap: 6px;
   padding: 9px 14px;
   border-radius: 8px;
-  border: 1px solid #16a34a;
-  background: #f0fdf4;
-  color: #15803d;
+  border: 1px solid #0B6E67;
+  background: #EAF7F6;
+  color: #0B6E67;
   font-weight: 600;
   font-size: 13px;
   cursor: pointer;
@@ -324,17 +333,17 @@
 }
 
 .rm-role-badge--student {
-  background: #dbeafe;
-  color: #1e40af;
+  background: #EAF7F6;
+  color: #085750;
 }
 
 .rm-role-badge--lecturer {
-  background: #dcfce7;
-  color: #166534;
+  background: #EAF7F6;
+  color: #085750;
 }
 
 .rm-borrowing-active {
-  color: #d97706;
+  color: #085750;
   font-weight: 600;
 }
 
@@ -384,8 +393,8 @@
 }
 
 .rm-btn-action--history {
-  background: #eff6ff;
-  color: #1d4ed8;
+  background: #EAF7F6;
+  color: #0B6E67;
 }
 
 .rm-btn-action--edit {
@@ -478,7 +487,7 @@
   padding: 8px 16px;
   border-radius: 8px;
   border: none;
-  background: #0284c7;
+  background: #16877F;
   color: #ffffff;
   font-size: 14px;
   font-weight: 600;
@@ -486,7 +495,7 @@
 }
 
 .rm-btn-save:hover {
-  background: #0369a1;
+  background: #0B6E67;
 }
 
 .rm-modal-status {
@@ -505,6 +514,7 @@
 }
 
 @media (max-width: 640px) {
+
   .rm-search-input,
   .rm-filter-select {
     width: 100%;

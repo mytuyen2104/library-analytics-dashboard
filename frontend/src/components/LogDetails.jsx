@@ -1,4 +1,4 @@
-import "../styles/LogDetails1.css";
+import "../styles/LogDetails.css";
 
 const base = "https://dashboard.dashboardg4.click/public/question/";
 

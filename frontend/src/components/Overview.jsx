@@ -1,6 +1,6 @@
 
 import MetabaseKPI from "../components/MetabaseKPI";
-import "../styles/Overview1.css";
+import "../styles/Overview.css";
 
 const base = "https://dashboard.dashboardg4.click/public/question/";
 
@@ -46,73 +46,73 @@ export default function Overview() {
         <div className="heading-content">
           <h1>TỔNG QUAN THƯ VIỆN</h1>
           <p>
-           Các chỉ số và tình hình khai thác tài nguyên thư viện
+            Các chỉ số và tình hình khai thác tài nguyên thư viện
           </p>
         </div>
       </section>
 
       {/* FRAME 02: NUMBER */}
       <section className="overview-number">
-<div className="tag1">
-        <div className="number-text">
-          <h2>Chỉ số hoạt động thư viện</h2>
-          
-        </div>
+        <div className="tag1">
+          <div className="number-text">
+            <h2>Chỉ số hoạt động thư viện</h2>
 
-        <div className="number-content">
-          {kpis.map((kpi) => (
-            <div className="number-item" key={kpi.title}>
-              <MetabaseKPI
-                title={kpi.title}
-                url={kpi.url}
-              />
-            </div>
-          ))}
+          </div>
+
+          <div className="number-content">
+            {kpis.map((kpi) => (
+              <div className="number-item" key={kpi.title}>
+                <MetabaseKPI
+                  title={kpi.title}
+                  url={kpi.url}
+                />
+              </div>
+            ))}
+          </div>
         </div>
-</div>
       </section>
 
       {/* FRAME 03: CHART */}
       <section className="overview-chart">
-<div className="overview-tag">
-        <div className="chart-text">
-          <h2>Phân tích và đề xuất nổi bật</h2>
-         
+        <div className="overview-tag">
+          <div className="chart-text">
+            <h2>Phân tích và đề xuất nổi bật</h2>
+
+          </div>
+
+          <div className="chart-content">
+            {charts.map((item) => (
+              <article
+                className={`chart-item chart-item-${item.layout}`}
+                key={item.title}
+              >
+
+                <div className="chart-item-text">
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                </div>
+
+                <div className="chart-item-frame">
+                  <iframe
+                    title={item.title}
+                    src={`${item.url}#bordered=false&titled=false`}
+                    loading="lazy"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                  />
+                </div>
+
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Xem đầy đủ trên Metabase
+                </a>
+
+              </article>
+            ))}
+          </div>
         </div>
-
-        <div className="chart-content">
-  {charts.map((item) => (
-    <article
-      className={`chart-item chart-item-${item.layout}`}
-      key={item.title}
-    >
-
-      <div className="chart-item-text">
-        <h3>{item.title}</h3>
-        <p>{item.description}</p>
-      </div>
-
-      <div className="chart-item-frame">
-        <iframe
-          title={item.title}
-          src={`${item.url}#bordered=false&titled=false`}
-          loading="lazy"
-          referrerPolicy="strict-origin-when-cross-origin"
-        />
-      </div>
-
-      <a
-        href={item.url}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Xem đầy đủ trên Metabase
-      </a>
-
-    </article>
-  ))}
-</div>
-</div>
       </section>
 
     </main>

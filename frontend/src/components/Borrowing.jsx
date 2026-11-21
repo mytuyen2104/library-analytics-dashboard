@@ -1,4 +1,4 @@
-import "../styles/Borrowing1.css";
+import "../styles/Borrowing.css";
 
 const base = "https://dashboard.dashboardg4.click/public/question/";
 

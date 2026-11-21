@@ -1,25 +1,73 @@
-
 /* ========================================
    CHAT WIDGET - GLOBAL INHERITED STYLES
 ======================================== */
-/* 
+
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 :root {
-    font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
-    color: #17243b;
-    background: #f5f7fb;
-    font-synthesis: none;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
+  color: #17243b;
+  background: #f5f7fb;
+  font-synthesis: none;
 }
 
 button,
 input,
 select {
-    font: inherit;
+  font: inherit;
 }
 
 body {
-    margin: 0;
-} */
+  margin: 0;
+}
+
+/* Thanh cuộn dọc */
+.chat-messages {
+  scrollbar-width: thin;
+  scrollbar-color: #0B6E67 #EAF7F6;
+}
+
+.chat-messages::-webkit-scrollbar {
+  width: 7px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: #EAF7F6;
+  border-radius: 10px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: #0B6E67;
+  border-radius: 10px;
+  border: 1px solid #EAF7F6;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+  background: #075B55;
+}
+
+/* Thanh cuộn ngang */
+.quick-questions {
+  scrollbar-width: thin;
+  scrollbar-color: #75C5B8 #EAF7F6;
+}
+
+.quick-questions::-webkit-scrollbar {
+  height: 5px;
+}
+
+.quick-questions::-webkit-scrollbar-track {
+  background: #EAF7F6;
+  border-radius: 10px;
+}
+
+.quick-questions::-webkit-scrollbar-thumb {
+  background: #75C5B8;
+  border-radius: 10px;
+}
+
+.quick-questions::-webkit-scrollbar-thumb:hover {
+  background: #0B6E67;
+}
