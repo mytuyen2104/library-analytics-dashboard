@@ -1,5 +1,23 @@
 [
   {
+    "id": 1795276049828,
+    "thoiGian": "22:47:29 21/11/2026",
+    "loaiHanhDong": "Nhập bổ sung kho",
+    "maSach": "S0118",
+    "tenSach": "Tiếng Anh giao tiếp - Tập 8",
+    "soLuongThem": 1,
+    "tonSauNhap": 7
+  },
+  {
+    "id": 1795276029697,
+    "thoiGian": "22:47:09 21/11/2026",
+    "loaiHanhDong": "Nhập bổ sung kho",
+    "maSach": "S0118",
+    "tenSach": "Tiếng Anh giao tiếp - Tập 8",
+    "soLuongThem": 1,
+    "tonSauNhap": 6
+  },
+  {
     "id": 1795244152493,
     "thoiGian": "13:55:52 21/11/2026",
     "loaiHanhDong": "Nhập bổ sung kho",

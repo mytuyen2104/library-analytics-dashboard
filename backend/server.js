@@ -712,14 +712,17 @@ app.get('/api/doc-gia/:maDocGia/lich-su', async (req, res) => {
   }
 });
 
-// Xóa độc giả (chỉ cho phép xóa nếu chưa có lịch sử mượn trả để bảo toàn khóa ngoại)
+// Xóa độc giả (cho phép xóa nếu độc giả không còn giữ sách chưa trả)
 app.delete('/api/doc-gia/:maDocGia', async (req, res) => {
-  try {
-    const { maDocGia } = req.params;
-    const pool = await sql.connect(dbConfig);
+  const { maDocGia } = req.params;
+  const pool = await sql.connect(dbConfig);
+  const transaction = new sql.Transaction(pool);
 
-    // Kiểm tra xem độc giả đã từng mượn trả sách chưa
-    const checkLoans = await pool.request()
+  try {
+    await transaction.begin();
+
+    // 1. Kiểm tra xem độc giả còn giữ cuốn sách nào chưa trả không
+    const checkLoans = await new sql.Request(transaction)
       .input('MaDocGia', sql.VarChar(10), maDocGia)
       .query(`
         SELECT 
@@ -732,23 +735,33 @@ app.delete('/api/doc-gia/:maDocGia', async (req, res) => {
     const { TongGiaoDich, DangGiu } = checkLoans.recordset[0];
 
     if (Number(DangGiu) > 0) {
+      await transaction.rollback();
       return res.status(400).json({
         error: `Không thể xóa độc giả ${maDocGia} vì đang giữ ${DangGiu} cuốn sách chưa trả!`,
       });
     }
 
+    // 2. Xóa các phiếu mượn cũ đã trả trong dbo.MuonTra trước để không vướng khóa ngoại
     if (Number(TongGiaoDich) > 0) {
-      return res.status(400).json({
-        error: `Không thể xóa độc giả ${maDocGia} vì đã có ${TongGiaoDich} phiếu mượn trong lịch sử lưu trữ của thư viện!`,
-      });
+      await new sql.Request(transaction)
+        .input('MaDocGia', sql.VarChar(10), maDocGia)
+        .query(`DELETE FROM dbo.MuonTra WHERE MaDocGia = @MaDocGia`);
     }
 
-    await pool.request()
+    // 3. Xóa thẻ độc giả trong dbo.DocGia
+    await new sql.Request(transaction)
       .input('MaDocGia', sql.VarChar(10), maDocGia)
       .query(`DELETE FROM dbo.DocGia WHERE MaDocGia = @MaDocGia`);
 
-    res.json({ message: `Đã xóa thẻ độc giả ${maDocGia} thành công!` });
+    await transaction.commit();
+
+    res.json({
+      message: Number(TongGiaoDich) > 0
+        ? `Đã xóa thẻ độc giả ${maDocGia} cùng ${TongGiaoDich} lịch sử phiếu đã trả thành công!`
+        : `Đã xóa thẻ độc giả ${maDocGia} thành công!`,
+    });
   } catch (err) {
+    await transaction.rollback();
     res.status(500).json({ error: err.message });
   }
 });
